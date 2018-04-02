@@ -9,7 +9,7 @@
 	<meta name="baseurl" content="<?php echo base_url()?>" />
 	<link rel="icon" href="<?php echo base_url("images/favicon.ico"); ?>" type="image/ico" />
 
-    <title>ZAZUE </title>
+    <title>EAP </title>
 
     <!-- Bootstrap -->
 	<link href="<?php echo base_url("assets/bootstrap/vendors/bootstrap/dist/css/bootstrap.min.css"); ?>" rel="stylesheet">
@@ -61,7 +61,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Reservas - BMG</a>
+            EAP APP - BMG</a>
           </div>
           <div class="clearfix"></div>
         </footer>
