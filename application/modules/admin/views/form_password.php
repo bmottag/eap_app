@@ -5,7 +5,7 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2><i class='fa fa-unlock fa-fw'></i>CAMBIO DE CONTRASEÑA</h2>
+					<h2><i class='fa fa-unlock fa-fw'></i>CHANGE PASSWORD </h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -15,7 +15,7 @@
 				<div class="x_content">
 				
 					<div class="alert alert-success alert-dismissible fade in" role="alert">
-						<strong>Info:</strong> Formulario para cambiar la contraseña del usuario.
+						<strong>Info:</strong> Form to chage the password.
 					</div>
 				
 					<form id="form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="<?php echo base_url("admin/update_password"); ?>">
@@ -23,21 +23,21 @@
 						<input type="hidden" id="hddUser" name="hddUser" value="<?php echo $information[0]["log_user"]; ?>"/>
 
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="nombres">Nombres <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="nombres">Firstname <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="nombres" name="nombres" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["first_name"]:""; ?>" maxlength=30 placeholder="Nombres" disabled>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="apellidos">Apellidos <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="apellidos">Lastname <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="apellidos" name="apellidos" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["last_name"]:""; ?>" maxlength=30 placeholder="Apellidos" disabled>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">Usuario <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">User <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="usuario" name="usuario" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["log_user"]:""; ?>" maxlength=30 placeholder="Usuario" disabled>
@@ -46,7 +46,7 @@
 
 						
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">Contraseña <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">Password <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="inputPassword" name="inputPassword" class="form-control" >
@@ -54,7 +54,7 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">Confirmar contraseña <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">Confirm password <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="inputConfirm" name="inputConfirm" class="form-control" >
@@ -68,7 +68,7 @@
 								<div class="row" align="center">
 									<div style="width:50%;" align="center">
 										<button type="button" id="btnSubmit" name="btnSubmit" class='btn btn-success'>
-												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+												Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
 										</button>								
 									</div>
 								</div>

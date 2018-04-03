@@ -9,21 +9,21 @@
 	  <ul class="nav navbar-nav navbar-right">	  
 		<li class="">
 		  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			<i class="fa fa-user"></i> Usuario
+			<i class="fa fa-user"></i> User
 			<span class=" fa fa-angle-down"></span>
 		  </a>
 		  <ul class="dropdown-menu dropdown-usermenu pull-right">
-			<li><a href="<?php echo base_url("menu/salir"); ?>"><i class="fa fa-sign-out pull-right"></i> Salir</a></li>
+			<li><a href="<?php echo base_url("menu/salir"); ?>"><i class="fa fa-sign-out pull-right"></i> Logout</a></li>
 		  </ul>
 		</li>
 		
 		<li class="">
 		  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			<i class="fa fa-cog"></i> Configuración
+			<i class="fa fa-cog"></i> Settings
 			<span class=" fa fa-angle-down"></span>
 		  </a>
 		  <ul class="dropdown-menu dropdown-usermenu pull-right">
-			<li><a href="<?php echo base_url("admin/usuarios"); ?>"><i class="fa fa-users pull-right"></i> Usuarios</a></li>
+			<li><a href="<?php echo base_url("admin/usuarios"); ?>"><i class="fa fa-users pull-right"></i> Users</a></li>
 		  </ul>
 		</li>
 

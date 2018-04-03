@@ -5,7 +5,7 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2><i class='fa fa-users'></i> USUARIOS</h2>
+					<h2><i class='fa fa-users'></i> USERS</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -15,7 +15,7 @@
 				<div class="x_content">
 
 					<div class="alert alert-success alert-dismissible fade in" role="alert">
-						<strong>Info:</strong> Formulario para adicionar y/o editar información del usuario.
+						<strong>Info:</strong> Form to add and edit the user information.
 					</div>
 				
 <?php
@@ -45,24 +45,24 @@ if ($retornoError) {
 						<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_user"]:""; ?>"/>
 
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="nombres">Nombres <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="nombres">Firstname <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="nombres" name="nombres" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["first_name"]:""; ?>" maxlength=30 placeholder="Nombres">
+								<input type="text" id="nombres" name="nombres" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["first_name"]:""; ?>" maxlength=30 placeholder="Firstname">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="apellidos">Apellidos <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="apellidos">Lastname <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="apellidos" name="apellidos" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["last_name"]:""; ?>" maxlength=30 placeholder="Apellidos">
+								<input type="text" id="apellidos" name="apellidos" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["last_name"]:""; ?>" maxlength=30 placeholder="Lastname">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">Usuario <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">User <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="usuario" name="usuario" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["log_user"]:""; ?>" maxlength=30 placeholder="Usuario">
+								<input type="text" id="usuario" name="usuario" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["log_user"]:""; ?>" maxlength=30 placeholder="User">
 							</div>
 						</div>
 						<div class="form-group">
@@ -72,9 +72,9 @@ if ($retornoError) {
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="celular" class="control-label col-md-3 col-sm-3 col-xs-12">No. Celular <span class="required">*</span></label>
+							<label for="celular" class="control-label col-md-3 col-sm-3 col-xs-12">Movil <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input id="celular" name="celular" class="form-control col-md-7 col-xs-12" type="text" value="<?php echo $information?$information[0]["movil"]:""; ?>" maxlength=12 placeholder="No. Celular">
+								<input id="celular" name="celular" class="form-control col-md-7 col-xs-12" type="text" value="<?php echo $information?$information[0]["movil"]:""; ?>" maxlength=12 placeholder="Movil">
 							</div>
 						</div>
 						
@@ -91,12 +91,12 @@ if ($retornoError) {
 						</div>
 						
 						<div class="form-group">
-							<label for="estado" class="control-label col-md-3 col-sm-3 col-xs-12">Estado <span class="required">*</span></label>
+							<label for="estado" class="control-label col-md-3 col-sm-3 col-xs-12">State <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select name="state" id="state" class="form-control" required>
 									<option value=''>Select...</option>
-									<option value=1 <?php if($information[0]["state"] == 1) { echo "selected"; }  ?>>Activo</option>
-									<option value=2 <?php if($information[0]["state"] == 2) { echo "selected"; }  ?>>Inactivo</option>
+									<option value=1 <?php if($information[0]["state"] == 1) { echo "selected"; }  ?>>Activ</option>
+									<option value=2 <?php if($information[0]["state"] == 2) { echo "selected"; }  ?>>Inactive</option>
 								</select>
 							</div>
 						</div>
@@ -107,7 +107,7 @@ if ($retornoError) {
 								<div class="row" align="center">
 									<div style="width:50%;" align="center">
 										<button type="button" id="btnSubmit" name="btnSubmit" class='btn btn-success'>
-												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+												Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
 										</button>								
 									</div>
 								</div>

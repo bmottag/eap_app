@@ -64,9 +64,9 @@ class Admin extends CI_Controller {
 			$log_user = $this->input->post('usuario');
 			$email = $this->input->post('email');
 
-			$msj = "Se adicionó el Cliente con éxito.";
+			$msj = "You have add a new User!!";
 			if ($idUser != '') {
-				$msj = "Se guardó el Cliente con éxito.";
+				$msj = "You have update an User!!";
 			}	
 			
 			$result_user = false;
@@ -91,16 +91,16 @@ class Admin extends CI_Controller {
 			if ($result_user || $result_email) {
 				$data["result"] = "error";
 				if($result_user){
-					$data["mensaje"] = " Error. El nombre de usuario ya existe.";
-					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> El nombre de usuario ya existe.');
+					$data["mensaje"] = " Error. The user already exist.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> The user already exist.');
 				}
 				if($result_email){
-					$data["mensaje"] = " Error. El correo ya existe.";
-					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> El correo ya existe.');
+					$data["mensaje"] = " Error. The email already exist.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> The email already exist.');
 				}
 				if($result_user && $result_email){
-					$data["mensaje"] = " Error. El nombre de usuario y correo ya existen.";
-					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> El nombre de usuario y correo ya existen.');
+					$data["mensaje"] = " Error. The user and email already exist.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> The user and email already exist.');
 				}
 			} else {
 			
@@ -111,7 +111,7 @@ class Admin extends CI_Controller {
 				} else {
 					$data["result"] = "error";
 					$data["idRecord"] = '';
-					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Contactarse con el Administrador.');
+					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help, contact the Admin.');
 				}
 			
 			}
@@ -150,14 +150,14 @@ class Admin extends CI_Controller {
 			$passwd = str_replace(array("<",">","[","]","*","^","-","'","="),"",$newPassword); 
 			
 			$data['linkBack'] = "admin/usuarios";
-			$data['titulo'] = "<i class='fa fa-unlock fa-fw'></i>CAMBIO DE CONTRASEÑA";
+			$data['titulo'] = "<i class='fa fa-unlock fa-fw'></i>CHANGE PASSWORD";
 			
 			if($newPassword == $confirm)
 			{					
 					if ($this->admin_model->updatePassword()) {
-						$data["msj"] = "Se actualizó la contraseña.";
-						$data["msj"] .= "<br><strong>Usuario: </strong>" . $this->input->post("hddUser");
-						$data["msj"] .= "<br><strong>Contraseña: </strong>" . $passwd;
+						$data["msj"] = "You have update the password.";
+						$data["msj"] .= "<br><strong>User: </strong>" . $this->input->post("hddUser");
+						$data["msj"] .= "<br><strong>Password: </strong>" . $passwd;
 						$data["clase"] = "alert-success";
 					}else{
 						$data["msj"] = "<strong>Error!!!</strong> Ask for help.";

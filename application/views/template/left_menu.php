@@ -12,7 +12,7 @@
 		<img src="<?php echo base_url("images/oxalis.png"); ?>" alt="..." class="img-circle profile_img">
 	  </div>
 	  <div class="profile_info">
-		<span>Bienvenido,</span>
+		<span>Welcome,</span>
 		<h2><?php echo $userRol = $this->session->name; ?></h2>
 	  </div>
 	</div>
