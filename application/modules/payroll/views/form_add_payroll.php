@@ -19,7 +19,6 @@
 					</div>
 				
 					<form id="form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="<?php echo base_url("payroll/savePayroll"); ?>" >
-						<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_user"]:""; ?>"/>
 						
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="project">Project name<span class="required">*</span></label>
@@ -27,7 +26,7 @@
 								<select name="project" id="project" class="form-control" >
 									<option value=''>Select...</option>
 									<?php for ($i = 0; $i < count($project); $i++) { ?>
-										<option value="<?php echo $project[$i]["id_project"]; ?>" <?php if($information[0]["fk_id_project_start"] == $project[$i]["id_project"]) { echo "selected"; }  ?>><?php echo $project[$i]["project_name"]; ?></option>	
+										<option value="<?php echo $project[$i]["id_project"]; ?>"><?php echo $project[$i]["project_name"]; ?></option>	
 									<?php } ?>
 								</select>
 							</div>
@@ -36,7 +35,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="observation">Observation </label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<textarea id="observation" name="observation" placeholder="Observation"  class="form-control" rows="2"><?php echo $information?$information[0]["observation"]:""; ?></textarea>
+								<textarea id="observation" name="observation" placeholder="Observation"  class="form-control" rows="3"></textarea>
 							</div>
 						</div>
 
