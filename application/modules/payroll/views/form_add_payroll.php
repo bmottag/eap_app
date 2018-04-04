@@ -18,7 +18,7 @@
 						<strong>Info:</strong> Form to save the start working hour, with the project you are working.
 					</div>
 				
-					<form id="form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="<?php echo base_url("payroll/savePayroll"); ?>"
+					<form id="form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="<?php echo base_url("payroll/savePayroll"); ?>" >
 						<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_user"]:""; ?>"/>
 						
 						<div class="form-group">
