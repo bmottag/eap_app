@@ -24,9 +24,9 @@
 								<th class="column-title">Start</th>
 								<th class="column-title">Finish</th>
 								<th class="column-title">Working hours</th>
-								<th class="column-title">Project start</th>
-								<th class="column-title">Project finish</th>
+								<th class="column-title">Project</th>
 								<th class="column-title">Observation</th>
+								<th class="column-title">Activities</th>
 								</tr>
 							</thead>
 
@@ -39,11 +39,9 @@
 				echo "<td class='text-center'>" . $data['start'] . "</td>";
 				echo "<td class='text-center'>" . $data['finish'] . "</td>";
 				echo "<td class='text-center'>" . $data['working_hours'] . "</td>";
-				echo "<td>" . $data['project_start'] . "</td>";
-				echo "<td>" . $data['project_finish'] . "</td>";
+				echo "<td>" . $data['project_name'] . "</td>";
 				echo "<td>" . $data['observation'] . "</td>";
-
-
+				echo "<td>" . $data['activities'] . "</td>";
 				echo "</tr>";
 			endforeach 
 		?>
