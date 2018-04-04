@@ -51,15 +51,48 @@ class Payroll extends CI_Controller {
 	 */
 	public function savePayroll()
 	{			
-			$hour = date("G:i");
-			
-			if ($this->payroll_model->savePayroll()) {
-                $this->session->set_flashdata('retornoExito', 'have a nice shift, you started at ' . $hour . '.');
-            } else {
-                $this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
-            }
+		$hour = date("G:i");
+		
+		if ($this->payroll_model->savePayroll()) {
+			$this->session->set_flashdata('retornoExito', 'have a nice shift, you started at ' . $hour . '.');
+		} else {
+			$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+		}
 
-			redirect("/dashboard",'refresh');
+		redirect("/dashboard",'refresh');
+	}
+	
+	/**
+	 * Update finish time payroll
+     * @since 4/4/2018
+     * @author BMOTTAG
+	 */
+	public function updatePayroll()
+	{				
+		if ($this->payroll_model->updatePayroll()) {
+
+			//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
+			//START search info for the payroll
+			$this->load->model("general_model");
+			$arrParam = array(
+				"idPayroll" => $this->input->post('hddIdentificador')
+			);			
+			$infoPayroll = $this->general_model->get_payroll($arrParam);
+			//END of search				
+
+			//update working time and working hours
+			$hour = date("G:i");
+			if ($this->payroll_model->updateWorkingTimePayroll($infoPayroll)) {
+				$this->session->set_flashdata('retornoExito', 'have a good night, you finished at ' . $hour . '.');
+			}else{
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> bad at math.');
+			}
+			
+		} else {
+			$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+		}
+
+		redirect("/dashboard",'refresh');
 	}
 	
 
