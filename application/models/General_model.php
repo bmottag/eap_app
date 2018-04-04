@@ -88,7 +88,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_payroll($arrData) 
 		{
-			$this->db->select('P.*, id_user, first_name, last_name, log_user, J.project_name project_start, H.project_name project_finish');
+			$this->db->select('P.*, id_user, CONCAT(U.first_name, " " , U.last_name) employee, log_user, J.project_name project_start, H.project_name project_finish');
 			$this->db->join('user U', 'U.id_user = P.fk_id_user', 'INNER');
 			$this->db->join('project J', 'J.id_project = P.fk_id_project_start', 'INNER');
 			$this->db->join('project H', 'H.id_project = P.fk_id_project_finish', 'LEFT');
