@@ -13,6 +13,7 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
+				<a href="<?php echo base_url("payroll"); ?>" class="btn btn-success"><i class="fa fa-book"></i> Payroll</a>
 				<?php if(!$info){ ?>				
 					<div class="alert alert-success alert-dismissible fade in" role="alert">
 						<strong>Info:</strong> There is no payroll records.
