@@ -29,6 +29,16 @@
 		</li>
 		
 		<li class="">
+		  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			<i class="fa fa-pie-chart"></i> Report
+			<span class=" fa fa-angle-down"></span>
+		  </a>
+		  <ul class="dropdown-menu dropdown-usermenu pull-right">
+			<li><a href="<?php echo base_url("report/search/payrollByAdmin"); ?>"><i class="fa fa-book pull-right"></i> Payroll report</a></li>
+		  </ul>
+		</li>
+		
+		<li class="">
 		  <a href="<?php echo base_url("dashboard"); ?>" class="user-profile" aria-expanded="false">
 			<i class="fa fa-home"></i> Home
 		  </a>

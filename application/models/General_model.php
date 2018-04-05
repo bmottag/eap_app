@@ -92,11 +92,17 @@ class General_model extends CI_Model {
 			$this->db->join('user U', 'U.id_user = P.fk_id_user', 'INNER');
 			$this->db->join('project J', 'J.id_project = P.fk_id_project', 'INNER');
 			
-			if (array_key_exists("idUser", $arrData)) {
+			if (array_key_exists("idUser", $arrData) && $arrData["idUser"] != 'x') {
 				$this->db->where('U.id_user', $arrData["idUser"]);
 			}
 			if (array_key_exists("idPayroll", $arrData)) {
 				$this->db->where('id_payroll', $arrData["idPayroll"]);
+			}
+			if (array_key_exists("from", $arrData)) {
+				$this->db->where('start >=', $arrData["from"]);
+			}				
+			if (array_key_exists("to", $arrData)) {
+				$this->db->where('start <=', $arrData["to"]);
 			}
 			
 			$this->db->order_by('id_payroll', 'desc');
