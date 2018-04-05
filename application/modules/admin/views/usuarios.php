@@ -44,11 +44,11 @@
 				echo "<td class='text-center'>";
 					switch ($data['state']) {
 						case 1:
-							$valor = 'Activo';
+							$valor = 'Active';
 							$clase = "text-success";
 							break;
 						case 2:
-							$valor = 'Inactivo';
+							$valor = 'Inactive';
 							$clase = "text-danger";
 							break;
 					}
