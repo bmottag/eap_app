@@ -17,9 +17,15 @@
 					<div class="alert alert-success alert-dismissible fade in" role="alert">
 						<strong>Info:</strong> Form to save the finish working hour, with the project you are working.
 					</div>
+					
+					<div class="alert alert-success alert-dismissible fade in" role="alert">
+						<strong>Start time:</strong> <?php echo $information[0]["start"]; ?><br>
+						<strong>Project:</strong> <?php echo $information[0]["project_name"]; ?>
+					</div>
 				
 					<form id="form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="<?php echo base_url("payroll/updatePayroll"); ?>" >
 						<input type="hidden" id="hddIdentificador" name="hddIdentificador" value="<?php echo $information[0]["id_payroll"]; ?>"/>
+						<input type="hidden" id="hddObservationStart" name="hddObservationStart" value="<?php echo $information[0]["observation"]; ?>"/>
 						
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="activities">Activities </label>

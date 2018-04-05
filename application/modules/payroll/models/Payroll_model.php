@@ -8,12 +8,15 @@
 		 * @since 3/4/2018
 		 */
 		public function savePayroll() 
-		{				
+		{
+				$observation =  $this->security->xss_clean($this->input->post('observation'));
+				$observation =  addslashes($observation);
+		
 				$data = array(
 					'fk_id_user' => $this->session->userdata('id'),
 					'fk_id_project' => $this->input->post('project'),
 					'start' => date('Y-m-d G:i:s'),
-					'observation' => $this->input->post('observation')
+					'observation' => $observation
 				);	
 
 				$query = $this->db->insert('payroll', $data);
@@ -37,6 +40,10 @@
 
 				$observation =  $this->security->xss_clean($this->input->post('observation'));
 				$observation =  addslashes($observation);
+				
+				$observationStart =  $this->input->post('hddObservationStart');
+				
+				$observation = $observationStart . "<br><br>" . $observation;
 			
 				$data = array(
 					'finish' => date('Y-m-d G:i:s'),
