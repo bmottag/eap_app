@@ -73,6 +73,67 @@ class Report extends CI_Controller {
 			$this->load->view("layout", $data);
     }
 	
+    /**
+     * Cargo modal- formulario para editar las horas de los empleados
+     * @since 5/4/2018
+     */
+    public function cargarModalHours() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$this->load->model("general_model");
+
+			//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
+			//START search info for the task
+			$arrParam = array(
+				"idPayroll" => $this->input->post('idPayroll')
+			);
+			$data['information'] = $this->general_model->get_payroll($arrParam);
+			//END of search				
+						
+			$this->load->view("modal_hours_worker", $data);
+    }
+	
+	/**
+	 * Save payroll hours
+     * @since 5/4/2018
+     * @author BMOTTAG
+	 */
+	public function savePayrollHour()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+
+			if ($this->report_model->savePayrollHour()) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', 'You have update the payroll hour');
+				
+				//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
+				//START search info for the task
+				$this->load->model("general_model");
+				$arrParam = array(
+					"idPayroll" => $this->input->post('hddIdentificador')
+				);
+				$infoPayroll = $this->general_model->get_payroll($arrParam);
+				//END of search	
+
+				//update working time and working hours
+				if ($this->report_model->updateWorkingTimePayroll($infoPayroll)) {
+					$this->session->set_flashdata('retornoExito', 'You have update the payroll hour');
+				}else{
+					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> bad at math.');
+				}
+				
+				
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+			
+			echo json_encode($data);
+    }
+	
 
 	
 }
