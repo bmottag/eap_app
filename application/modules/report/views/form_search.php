@@ -33,6 +33,18 @@
 						</div>
 						
 						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="project">Project </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select name="project" id="project" class="form-control" >
+									<option value=''>Select...</option>
+									<?php for ($i = 0; $i < count($projectList); $i++) { ?>
+										<option value="<?php echo $projectList[$i]["id_project"]; ?>"><?php echo $projectList[$i]["project_name"]; ?></option>	
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="datetimepicker_from">From date <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 

@@ -95,6 +95,9 @@ class General_model extends CI_Model {
 			if (array_key_exists("idUser", $arrData) && $arrData["idUser"] != 'x') {
 				$this->db->where('U.id_user', $arrData["idUser"]);
 			}
+			if (array_key_exists("idProject", $arrData) && $arrData["idProject"] != 'x') {
+				$this->db->where('fk_id_project', $arrData["idProject"]);
+			}
 			if (array_key_exists("idPayroll", $arrData)) {
 				$this->db->where('id_payroll', $arrData["idPayroll"]);
 			}
