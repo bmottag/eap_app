@@ -26,6 +26,12 @@
 			<li><a href="<?php echo base_url("admin/usuarios"); ?>"><i class="fa fa-users pull-right"></i> Users</a></li>
 		  </ul>
 		</li>
+		
+		<li class="">
+		  <a href="<?php echo base_url("dashboard"); ?>" class="user-profile" aria-expanded="false">
+			<i class="fa fa-home"></i> Home
+		  </a>
+		</li>
 
 	  </ul>
 	</nav>
