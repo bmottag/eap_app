@@ -113,6 +113,29 @@ class General_model extends CI_Model {
 				return false;
 			}
 		}
+		
+		/**
+		 * Project list
+		 * @since 4/4/2018
+		 */
+		public function get_project($arrData) 
+		{
+			if (array_key_exists("idProject", $arrData)) {
+				$this->db->where('id_project', $arrData["idProject"]);
+			}
+			if (array_key_exists("state", $arrData)) {
+				$this->db->where('project_state', $arrData["state"]);
+			}
+			$this->db->where('id_project !=', 0);
+
+			$this->db->order_by("project_name", "ASC");
+			$query = $this->db->get("project");
+
+			if ($query->num_rows() >= 1) {
+				return $query->result_array();
+			} else
+				return false;
+		}
 	
 		
 

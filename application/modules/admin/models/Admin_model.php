@@ -84,6 +84,33 @@
 				}
 	    }
 		
+		/**
+		 * Add/Edit PROJECT
+		 * @since 29/3/2018
+		 */
+		public function saveProject() 
+		{
+				$idProject = $this->input->post('hddId');
+				
+				$data = array(
+					'project_name' => $this->input->post('project'),
+					'project_state' => $this->input->post('state')
+				);	
+
+				//revisar si es para adicionar o editar
+				if ($idProject == '') {
+					$query = $this->db->insert('project', $data);
+				} else {
+					$this->db->where('id_project', $idProject);
+					$query = $this->db->update('project', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+		
 		
 		
 		

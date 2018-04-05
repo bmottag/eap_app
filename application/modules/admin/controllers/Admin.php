@@ -171,6 +171,75 @@ class Admin extends CI_Controller {
 			$data["view"] = "template/answer";
 			$this->load->view("layout", $data);
 	}
+	
+	/**
+	 * lista de project
+     * @since 4/4/2018
+     * @author BMOTTAG
+	 */
+	public function project()
+	{
+		$this->load->model("general_model");
+		$arrParam = array();
+		$data['info'] = $this->general_model->get_project($arrParam);
+
+		$data["view"] = 'projects';
+		$this->load->view("layout", $data);
+	}
+	
+	/**
+	 * Form project
+     * @since 4/4/2018
+     * @author BMOTTAG
+	 */
+	public function update_project($idProject = 'x')
+	{			
+		$this->load->model("general_model");
+		$data['information'] = FALSE;
+		
+		//consultar lista de roles
+		$arrParam = array(
+			"table" => "param_rol",
+			"order" => "rol_name",
+			"id" => "x"
+		);
+		$data['roles'] = $this->general_model->get_basic_search($arrParam);
+
+		//si envio el id, entonces busco la informacion 
+		if ($idProject != 'x') {
+			$arrParam = array("idProject" => $idProject);
+			$data['information'] = $this->general_model->get_project($arrParam);//info project
+		}
+
+		$data["view"] = 'form_project';
+		$this->load->view("layout", $data);
+	}
+	
+	/**
+	 * Guardar project
+     * @since 4/4/2018
+	 */
+	public function save_project()
+	{			
+			header('Content-Type: application/json');
+			
+			$idProject = $this->input->post('hddId');
+
+			$msj = "You have add a new Project!!";
+			if ($idProject != '') {
+				$msj = "You have update the Project!!";
+			}	
+						
+			if ($this->admin_model->saveProject()) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help, contact the Admin.');
+			}
+			
+			echo json_encode($data);
+    }
 
 
 
