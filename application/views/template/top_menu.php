@@ -25,6 +25,7 @@
 		  <ul class="dropdown-menu dropdown-usermenu pull-right">
 			<li><a href="<?php echo base_url("admin/usuarios"); ?>"><i class="fa fa-users pull-right"></i> Users</a></li>
 			<li><a href="<?php echo base_url("admin/project"); ?>"><i class="fa fa-road pull-right"></i> Projects</a></li>
+			<li><a href="<?php echo base_url("codeqr"); ?>"><i class="fa fa-qrcode pull-right"></i> QR Code</a></li>
 		  </ul>
 		</li>
 		
