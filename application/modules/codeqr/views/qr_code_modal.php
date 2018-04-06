@@ -14,12 +14,25 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label for="type" class="control-label">QR code value : *</label>
-					<input type="text" id="qr_code" name="qr_code" class="form-control" value="<?php echo $information?$information[0]["template_name"]:""; ?>" placeholder="QR Code value" required >
+					<label class="control-label" for="qr_code">QR code value : *</label>
+					<input type="text" id="qr_code" name="qr_code" class="form-control" value="<?php echo $information?$information[0]["value_qr_code"]:""; ?>" placeholder="QR Code value" required >
 				</div> 
 			</div>
-			
 		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group text-left">
+					<label class="control-label" for="user" >User : </label>
+					<select name="user" id="user" class="form-control" >
+						<option value=''>Select...</option>
+						<?php for ($i = 0; $i < count($usuarios); $i++) { ?>
+							<option value="<?php echo $usuarios[$i]["id_user"]; ?>" <?php if($information[0]["fk_id_user"] == $usuarios[$i]["id_user"]) { echo "selected"; }  ?>><?php echo $usuarios[$i]["name"]; ?></option>	
+						<?php } ?>
+					</select>
+				</div> 
+			</div>
+		</div>				
 				
 		<div class="form-group">
 			<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary" >

@@ -145,6 +145,50 @@ class General_model extends CI_Model {
 			} else
 				return false;
 		}
+		
+		/**
+		 * QR CODE list
+		 * @since 6/4/2018
+		 */
+		public function get_qr_code($arrData) 
+		{
+			$this->db->select('Q.*, id_user, CONCAT(U.first_name, " " , U.last_name) name');
+			$this->db->join('user U', 'U.id_user = Q.fk_id_user', 'LEFT');
+			
+			if (array_key_exists("idQRCode", $arrData)) {
+				$this->db->where('id_qr_code', $arrData["idQRCode"]);
+			}
+			
+			$this->db->order_by('id_qr_code', 'asc');
+			
+			$query = $this->db->get('param_qr_code Q');
+
+			if ($query->num_rows() > 0) {
+				return $query->result_array();
+			} else {
+				return false;
+			}
+		}
+		
+		/**
+		 * Lista de usuarios que no tienen QR CODE asignado
+		 * @since  6/4/2018
+		 */
+		public function user_without_qrcode()
+		{	
+				$sql = "SELECT U.id_user, CONCAT(U.first_name, ' ' , U.last_name) name";
+				$sql.= " FROM user U";
+				$sql.= " WHERE U.id_user NOT IN ( SELECT fk_id_user FROM param_qr_code Q WHERE fk_id_user IS NOT NULL)";
+				$sql.= " AND U.state = 1";
+				
+				$query = $this->db->query($sql);
+				
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
 	
 		
 

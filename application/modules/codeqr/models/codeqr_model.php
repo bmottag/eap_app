@@ -14,6 +14,7 @@
 				
 				$data = array(
 					'value_qr_code' => $this->input->post('qr_code'),
+					'fk_id_user' => $this->input->post('user'),
 					'image_qr_code' => 'images/qrcode/' . $value . ".png",
 					'encryption' => $encryption,
 					'state' => 2 //inactive
@@ -39,9 +40,12 @@
 		 * @author BMOTTAG
 		 * @since  6/4/2018
 		 */
-		public function verifyQRCode() 
+		public function verifyQRCode($arrData) 
 		{
 				$value = $this->input->post('qr_code');
+				if (array_key_exists("idQRCode", $arrData)) {
+					$this->db->where('id_qr_code !=', $arrData["idQRCode"]);
+				}	
 				
 				$this->db->where("value_qr_code", $value);
 				$query = $this->db->get("param_qr_code");

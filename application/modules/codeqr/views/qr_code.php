@@ -48,6 +48,8 @@ $(function(){
 								<th class="column-title">Value </th>
 								<th class="column-title">Image</th>
 								<th class="column-title">State</th>
+								<th class="column-title">Usuario</th>
+								<th class="column-title">Edit</th>
 								</tr>
 							</thead>
 
@@ -75,6 +77,26 @@ $(function(){
 									}
 									echo '<p class="' . $clase . '"><strong>' . $valor . '</strong></p>';
 									echo "</td>";
+									
+									echo "<td class='text-center'>";
+									
+if($data['fk_id_user']){
+	echo "<p class='text-primary'>" . $data['name'] . "</br>";
+	echo "<a href='" . base_url("codigoqr/update_usuario/" . $data['id_qr_code']) . "' class='text-primary text-center'>Delete</p>";
+}else{
+	echo "<p class='text-danger text-center'><strong>Falta</strong></p>";
+}
+						
+									echo "</td>";
+									
+									echo "<td>";
+							?>
+								<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $data['id_qr_code']; ?>" >
+									Edit <span class="glyphicon glyphicon-edit" aria-hidden="true">
+								</button>
+							<?php
+									echo "</td>";
+
 									echo "</tr>";
 								endforeach 
 							?>

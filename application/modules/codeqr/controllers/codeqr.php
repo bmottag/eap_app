@@ -17,12 +17,8 @@ class Codeqr extends CI_Controller {
 	public function index()
 	{		
 			$this->load->model("general_model");
-			$arrParam = array(
-				"table" => "param_qr_code",
-				"order" => "value_qr_code",
-				"id" => "x"
-			);
-			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			$arrParam = array();
+			$data['info'] = $this->general_model->get_qr_code($arrParam);
 			
 			$data["view"] = 'qr_code';
 			$this->load->view("layout", $data);
@@ -37,17 +33,16 @@ class Codeqr extends CI_Controller {
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
 			$data['information'] = FALSE;
-			$data["idQRCode"] = $this->input->post("idQRCode");	
+			$idQRCode = $this->input->post("idQRCode");	
 			
-			if ($data["idQRCode"] != 'x') {
-				$this->load->model("general_model");
+			$this->load->model("general_model");
+			$data['usuarios'] = $this->general_model->user_without_qrcode();//listado usuarios sin codigo QR
+			
+			if ($idQRCode != 'x') {
 				$arrParam = array(
-					"table" => "param_qr_code",
-					"order" => "id_qr_code",
-					"column" => "id_qr_code",
-					"id" => $data["idQRCode"]
+					"idQRCode" => $idQRCode
 				);
-				$data['information'] = $this->general_model->get_basic_search($arrParam);
+				$data['information'] = $this->general_model->get_qr_code($arrParam);
 			}
 			
 			$this->load->view("qr_code_modal", $data);
@@ -71,7 +66,10 @@ class Codeqr extends CI_Controller {
 			}
 			
 			//verificar si ya existe el valor para el codigo
-			$result_qrcode = $this->codeqr_model->verifyQRCode();
+			$arrParam = array(
+				"idQRCode" => $idQRCode
+			);
+			$result_qrcode = $this->codeqr_model->verifyQRCode($arrParam);
 			
 			if ($result_qrcode) {
 				$data["result"] = "error";
