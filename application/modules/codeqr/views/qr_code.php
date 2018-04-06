@@ -18,7 +18,6 @@ $(function(){
 
 </script>
 
-
 <div class="right_col" role="main">
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
@@ -29,7 +28,6 @@ $(function(){
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
-
 					</ul>
 					<div class="clearfix"></div>
 				</div>
@@ -57,16 +55,14 @@ $(function(){
 							<?php 
 								foreach ($info as $data):
 									echo "<tr>";
-									echo "<td class='text-center'>" . $data['value_qr_code'] . "</td>";
-									echo "<td class='text-center'>";
-
+									echo "<td>" . $data['value_qr_code'] . "</td>";
+									echo "<td>";
 						?>
-							<img src="<?php echo base_url($data["image_qr_code"]); ?>" class="img-rounded" width="32" height="32" />
+							<img src="<?php echo base_url($data["image_qr_code"]); ?>" class="img-rounded" width="42" height="42" />
 						<?php
-
 									echo "</td>";
 									
-									echo "<td class='text-center'>";
+									echo "<td>";
 									switch ($data['state']) {
 										case 1:
 											$valor = 'Active';

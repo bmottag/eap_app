@@ -34,7 +34,23 @@
 				}
 		}
 				
-		
+		/**
+		 * Verify if the qrcode already exist
+		 * @author BMOTTAG
+		 * @since  6/4/2018
+		 */
+		public function verifyQRCode() 
+		{
+				$value = $this->input->post('qr_code');
+				
+				$this->db->where("value_qr_code", $value);
+				$query = $this->db->get("param_qr_code");
+
+				if ($query->num_rows() >= 1) {
+					return true;
+				} else{ return false; }
+		}	
+	
 		
 		
 		

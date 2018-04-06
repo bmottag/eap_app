@@ -69,36 +69,47 @@ class Codeqr extends CI_Controller {
 			if ($idQRCode != '') {
 				$msj = "You have update a QR Code!!";
 			}
-
-			$pass = $this->generaPass();//clave para colocarle al codigo QR
 			
-			$value = $this->input->post('qr_code');
-			$encryption = $value . $pass;
-			$rutaImagen = "images/qrcode/" . $value . ".png";
-			$valorQRcode = base_url("login/qrcodeLogin/" . $encryption);
-					
-			if ($idQRCode = $this->codeqr_model->saveQRCode($encryption)) 
-			{
-				//INCIO - genero imagen con la libreria y la subo 
-				$this->load->library('ciqrcode');
-
-				$params['data'] = $valorQRcode;
-				$params['level'] = 'H';
-				$params['size'] = 10;
-				$params['savename'] = FCPATH.$rutaImagen;
-								
-				$this->ciqrcode->generate($params);
-				//FIN - genero imagen con la libreria y la subo 				
-				
-				$data["result"] = true;
-				$data["idRecord"] = $idQRCode;
-				
-				$this->session->set_flashdata('retornoExito', $msj);
-			} else {
+			//verificar si ya existe el valor para el codigo
+			$result_qrcode = $this->codeqr_model->verifyQRCode();
+			
+			if ($result_qrcode) {
 				$data["result"] = "error";
-				$data["idRecord"] = "";
+				$data["mensaje"] = " Error. The QR code value already exist.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> The QR code value already exist.');
+			} else {
+		
+				$pass = $this->generaPass();//clave para colocarle al codigo QR
 				
-				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+				$value = $this->input->post('qr_code');
+				$encryption = $value . $pass;
+				$rutaImagen = "images/qrcode/" . $value . ".png";
+				$valorQRcode = base_url("login/qrcodeLogin/" . $encryption);
+						
+				if ($idQRCode = $this->codeqr_model->saveQRCode($encryption)) 
+				{
+					//INCIO - genero imagen con la libreria y la subo 
+					$this->load->library('ciqrcode');
+
+					$params['data'] = $valorQRcode;
+					$params['level'] = 'H';
+					$params['size'] = 10;
+					$params['savename'] = FCPATH.$rutaImagen;
+									
+					$this->ciqrcode->generate($params);
+					//FIN - genero imagen con la libreria y la subo 				
+					
+					$data["result"] = true;
+					$data["idRecord"] = $idQRCode;
+					
+					$this->session->set_flashdata('retornoExito', $msj);
+				} else {
+					$data["result"] = "error";
+					$data["idRecord"] = "";
+					
+					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+				}
+				
 			}
 
 			echo json_encode($data);

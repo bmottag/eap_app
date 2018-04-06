@@ -22,11 +22,9 @@
 		</div>
 				
 		<div class="form-group">
-			<div class="row" align="center">
-				<div style="width:50%;" align="center">
-					<input type="button" id="btnSubmit" name="btnSubmit" value="Save" class="btn btn-primary"/>
-				</div>
-			</div>
+			<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary" >
+				Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+			</button> 
 		</div>
 		
 		<div class="form-group">
