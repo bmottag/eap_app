@@ -17,7 +17,7 @@
 					'fk_id_user' => $this->input->post('user'),
 					'image_qr_code' => 'images/qrcode/' . $value . ".png",
 					'encryption' => $encryption,
-					'state' => 2 //inactive
+					'qr_code_state' => $this->input->post('state')
 				);
 				
 				//revisar si es para adicionar o editar

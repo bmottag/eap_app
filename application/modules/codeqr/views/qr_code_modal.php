@@ -32,7 +32,20 @@
 					</select>
 				</div> 
 			</div>
-		</div>				
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group text-left">
+					<label class="control-label" for="state" >State : *</label>
+					<select name="state" id="state" class="form-control" required>
+						<option value=''>Select...</option>
+						<option value=1 <?php if($information[0]["qr_code_state"] == 1) { echo "selected"; }  ?>>Active</option>
+						<option value=2 <?php if($information[0]["qr_code_state"] == 2) { echo "selected"; }  ?>>Inactive</option>
+					</select>
+				</div> 
+			</div>
+		</div>
 				
 		<div class="form-group">
 			<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary" >
