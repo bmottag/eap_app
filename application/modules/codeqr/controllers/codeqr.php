@@ -136,6 +136,35 @@ class Codeqr extends CI_Controller {
 			return $pass;
 	}
 	
+    /**
+     * actualizamos el campo usuario del codigo QR
+     */
+    public function update_usuario($idQRCode) 
+	{
+			if (empty($idQRCode) ) {
+				show_error('ERROR!!! - You are in the wrong place.');
+			}
+			
+			//actualizamos el campo usuario de QR CODE
+			$arrParam = array(
+				"table" => "param_qr_code",
+				"primaryKey" => "id_qr_code",
+				"id" => $idQRCode,
+				"column" => "fk_id_user",
+				"value" => ""
+			);
+
+			$this->load->model("general_model");
+
+			if ($this->general_model->updateRecord($arrParam)) {
+				$this->session->set_flashdata('retornoExito', 'The user was deleted.');
+			} else {
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+			
+			redirect(base_url('codeqr'), 'refresh');
+    }
+	
 
 	
 }
