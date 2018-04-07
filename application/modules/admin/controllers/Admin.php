@@ -66,7 +66,7 @@ class Admin extends CI_Controller {
 
 			$msj = "You have add a new User!!";
 			if ($idUser != '') {
-				$msj = "You have update an User!!";
+				$msj = "You have update the User!!";
 			}	
 			
 			$result_user = false;

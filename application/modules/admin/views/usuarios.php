@@ -14,7 +14,31 @@
 				</div>
 
 				<div class="x_content">
-				
+<?php
+$retornoExito = $this->session->flashdata('retornoExito');
+if ($retornoExito) {
+    ?>
+	<div class="alert alert-success alert-dismissible fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+		</button>
+		<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		<strong>Ok!</strong> <?php echo $retornoExito ?>	
+	</div>
+    <?php
+}
+
+$retornoError = $this->session->flashdata('retornoError');
+if ($retornoError) {
+    ?>
+	<div class="alert alert-danger alert-dismissible fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+		</button>
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<strong>Error!</strong> <?php echo $retornoError ?>
+	</div>	
+    <?php
+}
+?> 				
 					<a href="<?php echo base_url("admin/update_usuario"); ?>" class="btn btn-success"><i class="fa fa-plus"></i> Add User</a>
 				
 					<div class="table-responsive">

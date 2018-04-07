@@ -64,7 +64,7 @@ $( document ).ready( function () {
 						{	                                                        
 							$("#div_load").css("display", "none");
 							$('#btnSubmit').removeAttr('disabled');
-							var url = base_url + "admin/update_usuario/" + data.idRecord;
+							var url = base_url + "admin/usuarios";
 							$(location).attr("href", url);
 						}
 						else

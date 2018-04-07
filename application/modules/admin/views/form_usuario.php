@@ -18,29 +18,6 @@
 						<strong>Info:</strong> Form to add and edit the user information.
 					</div>
 				
-<?php
-$retornoExito = $this->session->flashdata('retornoExito');
-if ($retornoExito) {
-    ?>
-	<div class="alert alert-success alert-dismissible fade in" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-		</button>
-		<strong>Ok!</strong> <?php echo $retornoExito ?>	
-	</div>
-    <?php
-}
-
-$retornoError = $this->session->flashdata('retornoError');
-if ($retornoError) {
-    ?>
-	<div class="alert alert-danger alert-dismissible fade in" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-		</button>
-		<strong>Error!</strong> <?php echo $retornoError ?>
-	</div>	
-    <?php
-}
-?> 
 					<form id="form" data-parsley-validate class="form-horizontal form-label-left">
 						<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_user"]:""; ?>"/>
 
