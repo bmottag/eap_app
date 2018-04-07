@@ -32,7 +32,32 @@ $(function(){
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-				
+
+<?php
+$retornoExito = $this->session->flashdata('retornoExito');
+if ($retornoExito) {
+    ?>
+	<div class="alert alert-success alert-dismissible fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+		</button>
+		<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		<strong>Ok!</strong> <?php echo $retornoExito ?>	
+	</div>
+    <?php
+}
+
+$retornoError = $this->session->flashdata('retornoError');
+if ($retornoError) {
+    ?>
+	<div class="alert alert-danger alert-dismissible fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+		</button>
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<strong>Error!</strong> <?php echo $retornoError ?>
+	</div>	
+    <?php
+}
+?> 
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal" id="x" >
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add QR Code 
 				</button>	
@@ -65,7 +90,7 @@ $(function(){
 									echo "</td>";
 									
 									echo "<td>";
-									switch ($data['state']) {
+									switch ($data['qr_code_state']) {
 										case 1:
 											$valor = 'Active';
 											$clase = "text-success";
@@ -82,7 +107,7 @@ $(function(){
 									
 if($data['fk_id_user']){
 	echo "<p class='text-primary'>" . $data['name'] . "</br>";
-	echo "<a href='" . base_url("codigoqr/update_usuario/" . $data['id_qr_code']) . "' class='text-primary text-center'>Delete</p>";
+	echo "<a href='" . base_url("codeqr/update_usuario/" . $data['id_qr_code']) . "' class='text-primary text-center'>Delete</p>";
 }else{
 	echo "<p class='text-danger text-center'><strong>Falta</strong></p>";
 }
