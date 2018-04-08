@@ -15,7 +15,7 @@
 				<div class="x_content">
 
 					<div class="alert alert-success alert-dismissible fade in" role="alert">
-						<strong>Info:</strong> Form to save the start working hour, with the project you are working.
+						<strong>User:</strong> <?php echo $this->session->name; ?>
 					</div>
 				
 					<form id="form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="<?php echo base_url("payroll/savePayroll"); ?>" >

@@ -13,12 +13,9 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-
-					<div class="alert alert-success alert-dismissible fade in" role="alert">
-						<strong>Info:</strong> Form to save the finish working hour, with the project you are working.
-					</div>
 					
 					<div class="alert alert-success alert-dismissible fade in" role="alert">
+						<strong>User:</strong> <?php echo $this->session->name; ?><br>
 						<strong>Start time:</strong> <?php echo $information[0]["start"]; ?><br>
 						<strong>Project:</strong> <?php echo $information[0]["project_name"]; ?>
 					</div>
