@@ -14,11 +14,16 @@
 				
 				$data = array(
 					'value_qr_code' => $this->input->post('qr_code'),
-					'fk_id_user' => $this->input->post('user'),
 					'image_qr_code' => 'images/qrcode/' . $value . ".png",
 					'encryption' => $encryption,
 					'qr_code_state' => $this->input->post('state')
 				);
+				
+				//verificar que traiga datos de usuario de lo contrario no guarde nada
+				$user = $this->input->post('user');
+				if($user != ''){
+					$data['fk_id_user'] = $this->input->post('user');
+				}
 				
 				//revisar si es para adicionar o editar
 				if ($idQRCode == '') {
