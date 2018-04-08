@@ -71,4 +71,39 @@ class Login extends MX_Controller {
 		$this->login_model->redireccionarUsuario();
 	}
 	
+	/**
+	 * Logi por medio de QR CODE
+	 * @param varchar $valor: llave encriptada de la tabla QR CODE
+	 */
+	public function qrcodeLogin($valor = 'x')
+	{
+			$this->load->model("general_model");
+
+			$arrParam = array(
+				"encryption" => $valor
+			);
+			$user = $this->login_model->validateLoginQRCode($arrParam);//brings user information from user table
+					
+			if (($user["valid"] == true)) {
+				$sessionData = array(
+					"auth" => "OK",
+					"id" => $user["id"],
+					"firstname" => $user["firstname"],
+					"lastname" => $user["lastname"],
+					"name" => $user["firstname"] . ' ' . $user["lastname"],
+					"logUser" => $user["logUser"],
+					"state" => 99,
+					"rol" => $user["rol"]
+				);
+				$this->session->set_userdata($sessionData);
+				
+				$this->login_model->redireccionarUsuario();			
+			}else{					
+				$data["msj"] = "<strong>Error</strong> datos incorrectos.";
+				$this->load->view('login', $data);
+			}
+	}
+
+
+	
 }

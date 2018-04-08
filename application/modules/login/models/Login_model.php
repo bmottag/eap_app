@@ -69,6 +69,9 @@
 	    				$this->session->sess_destroy();
 	    				redirect("/login","location",301);
 	    				break;
+	    		case 99: //USUARIO QUE INGRESO CON CODIGO QR, LO REDIRECCIONO AL PAYROLL
+						redirect("payroll","location",301);
+	    				break;
 	    		default: //No sé como llegaron hasta acá, pero los devuelvo al Login.
 	    				$this->session->sess_destroy();
 	    				redirect("/login","location",301);
@@ -76,7 +79,40 @@
 	    	}
 	    }
 	    
-	
+	    /**
+	     * Cargo los datos del usuario que viene con codigo QR
+	     * @author BMOTTAG
+	     * @since  8/4/2018
+	     */
+	    public function validateLoginQRCode($arrData)
+		{
+	    	$user = array();
+	    	$user["valid"] = false;
+			
+			$this->db->select();
+			$this->db->join('user U', 'U.id_user = Q.fk_id_user', 'INNER');
+			$this->db->where('encryption', $arrData["encryption"]);
+			$this->db->where('qr_code_state', 1);			
+			$query = $this->db->get('param_qr_code Q');
+			
+	    	if ($query->num_rows() > 0){	    		
+	    		foreach($query->result() as $row){
+	    				$user["valid"] = true;
+	    				$user["id"] = $row->id_user;
+	    				$user["firstname"] = $row->first_name;
+	    				$user["lastname"] = $row->last_name;
+						$user["logUser"] = $row->log_user;
+	    				$user["movil"] = $row->movil;
+						$user["state"] = $row->state;
+						$user["rol"] = $row->fk_id_rol;
+						$user["photo"] = $row->photo;
+	    		}
+	    	}
+			
+	    	$this->db->close();	    	
+	    	return $user;
+	    }	
+
 		
 		
 		
