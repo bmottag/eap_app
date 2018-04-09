@@ -5,6 +5,8 @@ $( document ).ready( function () {
 	$( "#form" ).validate( {
 		rules: {
 			project:			{ required: true, minlength: 3, maxlength:50 },
+			project_number:		{ required: true, minlength: 3, maxlength:30 },
+			company:			{ required: true },
 			state:	 			{ required: true }
 		},
 		errorElement: "em",

@@ -129,6 +129,8 @@ class General_model extends CI_Model {
 		 */
 		public function get_project($arrData) 
 		{
+			$this->db->join('param_company C', 'C.id_company = P.fk_id_company', 'INNER');
+			
 			if (array_key_exists("idProject", $arrData)) {
 				$this->db->where('id_project', $arrData["idProject"]);
 			}
@@ -138,7 +140,7 @@ class General_model extends CI_Model {
 			$this->db->where('id_project !=', 0);
 
 			$this->db->order_by("project_name", "ASC");
-			$query = $this->db->get("project");
+			$query = $this->db->get("project P");
 
 			if ($query->num_rows() >= 1) {
 				return $query->result_array();

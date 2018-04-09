@@ -197,13 +197,13 @@ class Admin extends CI_Controller {
 		$this->load->model("general_model");
 		$data['information'] = FALSE;
 		
-		//consultar lista de roles
+		//consultar lista de compañias
 		$arrParam = array(
-			"table" => "param_rol",
-			"order" => "rol_name",
+			"table" => "param_company",
+			"order" => "id_company",
 			"id" => "x"
 		);
-		$data['roles'] = $this->general_model->get_basic_search($arrParam);
+		$data['company'] = $this->general_model->get_basic_search($arrParam);
 
 		//si envio el id, entonces busco la informacion 
 		if ($idProject != 'x') {

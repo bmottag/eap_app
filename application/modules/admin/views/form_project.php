@@ -30,6 +30,26 @@
 						</div>
 						
 						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="project_number">Project number <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="project_number" name="project_number" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["project_number"]:""; ?>" maxlength=30 placeholder="Project number">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="company">Company <span class="required">*</span></label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select name="company" id="company" class="form-control" required>
+									<option value=''>Select...</option>
+									<?php for ($i = 0; $i < count($company); $i++) { ?>
+										<option value="<?php echo $company[$i]["id_company"]; ?>" <?php if($information[0]["fk_id_company"] == $company[$i]["id_company"]) { echo "selected"; }  ?>><?php echo $company[$i]["company_name"]; ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
 							<label for="estado" class="control-label col-md-3 col-sm-3 col-xs-12">State <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select name="state" id="state" class="form-control" required>

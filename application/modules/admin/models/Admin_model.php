@@ -94,6 +94,8 @@
 				
 				$data = array(
 					'project_name' => $this->input->post('project'),
+					'project_number' => $this->input->post('project_number'),
+					'fk_id_company' => $this->input->post('company'),
 					'project_state' => $this->input->post('state')
 				);	
 

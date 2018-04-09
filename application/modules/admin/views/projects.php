@@ -49,6 +49,8 @@ if ($retornoError) {
 								<tr class="headings">
 								<th class="column-title">ID </th>
 								<th class="column-title">Project name</th>
+								<th class="column-title">Project number</th>
+								<th class="column-title">Company</th>
 								<th class="column-title">State</th>
 								<th class="column-title">Links</th>
 								</tr>
@@ -61,6 +63,8 @@ if ($retornoError) {
 				echo "<tr>";
 				echo "<td>" . $data['id_project'] . "</td>";
 				echo "<td>" . $data['project_name'] . "</td>";
+				echo "<td>" . $data['project_number'] . "</td>";
+				echo "<td>" . $data['company_name'] . "</td>";
 				echo "<td>";
 					switch ($data['project_state']) {
 						case 1:
