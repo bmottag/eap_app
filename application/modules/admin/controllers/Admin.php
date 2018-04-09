@@ -240,6 +240,79 @@ class Admin extends CI_Controller {
 			
 			echo json_encode($data);
     }
+	
+	/**
+	 * Company List
+     * @since 8/4/2018
+     * @author BMOTTAG
+	 */
+	public function company()
+	{
+			$this->load->model("general_model");
+
+			$arrParam = array(
+				"table" => "param_company",
+				"order" => "id_company",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'company';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario company
+     * @since 8/4/2018
+     */
+    public function cargarModalCompany() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idCompany"] = $this->input->post("idCompany");	
+			
+			if ($data["idCompany"] != 'x') {
+				$this->load->model("general_model");
+				$arrParam = array(
+					"table" => "param_company",
+					"order" => "id_company",
+					"column" => "id_company",
+					"id" => $data["idCompany"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("company_modal", $data);
+    }
+	
+	/**
+	 * Update company
+     * @since 8/4/2018
+     * @author BMOTTAG
+	 */
+	public function save_company()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idCompany = $this->input->post('hddId');
+			
+			$msj = "You have add a new company!!";
+			if ($idCompany != '') {
+				$msj = "You have update a company!!";
+			}
+
+			if ($idCompany = $this->admin_model->saveCompany()) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 
 
 
