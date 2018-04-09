@@ -189,7 +189,8 @@ $minutosFin = substr($fin, 14, 2);
 				</div>
 			</div>
 		</div>
-		
+
+		<div class="ln_solid"></div>
 		<div class="form-group">
 			<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary" >
 				Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
