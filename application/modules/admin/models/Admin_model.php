@@ -91,22 +91,39 @@
 		public function saveProject() 
 		{
 				$idProject = $this->input->post('hddId');
+				$idUserForeman = $this->input->post('foreman');
+				$hddIdUserForemanAnterior = $this->input->post('hddIdUserForemanAnterior');
 				
 				$data = array(
 					'project_name' => $this->input->post('project'),
 					'project_number' => $this->input->post('project_number'),
 					'fk_id_company' => $this->input->post('company'),
-					'fk_id_user_foreman' => $this->input->post('foreman'),
+					'fk_id_user_foreman' => $idUserForeman,
 					'project_state' => $this->input->post('state')
-				);	
+				);
 
 				//revisar si es para adicionar o editar
 				if ($idProject == '') {
 					$query = $this->db->insert('project', $data);
+					$idProject = $this->db->insert_id();
+					
 				} else {
 					$this->db->where('id_project', $idProject);
 					$query = $this->db->update('project', $data);
 				}
+				
+				//si el  nuevo foreman es diferente al anterior entonces guardo LOG del nuevo foreman
+				if($idUserForeman != $hddIdUserForemanAnterior){
+					//se ingresa el log del foreman
+					$data = array(
+						'fk_id_project' => $idProject,
+						'fk_id_user_foreman' => $idUserForeman,
+						'date_issue' => date("Y-m-d G:i:s"),
+						'fk_id_user' => $this->session->userdata("id")
+					);
+					$query = $this->db->insert('log_foreman_project', $data);
+				}
+				
 				if ($query) {
 					return true;
 				} else {

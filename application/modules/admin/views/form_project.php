@@ -20,6 +20,7 @@
 				
 					<form id="form" data-parsley-validate class="form-horizontal form-label-left">
 						<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_project"]:""; ?>"/>
+						<input type="hidden" id="hddIdUserForemanAnterior" name="hddIdUserForemanAnterior" value="<?php echo $information?$information[0]["fk_id_user_foreman"]:""; ?>"/>
 
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="project">Project name <span class="required">*</span>
