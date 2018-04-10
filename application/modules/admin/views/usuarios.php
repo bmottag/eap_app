@@ -64,7 +64,9 @@ if ($retornoError) {
 				echo "<td>" . $data['first_name'] . " " . $data['last_name'] . "</td>";
 				echo "<td>" . $data['email'] . "</td>";
 				echo "<td>" . $data['movil'] . "</td>";
-				echo "<td class='text-center'>" . $data['rol_name'] . "</td>";
+				echo "<td class='text-center'>";
+				echo '<p class="' . $data['estilos'] . '"><strong>' . $data['rol_name'] . '</strong></p>';
+				echo "</td>";
 				echo "<td class='text-center'>";
 					switch ($data['state']) {
 						case 1:
