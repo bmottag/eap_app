@@ -38,8 +38,14 @@
 								foreach ($info as $data):
 									echo "<tr>";
 									echo "<td>" . $data['employee'] . "</td>";
-									echo "<td class='text-center'>" . $data['start'] . "</td>";
-									echo "<td class='text-center'>" . $data['finish'] . "</td>";
+									echo "<td class='text-center'>" . date('F j, Y, g:i a', strtotime($data['start'])) . "</td>";
+									echo "<td class='text-center'>";
+									if($data['finish'] == 0){
+										echo "-";
+									}else{
+										echo date('F j, Y, g:i a', strtotime($data['finish']));
+									}
+									echo "</td>";
 									echo "<td class='text-center'>" . $data['working_hours'] . "</td>";
 									echo "<td>" . $data['project_name'] . "</td>";
 									echo "<td>" . $data['observation'] . "</td>";
