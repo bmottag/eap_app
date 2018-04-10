@@ -62,6 +62,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_user_list($arrData) 
 		{
+			$this->db->select('U.*, CONCAT(U.first_name, " " , U.last_name) name, R.*');
 			if (array_key_exists("idUser", $arrData)) {
 				$this->db->where('U.id_user', $arrData["idUser"]);
 			}
@@ -129,7 +130,9 @@ class General_model extends CI_Model {
 		 */
 		public function get_project($arrData) 
 		{
+			$this->db->select('P.*, C.*, CONCAT(U.first_name, " " , U.last_name) foreman');
 			$this->db->join('param_company C', 'C.id_company = P.fk_id_company', 'INNER');
+			$this->db->join('user U', 'U.id_user = P.fk_id_user_foreman', 'INNER');
 			
 			if (array_key_exists("idProject", $arrData)) {
 				$this->db->where('id_project', $arrData["idProject"]);

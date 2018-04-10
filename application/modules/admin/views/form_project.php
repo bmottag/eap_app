@@ -50,6 +50,18 @@
 						</div>
 						
 						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="foreman">Foreman <span class="required">*</span></label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select name="foreman" id="foreman" class="form-control" >
+									<option value=''>Select...</option>
+									<?php for ($i = 0; $i < count($infoUser); $i++) { ?>
+										<option value="<?php echo $infoUser[$i]["id_user"]; ?>" <?php if($information[0]["fk_id_user_foreman"] == $infoUser[$i]["id_user"]) { echo "selected"; }  ?>><?php echo $infoUser[$i]["name"]; ?></option>	
+									<?php } ?>
+								</select>
+							</div>
+						</div>						
+						
+						<div class="form-group">
 							<label for="estado" class="control-label col-md-3 col-sm-3 col-xs-12">State <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select name="state" id="state" class="form-control" required>

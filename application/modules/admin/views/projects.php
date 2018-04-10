@@ -51,6 +51,7 @@ if ($retornoError) {
 								<th class="column-title">Project name</th>
 								<th class="column-title">Project number</th>
 								<th class="column-title">Company</th>
+								<th class="column-title">Foreman</th>
 								<th class="column-title">State</th>
 								<th class="column-title">Links</th>
 								</tr>
@@ -65,6 +66,7 @@ if ($retornoError) {
 				echo "<td>" . $data['project_name'] . "</td>";
 				echo "<td>" . $data['project_number'] . "</td>";
 				echo "<td>" . $data['company_name'] . "</td>";
+				echo "<td>" . $data['foreman'] . "</td>";
 				echo "<td>";
 					switch ($data['project_state']) {
 						case 1:

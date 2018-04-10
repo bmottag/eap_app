@@ -7,6 +7,7 @@ $( document ).ready( function () {
 			project:			{ required: true, minlength: 3, maxlength:50 },
 			project_number:		{ required: true, minlength: 3, maxlength:30 },
 			company:			{ required: true },
+			foreman:			{ required: true },
 			state:	 			{ required: true }
 		},
 		errorElement: "em",

@@ -96,6 +96,7 @@
 					'project_name' => $this->input->post('project'),
 					'project_number' => $this->input->post('project_number'),
 					'fk_id_company' => $this->input->post('company'),
+					'fk_id_user_foreman' => $this->input->post('foreman'),
 					'project_state' => $this->input->post('state')
 				);	
 

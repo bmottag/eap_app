@@ -182,7 +182,7 @@ class Admin extends CI_Controller {
 		$this->load->model("general_model");
 		$arrParam = array();
 		$data['info'] = $this->general_model->get_project($arrParam);
-
+		
 		$data["view"] = 'projects';
 		$this->load->view("layout", $data);
 	}
@@ -204,6 +204,13 @@ class Admin extends CI_Controller {
 			"id" => "x"
 		);
 		$data['company'] = $this->general_model->get_basic_search($arrParam);
+		
+		//lista de foreman
+		$arrParam = array(
+			"idRol" => 2,
+			"state" => 1
+		);
+		$data['infoUser'] = $this->general_model->get_user_list($arrParam);
 
 		//si envio el id, entonces busco la informacion 
 		if ($idProject != 'x') {
