@@ -28,7 +28,7 @@ class Payroll extends CI_Controller {
 		
 		//search for the last payroll record
 		$arrParam = array(
-			"idEmployee" => $this->session->userdata("id"),
+			"idUser" => $this->session->userdata("id"),
 			"limit" => 1
 		);			
 		$data['information'] = $this->general_model->get_payroll($arrParam);
