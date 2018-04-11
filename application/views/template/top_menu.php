@@ -7,14 +7,11 @@
 	  </div>
 
 	  <ul class="nav navbar-nav navbar-right">	  
+	  
 		<li class="">
-		  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			<i class="fa fa-user"></i> User
-			<span class=" fa fa-angle-down"></span>
+		  <a href="<?php echo base_url("menu/salir"); ?>" class="user-profile" aria-expanded="false">
+			<i class="fa fa-sign-out"></i> Logout
 		  </a>
-		  <ul class="dropdown-menu dropdown-usermenu pull-right">
-			<li><a href="<?php echo base_url("menu/salir"); ?>"><i class="fa fa-sign-out pull-right"></i> Logout</a></li>
-		  </ul>
 		</li>
 		
 		<?php echo $topMenu; ?>
