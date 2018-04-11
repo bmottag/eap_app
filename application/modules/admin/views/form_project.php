@@ -39,6 +39,14 @@
 						</div>
 						
 						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["address"]:""; ?>" maxlength=30 placeholder="Address">
+							</div>
+						</div>
+						
+						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="company">Company <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select name="company" id="company" class="form-control" required>
