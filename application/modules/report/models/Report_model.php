@@ -8,11 +8,12 @@
 		 */
 		public function savePayrollHour() 
 		{
+				$name = $this->session->userdata['name'];//nombre de usuario conectado
 				$idPayroll = $this->input->post('hddIdentificador');
 				$inicio = $this->input->post('hddInicio');
 				$fin = $this->input->post('hddFin');
 				
-				$moreInfo = "<strong>Changue hour by SUPER ADMIN.</strong> <br>Before -> Start: " . $inicio . " <br>Before -> Finish: " . $fin;
+				$moreInfo = "<strong>Changue hour by " . $name . ".</strong> <br>Before -> Start: " . $inicio . " <br>Before -> Finish: " . $fin;
 				$observation = $this->input->post('hddObservation') . "<br>********************<br>" . $moreInfo . "<br>" . $this->input->post('observation') . "<br>Date: " . date("Y-m-d G:i:s") . "<br>********************";
 
 				$fechaStart = $this->input->post('start_date');

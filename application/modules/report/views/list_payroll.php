@@ -24,7 +24,7 @@ $(function(){
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2><i class='fa fa-book'></i> LAST PAYROLL RECORDS  </h2>
+					<h2><i class='fa fa-book'></i> PAYROLL RECORDS </h2>
 					
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -62,17 +62,13 @@ $(function(){
 									echo "<td>";
 									echo "<strong>Start</strong><br>" . $data['start'];
 									echo "<br><strong>Finish</strong><br>" . $data['finish']. "<br>";
-/**
- * Opcion de editar horas para  SUPER ADMIN
- */
-	$userRol = $this->session->rol;
-	if($userRol==1){
+
 						?>
 								<button type="button" class="btn btn-info btn-xs btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $data['id_payroll']; ?>" >
 									Edit Hours <span class="glyphicon glyphicon-edit" aria-hidden="true">
 								</button>									
 						<?php
-	}
+
 									echo "</td>";
 									echo "<td>" . $data['project_name'] . "</td>";
 									echo "<td>" . $data['observation'] . "</td>";
