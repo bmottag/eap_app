@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-04-2018 a las 02:24:45
+-- Tiempo de generación: 11-04-2018 a las 20:31:32
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 5.6.24
 
@@ -93,7 +93,6 @@ INSERT INTO `param_menu` (`id_menu`, `menu_name`, `menu_icono`, `orden`) VALUES
 CREATE TABLE `param_menu_links` (
   `id_link` int(3) NOT NULL,
   `fk_id_menu` int(3) NOT NULL,
-  `fk_id_rol` int(1) NOT NULL,
   `link_name` varchar(100) NOT NULL,
   `link_url` varchar(100) NOT NULL,
   `link_icono` varchar(50) NOT NULL,
@@ -104,13 +103,33 @@ CREATE TABLE `param_menu_links` (
 -- Volcado de datos para la tabla `param_menu_links`
 --
 
-INSERT INTO `param_menu_links` (`id_link`, `fk_id_menu`, `fk_id_rol`, `link_name`, `link_url`, `link_icono`, `orden`) VALUES
-(1, 1, 1, 'Payroll report', 'report/search/payrollByAdmin', 'fa-book', 1),
-(2, 1, 2, 'Payroll report', 'report/search/payrollByAdmin', 'fa-book', 1),
-(3, 2, 1, 'Users', 'admin/usuarios', 'fa-users', 1),
-(4, 2, 1, 'Company', 'admin/company', 'fa-building', 2),
-(5, 2, 1, 'Projects', 'admin/project', 'fa-road', 3),
-(6, 2, 1, 'QR Code', 'codeqr', 'fa-qrcode', 4);
+INSERT INTO `param_menu_links` (`id_link`, `fk_id_menu`, `link_name`, `link_url`, `link_icono`, `orden`) VALUES
+(1, 1, 'Payroll report', 'report/search/payrollByAdmin', 'fa-book', 1),
+(3, 2, 'Users', 'admin/usuarios', 'fa-users', 1),
+(4, 2, 'Company', 'admin/company', 'fa-building', 2),
+(5, 2, 'Projects', 'admin/project', 'fa-road', 3),
+(6, 2, 'QR Code', 'codeqr', 'fa-qrcode', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `param_menu_permisos`
+--
+
+CREATE TABLE `param_menu_permisos` (
+  `id_permiso` int(3) NOT NULL,
+  `fk_id_menu` int(3) NOT NULL,
+  `fk_id_rol` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `param_menu_permisos`
+--
+
+INSERT INTO `param_menu_permisos` (`id_permiso`, `fk_id_menu`, `fk_id_rol`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -186,11 +205,12 @@ CREATE TABLE `payroll` (
 
 INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `finish`, `working_time`, `working_hours`, `observation`, `activities`) VALUES
 (1, 1, 1, '2018-04-04 06:11:58', '2018-04-05 19:11:40', '+1 days 12:59:42', 37, 'Nuevas cosas<br><br>Observaciones', 'Actividades'),
-(2, 1, 2, '2018-04-05 19:11:00', '2018-04-05 22:00:00', '+0 days 02:49:00', 2.75, 'Nuevo proyecto<br>********************<br><strong>Changue hour by SUPER ADMIN.</strong> <br>Before -> Start: 2018-04-05 19:11:58 <br>Before -> Finish: 0000-00-00 00:00:00<br>Pruebas de cambio de hora<br>Date: 2018-04-05 20:25:41<br>********************', ''),
+(2, 1, 2, '2018-04-11 19:11:00', '2018-04-11 23:00:00', '+0 days 03:49:00', 3.75, 'Nuevo proyecto<br>********************<br><strong>Changue hour by SUPER ADMIN.</strong> <br>Before -> Start: 2018-04-05 19:11:58 <br>Before -> Finish: 0000-00-00 00:00:00<br>Pruebas de cambio de hora<br>Date: 2018-04-05 20:25:41<br>********************<br>********************<br><strong>Changue hour by ANDRES PALOMARES.</strong> <br>Before -> Start: 2018-04-05 19:11:00 <br>Before -> Finish: 2018-04-05 22:00:00<br>Ajuste por la hora de almuerzo<br>Date: 2018-04-11 12:02:22<br>********************', ''),
 (3, 1, 1, '2018-04-05 21:17:01', '2018-04-05 21:43:45', '+0 days 00:26:44', 0.5, 'Ingreso a un nuevo proyecto<br><br>', ''),
 (4, 1, 1, '2018-04-05 07:45:00', '2018-04-05 21:50:00', '+0 days 14:05:00', 14, 'eTOY COMO OPERADOR<br><br><br>********************<br><strong>Changue hour by SUPER ADMIN.</strong> <br>Before -> Start: 2018-04-05 21:45:08 <br>Before -> Finish: 2018-04-05 21:50:44<br>ERROR AL GUARDAAAR<br>Date: 2018-04-05 21:52:18<br>********************', ''),
 (5, 1, 1, '2018-04-09 01:37:25', '2018-04-09 05:23:32', '+0 days 03:46:07', 3.75, 'Nuevo ingreso<br><br>', ''),
-(6, 1, 3, '2018-04-09 23:15:01', '0000-00-00 00:00:00', '', 0, '', '');
+(6, 1, 3, '2018-04-09 23:15:01', '2018-04-11 12:13:38', '+1 days 12:58:37', 37, '<br><br>', ''),
+(7, 4, 2, '2018-04-11 11:51:47', '0000-00-00 00:00:00', '', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -281,6 +301,13 @@ ALTER TABLE `param_menu`
 --
 ALTER TABLE `param_menu_links`
   ADD PRIMARY KEY (`id_link`),
+  ADD KEY `fk_id_menu` (`fk_id_menu`);
+
+--
+-- Indices de la tabla `param_menu_permisos`
+--
+ALTER TABLE `param_menu_permisos`
+  ADD PRIMARY KEY (`id_permiso`),
   ADD KEY `fk_id_menu` (`fk_id_menu`),
   ADD KEY `fk_id_rol` (`fk_id_rol`);
 
@@ -349,6 +376,11 @@ ALTER TABLE `param_menu`
 ALTER TABLE `param_menu_links`
   MODIFY `id_link` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT de la tabla `param_menu_permisos`
+--
+ALTER TABLE `param_menu_permisos`
+  MODIFY `id_permiso` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT de la tabla `param_qr_code`
 --
 ALTER TABLE `param_qr_code`
@@ -362,7 +394,7 @@ ALTER TABLE `param_rol`
 -- AUTO_INCREMENT de la tabla `payroll`
 --
 ALTER TABLE `payroll`
-  MODIFY `id_payroll` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_payroll` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `project`
 --
@@ -387,8 +419,14 @@ ALTER TABLE `log_foreman_project`
 -- Filtros para la tabla `param_menu_links`
 --
 ALTER TABLE `param_menu_links`
-  ADD CONSTRAINT `param_menu_links_ibfk_1` FOREIGN KEY (`fk_id_menu`) REFERENCES `param_menu` (`id_menu`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `param_menu_links_ibfk_2` FOREIGN KEY (`fk_id_rol`) REFERENCES `param_rol` (`id_rol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `param_menu_links_ibfk_1` FOREIGN KEY (`fk_id_menu`) REFERENCES `param_menu` (`id_menu`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `param_menu_permisos`
+--
+ALTER TABLE `param_menu_permisos`
+  ADD CONSTRAINT `param_menu_permisos_ibfk_1` FOREIGN KEY (`fk_id_menu`) REFERENCES `param_menu` (`id_menu`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `param_menu_permisos_ibfk_2` FOREIGN KEY (`fk_id_rol`) REFERENCES `param_rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `payroll`
