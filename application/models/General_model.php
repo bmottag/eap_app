@@ -90,6 +90,9 @@ class General_model extends CI_Model {
 		 */
 		public function get_payroll($arrData) 
 		{
+				$rol = $this->session->userdata['rol'];
+				$idUser = $this->session->userdata['id'];
+			
 				$this->db->select('P.*, id_user, CONCAT(U.first_name, " " , U.last_name) employee, log_user, J.project_name');
 				$this->db->join('user U', 'U.id_user = P.fk_id_user', 'INNER');
 				$this->db->join('project J', 'J.id_project = P.fk_id_project', 'INNER');
@@ -99,6 +102,8 @@ class General_model extends CI_Model {
 				}
 				if (array_key_exists("idProject", $arrData) && $arrData["idProject"] != 'x') {
 					$this->db->where('fk_id_project', $arrData["idProject"]);
+				}elseif($rol == 2){
+					$this->db->where('J.fk_id_user_foreman', $idUser);
 				}
 				if (array_key_exists("idPayroll", $arrData)) {
 					$this->db->where('id_payroll', $arrData["idPayroll"]);
