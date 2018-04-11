@@ -17,28 +17,7 @@
 		  </ul>
 		</li>
 		
-		<li class="">
-		  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			<i class="fa fa-cog"></i> Settings
-			<span class=" fa fa-angle-down"></span>
-		  </a>
-		  <ul class="dropdown-menu dropdown-usermenu pull-right">
-			<li><a href="<?php echo base_url("admin/usuarios"); ?>"><i class="fa fa-users pull-right"></i> Users</a></li>
-			<li><a href="<?php echo base_url("admin/company"); ?>"><i class="fa fa-building pull-right"></i> Company</a></li>
-			<li><a href="<?php echo base_url("admin/project"); ?>"><i class="fa fa-road pull-right"></i> Projects</a></li>
-			<li><a href="<?php echo base_url("codeqr"); ?>"><i class="fa fa-qrcode pull-right"></i> QR Code</a></li>
-		  </ul>
-		</li>
-		
-		<li class="">
-		  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			<i class="fa fa-pie-chart"></i> Report
-			<span class=" fa fa-angle-down"></span>
-		  </a>
-		  <ul class="dropdown-menu dropdown-usermenu pull-right">
-			<li><a href="<?php echo base_url("report/search/payrollByAdmin"); ?>"><i class="fa fa-book pull-right"></i> Payroll report</a></li>
-		  </ul>
-		</li>
+		<?php echo $topMenu; ?>
 		
 		<li class="">
 		  <a href="<?php echo base_url("dashboard"); ?>" class="user-profile" aria-expanded="false">

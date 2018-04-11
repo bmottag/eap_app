@@ -194,6 +194,38 @@ class General_model extends CI_Model {
 					return false;
 				}
 		}
+		
+		/**
+		 * Consulta menu
+		 * @since 10/04/2018
+		 */
+		public function get_menu() {
+				$idUser = $this->session->userdata['id'];
+				$sql = "SELECT * FROM param_menu
+						ORDER BY orden DESC";
+				$query = $this->db->query($sql);
+				return $query->result_array();
+		}
+		
+		/**
+		 * Consulta lista de enlaces para un menu y un rol especifico
+		 * @param idMenu
+		 * @since 10/04/2018
+		 */
+		public function get_enlaces($idMenu) {
+				$rol = $this->session->userdata['rol'];
+
+				$sql = "SELECT * FROM param_menu_links L
+						WHERE L.fk_id_menu = " . $idMenu . " AND L.fk_id_rol = " . $rol . "
+						ORDER BY L.orden";
+
+				$query = $this->db->query($sql);
+				if ($query->num_rows() >= 1) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
 	
 		
 

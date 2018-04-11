@@ -44,8 +44,45 @@
 			
 			<!-- left navigation -->
 			<?php $this->load->view("template/left_menu"); ?>
-			<!-- top navigation -->
-			<?php $this->load->view("template/top_menu"); ?>
+			
+			<!-- top navigation -->			
+			<?php
+				//consultar enlaces
+				$ci = &get_instance();
+				$ci->load->model("general_model");
+			
+				$menu = '';
+				$rol = $this->session->userdata['rol'];
+
+				if($rol != 3)
+				{
+					$itemsMenu = $this->general_model->get_menu();
+					
+					foreach ($itemsMenu as $item):
+						$menu .= '<li class="">';
+						$menu .= '<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<i class="fa ' . $item['menu_icono'] . '"></i> ' . $item['menu_name']  . '
+										<span class=" fa fa-angle-down"></span>
+									</a>';
+						$menu .= '<ul class="dropdown-menu dropdown-usermenu pull-right">';
+						
+						//enlaces del menu
+						$enlaces = $this->general_model->get_enlaces($item['id_menu']);
+						
+						foreach ($enlaces as $list):
+							$menu .= '<li><a href="' . base_url($list['link_url']) . '"><i class="fa ' . $list['link_icono'] . ' pull-right"></i> ' . $list['link_name'] . '</a></li>';
+						endforeach;
+						
+						$menu .= '</ul>';
+						$menu .= '</li>';
+					
+					endforeach;
+				}
+				
+				$data["topMenu"] = $menu;
+			?>
+			
+			<?php $this->load->view("template/top_menu", $data); ?>
 			<!-- Start of content -->
 			<?php
 			if (isset($view) && ($view != '')) {
@@ -53,10 +90,6 @@
 			}
 			?>
 			<!-- End of content -->
-
-
-
-
 
         <!-- footer content -->
         <footer>
