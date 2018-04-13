@@ -21,7 +21,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="position">Contact position</label>
-					<input type="text" id="position" name="position" class="form-control" value="<?php echo $information?$information[0]["contact_position"]:""; ?>" placeholder="Position" required >
+					<input type="text" id="position" name="position" class="form-control" value="<?php echo $information?$information[0]["contact_position"]:""; ?>" placeholder="Position" >
 				</div>
 			</div>
 		</div>
