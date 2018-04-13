@@ -1,6 +1,6 @@
 $( document ).ready( function () {
 
-	$("#nombres").convertirMayuscula().maxlength(50);
+	$("#company").convertirMayuscula().maxlength(50);
 	$("#contact").convertirMayuscula().bloquearNumeros().maxlength(50);		
 	$("#movilNumber").bloquearTexto().maxlength(12);
 	
