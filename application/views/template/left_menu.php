@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
   <div class="left_col scroll-view">
 	<div class="navbar nav_title" style="border: 0;">
-	  <a href="<?php echo base_url("dashboard"); ?>" class="site_title"><i class="fa fa-paw"></i> <span>EAP APP</span></a>
+	  <a class="site_title" href="<?php echo base_url("dashboard"); ?>"><img src="<?php echo base_url("images/logo_eap.png"); ?>" class="img-rounded" width="187" height="76" /></a>
 	</div>
 
 	<div class="clearfix"></div>
