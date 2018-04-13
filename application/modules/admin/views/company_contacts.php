@@ -33,7 +33,7 @@ $(function(){
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2><i class='fa fa-hand-o-up'></i> COMPANY CONTACTS</h2>
+					<h2><i class='fa fa-building'></i> COMPANY CONTACTS</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -76,7 +76,9 @@ if ($retornoError) {
 							<li>
 <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $infoCompany[0]["id_company"]; ?>">
 	<i class="fa fa-plus"></i> Add contact
-</button>								
+</button>
+
+<a class="btn btn-danger btn-block" href=" <?php echo base_url().'admin/company'; ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a>
 							</li>
 							
 						</ul>
