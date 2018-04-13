@@ -77,7 +77,7 @@ if ($retornoError) {
 								<th class="column-title">Contact</th>
 								<th class="column-title">Movil</th>
 								<th class="column-title">Email</th>
-								<th class="column-title">Edit</th>
+								<th class="column-title">Links</th>
 								</tr>
 							</thead>
 
@@ -93,9 +93,11 @@ if ($retornoError) {
 
 				echo "<td>";
 		?>
-				<button type="button" class="btn btn-info btn-xs btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $data['id_company']; ?>" >
+				<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $data['id_company']; ?>" >
 					Edit <span class="glyphicon glyphicon-edit" aria-hidden="true">
-				</button>									
+				</button>
+				
+				<a href='<?php echo base_url("admin/company_contacts/" . $data['id_company']); ?>' class='btn btn-warning btn-xs'><i class='fa fa-plus'></i> More contacts </a>
 		<?php	
 				echo "</td>";
 				echo "</tr>";

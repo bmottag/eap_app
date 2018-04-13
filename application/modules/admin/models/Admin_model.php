@@ -161,6 +161,35 @@
 				}
 		}
 		
+		/**
+		 * Add/Edit COMPANY CONTACTS
+		 * @since 12/4/2018
+		 */
+		public function saveContact() 
+		{
+				$idContact = $this->input->post('hddIdContact');
+				
+				$data = array(
+					'fk_id_company' => $this->input->post('hddIdCompany'),
+					'contact_name' => $this->input->post('contact'),
+					'contact_movil' => $this->input->post('movilNumber'),
+					'contact_email' => $this->input->post('email')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idContact == '') {
+					$query = $this->db->insert('param_company_contacts', $data);				
+					$idContact = $this->db->insert_id();
+				} else {
+					$this->db->where('id_contact', $idContact);
+					$query = $this->db->update('param_company_contacts', $data);
+				}
+				if ($query) {
+					return $idContact;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		

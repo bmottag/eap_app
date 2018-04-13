@@ -321,6 +321,94 @@ class Admin extends CI_Controller {
 			echo json_encode($data);	
     }
 
+	/**
+	 * Company contacts
+     * @since 12/4/2018
+     * @author BMOTTAG
+	 */
+	public function company_contacts($idCompany)
+	{
+			$this->load->model("general_model");
+
+			//company info
+			$arrParam = array(
+				"table" => "param_company",
+				"order" => "id_company",
+				"column" => "id_company",
+				"id" => $idCompany
+			);
+			$data['infoCompany'] = $this->general_model->get_basic_search($arrParam);
+			
+			//company contacts
+			$arrParam = array(
+				"table" => "param_company_contacts",
+				"order" => "contact_name",
+				"column" => "fk_id_company",
+				"id" => $idCompany
+			);
+			$data['infoContacts'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'company_contacts';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario company contacts
+     * @since 12/4/2018
+     */
+    public function cargarModalCompanyContacts() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idCompany"] = $this->input->post("idCompany");
+			$data["idContact"] = $this->input->post("idContact");
+						
+			if ($data["idContact"] != 'x') {
+				$this->load->model("general_model");
+				$arrParam = array(
+					"table" => "param_company_contacts",
+					"order" => "id_contact",
+					"column" => "id_contact",
+					"id" => $data["idContact"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+				
+				$data["idCompany"] = $data['information'][0]['fk_id_company'];
+			}
+			
+			$this->load->view("company_contacts_modal", $data);
+    }
+	
+	/**
+	 * Save company contacts
+     * @since 12/4/2018
+     * @author BMOTTAG
+	 */
+	public function save_company_contacts()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idCompany = $this->input->post('hddIdCompany');
+			$idContact = $this->input->post('hddIdContact');
+			$data["idRecord"] = $idCompany;
+			
+			$msj = "You have add a new contact!!";
+			if ($idContact != '') {
+				$msj = "You have update a contact!!";
+			}
+
+			if ($idContact = $this->admin_model->saveContact()) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 
 
 	
