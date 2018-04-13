@@ -172,6 +172,7 @@
 				$data = array(
 					'fk_id_company' => $this->input->post('hddIdCompany'),
 					'contact_name' => $this->input->post('contact'),
+					'contact_position' => $this->input->post('position'),
 					'contact_movil' => $this->input->post('movilNumber'),
 					'contact_email' => $this->input->post('email')
 				);

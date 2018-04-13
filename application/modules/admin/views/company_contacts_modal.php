@@ -13,8 +13,15 @@
 		<div class="row">			
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="contact">Contact name</label>
+					<label class="control-label" for="contact">Contact name *</label>
 					<input type="text" id="contact" name="contact" class="form-control" value="<?php echo $information?$information[0]["contact_name"]:""; ?>" placeholder="Contact" required >
+				</div>
+			</div>
+			
+			<div class="col-sm-6">
+				<div class="form-group text-left">
+					<label class="control-label" for="position">Contact position</label>
+					<input type="text" id="position" name="position" class="form-control" value="<?php echo $information?$information[0]["contact_position"]:""; ?>" placeholder="Position" required >
 				</div>
 			</div>
 		</div>
@@ -22,14 +29,14 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="movilNumber">Movil number</label>
+					<label class="control-label" for="movilNumber">Movil number *</label>
 					<input type="text" id="movilNumber" name="movilNumber" class="form-control" value="<?php echo $information?$information[0]["contact_movil"]:""; ?>" placeholder="Movil number" required >
 				</div>
 			</div>
 
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="email">Email</label>
+					<label class="control-label" for="email">Email *</label>
 					<input type="text" class="form-control" id="email" name="email" value="<?php echo $information?$information[0]["contact_email"]:""; ?>" placeholder="Email" />
 				</div>
 			</div>

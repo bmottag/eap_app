@@ -1,6 +1,7 @@
 $( document ).ready( function () {
 
-	$("#contact").convertirMayuscula().bloquearNumeros().maxlength(50);		
+	$("#position").convertirMayuscula().maxlength(70);
+	$("#contact").convertirMayuscula().bloquearNumeros().maxlength(50);
 	$("#movilNumber").bloquearTexto().maxlength(12);
 	
 	$( "#form" ).validate( {

@@ -73,12 +73,10 @@ if ($retornoError) {
 					<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
 						<h4><?php echo $infoCompany[0]["company_name"]; ?></h4>
 						<ul class="list-unstyled user_data">
-							<li><br>
-								
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal" id="<?php echo $infoCompany[0]["id_company"]; ?>">
+							<li>
+<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $infoCompany[0]["id_company"]; ?>">
 	<i class="fa fa-plus"></i> Add contact
-</button>
-								
+</button>								
 							</li>
 							
 						</ul>
@@ -90,9 +88,10 @@ if ($retornoError) {
 							<thead>
 								<tr>
 									<th style="width: 1%">#</th>
-									<th style="width: 20%">Contact name</th>
-									<th style="width: 20%">Movil</th>
-									<th style="width: 20%">Email</th>
+									<th style="width: 30%">Contact name</th>
+									<th style="width: 30%">Position</th>
+									<th style="width: 15%">Movil</th>
+									<th style="width: 15%">Email</th>
 									<th >Edit</th>
 								</tr>
 							</thead>
@@ -105,6 +104,7 @@ if ($retornoError) {
 					echo "<tr>";
 					echo "<td>" . $i . "</td>";
 					echo "<td>" . $data['contact_name'] . "</td>";
+					echo "<td>" . $data['contact_position'] . "</td>";
 					echo "<td>" . $data['contact_movil'] . "</td>";
 					echo "<td>" . $data['contact_email'] . "</td>";
 					echo "<td>";
