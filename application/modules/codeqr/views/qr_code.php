@@ -85,7 +85,9 @@ if ($retornoError) {
 									echo "<td>" . $data['value_qr_code'] . "</td>";
 									echo "<td>";
 						?>
-							<img src="<?php echo base_url($data["image_qr_code"]); ?>" class="img-rounded" width="42" height="42" />
+<a href='<?php echo base_url($data["image_qr_code"]); ?>' target='_blank'>
+			<img src="<?php echo base_url($data["image_qr_code"]); ?>" class="img-rounded" width="42" height="42" />
+</a>
 						<?php
 									echo "</td>";
 									
@@ -107,7 +109,7 @@ if ($retornoError) {
 									
 if($data['fk_id_user']){
 	echo "<p class='text-primary'>" . $data['name'] . "</br>";
-	echo "<a href='" . base_url("codeqr/update_usuario/" . $data['id_qr_code']) . "' class='text-primary text-center'>Delete</p>";
+	echo "<a href='" . base_url("codeqr/update_usuario/" . $data['id_qr_code']) . "' class='text-primary text-center'>Delete</a></p>";
 }else{
 	echo "<p class='text-danger text-center'><strong>Falta</strong></p>";
 }
