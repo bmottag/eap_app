@@ -131,6 +131,44 @@ class General_model extends CI_Model {
 		}
 		
 		/**
+		 * Get listado de proyectos en los que trabajo el usuario en los ultimos 30 dias
+		 * @since 13/4/2018
+		 */
+		public function get_proyect_list($arrData)
+		{		
+				$rol = $this->session->userdata['rol'];
+				$idUser = $this->session->userdata['id'];
+		
+				$this->db->select('distinct(fk_id_project), project_name');
+				$this->db->join('user U', 'U.id_user = P.fk_id_user', 'INNER');
+				$this->db->join('project J', 'J.id_project = P.fk_id_project', 'INNER');
+
+				if (array_key_exists("idUser", $arrData) && $arrData["idUser"] != 'x') {
+					$this->db->where('U.id_user', $arrData["idUser"]);
+				}else{
+					//si no envian usuario es porque es un foreman o un administrador
+					//entonces se filtra desde primer dia del año en curso
+					$year = date('Y');
+					$firstDay = date('Y-m-d', mktime(0,0,0, 1, 1, $year));
+					
+					$this->db->where('P.start >=', $firstDay);
+				}
+				$this->db->order_by('J.project_name', 'asc');
+				
+				if (array_key_exists("limit", $arrData)) {
+					$query = $this->db->get('payroll P', $arrData["limit"]);
+				}else{
+					$query = $this->db->get('payroll P');
+				}				
+
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+		
+		/**
 		 * Project list
 		 * @since 4/4/2018
 		 */

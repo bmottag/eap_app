@@ -13,33 +13,56 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-				<a href="<?php echo base_url("payroll"); ?>" class="btn btn-success"><i class="fa fa-book"></i> Payroll</a>
-				<?php if(!$info){ ?>				
+
+				<?php if(!$infoProjects){ ?>				
 					<div class="alert alert-success alert-dismissible fade in" role="alert">
 						<strong>Info:</strong> There is no payroll records.
 					</div>
-				<?php }else{ ?>			
+				<?php }else{ ?>	
+				
+				<?php 
+					
+					$ci = &get_instance();
+					$ci->load->model("general_model");
+					
+					$userRol = $this->session->userdata("rol");
+					$arrParam = array();
+					
+					if($userRol==3){ //If it is a normal user, just show the records of the user session
+						$arrParam["idUser"] = $this->session->userdata("id");
+						$arrParam["limit"] = 30;//Limite de registros para la consulta
+					}
+				
+					foreach ($infoProjects as $data):
+				?>
 					<div class="table-responsive">
 						<table id="datatable" class="table table-striped jambo_table bulk_action">
 							<thead>
 								<tr class="headings">
-								<th class="column-title">User </th>
-								<th class="column-title">Start</th>
-								<th class="column-title">Finish</th>
-								<th class="column-title">Working hours</th>
-								<th class="column-title">Project</th>
-								<th class="column-title">Observation</th>
-								<th class="column-title">Activities</th>
+									<th class="column-title" colspan="7"><strong>Project: </strong> <?php echo $data['project_name']; ?> </th>
+								</tr>
+								<tr class="headings">
+								<th class="column-title" style="width: 15%">User </th>
+								<th class="column-title" style="width: 17%">Start</th>
+								<th class="column-title" style="width: 17%">Finish</th>
+								<th class="column-title" style="width: 10%">Working hours</th>
+								<th class="column-title" style="width: 21%">Observation</th>
+								<th class="column-title" style="width: 20%">Activities</th>
 								</tr>
 							</thead>
 
 							<tbody>
 							<?php 
+							
+								//consultar registros
+								$arrParam["idProject"] = $data["fk_id_project"];
+								$info = $this->general_model->get_payroll($arrParam);
+								
 								foreach ($info as $data):
 									echo "<tr>";
 									echo "<td>" . $data['employee'] . "</td>";
-									echo "<td class='text-center'>" . date('F j, Y, g:i a', strtotime($data['start'])) . "</td>";
-									echo "<td class='text-center'>";
+									echo "<td>" . date('F j, Y, g:i a', strtotime($data['start'])) . "</td>";
+									echo "<td>";
 									if($data['finish'] == 0){
 										echo "-";
 									}else{
@@ -47,15 +70,18 @@
 									}
 									echo "</td>";
 									echo "<td class='text-center'>" . $data['working_hours'] . "</td>";
-									echo "<td>" . $data['project_name'] . "</td>";
 									echo "<td>" . $data['observation'] . "</td>";
 									echo "<td>" . $data['activities'] . "</td>";
 									echo "</tr>";
-								endforeach 
+								endforeach;
 							?>
 							</tbody>
 						</table>
 					</div>
+				<?php
+					endforeach;
+				?>
+
 				<?php } ?>
 				</div>
 			</div>
