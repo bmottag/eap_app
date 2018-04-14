@@ -63,15 +63,17 @@
                 <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required />
               </div>
               <div>
-				<button type="submit" class="btn btn-success" id='btnSubmit' name='btnSubmit'>Login </button>
-                
+				<button type="submit" class="btn btn-eap" id='btnSubmit' name='btnSubmit'>
+					Login <i class="fa fa-sign-in"></i>
+				</button>
               </div>
 
               <div class="clearfix"></div>
 
               <div class="separator">
                 <div>
-                  <p>©2018 All Rights Reserved.</p>
+					<h1><img src="<?php echo base_url("images/logo_eap.png"); ?>" /></h1>
+					<p>©2018 All Rights Reserved.</p>
                 </div>
               </div>
             </form>

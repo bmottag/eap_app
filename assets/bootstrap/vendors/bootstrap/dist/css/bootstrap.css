@@ -3170,6 +3170,63 @@ fieldset[disabled] .btn-primary.focus {
   color: #337ab7;
   background-color: #fff;
 }
+.btn-eap {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.btn-eap:focus,
+.btn-eap.focus {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #255625;
+}
+.btn-eap:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.btn-eap:active,
+.btn-eap.active,
+.open > .dropdown-toggle.btn-eap {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.btn-eap:active:hover,
+.btn-eap.active:hover,
+.open > .dropdown-toggle.btn-eap:hover,
+.btn-eap:active:focus,
+.btn-eap.active:focus,
+.open > .dropdown-toggle.btn-eap:focus,
+.btn-eap:active.focus,
+.btn-eap.active.focus,
+.open > .dropdown-toggle.btn-eap.focus {
+  color: #fff;
+  background-color: #398439;
+  border-color: #255625;
+}
+.btn-eap:active,
+.btn-eap.active,
+.open > .dropdown-toggle.btn-eap {
+  background-image: none;
+}
+.btn-eap.disabled:hover,
+.btn-eap[disabled]:hover,
+fieldset[disabled] .btn-eap:hover,
+.btn-eap.disabled:focus,
+.btn-eap[disabled]:focus,
+fieldset[disabled] .btn-eap:focus,
+.btn-eap.disabled.focus,
+.btn-eap[disabled].focus,
+fieldset[disabled] .btn-eap.focus {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.btn-eap .badge {
+  color: #5cb85c;
+  background-color: #fff;
+}
 .btn-success {
   color: #fff;
   background-color: #5cb85c;
