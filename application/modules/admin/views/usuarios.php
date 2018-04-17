@@ -50,6 +50,7 @@ if ($retornoError) {
 								<th class="column-title">Name </th>
 								<th class="column-title">Email</th>
 								<th class="column-title">Movil</th>
+								<th class="column-title">User type</th>
 								<th class="column-title">Rol</th>
 								<th class="column-title">State</th>
 								<th class="column-title">Links</th>
@@ -64,6 +65,7 @@ if ($retornoError) {
 				echo "<td>" . $data['first_name'] . " " . $data['last_name'] . "</td>";
 				echo "<td>" . $data['email'] . "</td>";
 				echo "<td>" . $data['movil'] . "</td>";
+				echo "<td>" . $data['user_type'] . "</td>";
 				echo "<td class='text-center'>";
 				echo '<p class="' . $data['estilos'] . '"><strong>' . $data['rol_name'] . '</strong></p>';
 				echo "</td>";
