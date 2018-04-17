@@ -41,6 +41,14 @@ class Admin extends CI_Controller {
 			"id" => "x"
 		);
 		$data['roles'] = $this->general_model->get_basic_search($arrParam);
+		
+		//consultar lista de roles
+		$arrParam = array(
+			"table" => "param_user_type",
+			"order" => "user_type",
+			"id" => "x"
+		);
+		$data['userType'] = $this->general_model->get_basic_search($arrParam);
 
 		//si envio el id, entonces busco la informacion 
 		if ($idUser != 'x') {

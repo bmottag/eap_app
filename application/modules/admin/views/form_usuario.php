@@ -56,7 +56,19 @@
 						</div>
 						
 						<div class="form-group">
-							<label for="rol" class="control-label col-md-3 col-sm-3 col-xs-12">Rol <span class="required">*</span></label>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="type">User type <span class="required">*</span></label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select name="type" id="type" class="form-control" >
+									<option value=''>Select...</option>
+									<?php for ($i = 0; $i < count($userType); $i++) { ?>
+										<option value="<?php echo $userType[$i]["id_type"]; ?>" <?php if($information[0]["fk_id_type"] == $userType[$i]["id_type"]) { echo "selected"; }  ?>><?php echo $userType[$i]["user_type"]; ?></option>	
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="rol">Rol <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select name="rol" id="rol" class="form-control" >
 									<option value=''>Select...</option>

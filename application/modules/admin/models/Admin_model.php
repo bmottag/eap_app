@@ -36,6 +36,7 @@
 					'log_user' => $this->input->post('usuario'),
 					'email' => $this->input->post('email'),
 					'movil' => $this->input->post('celular'),
+					'fk_id_type' => $this->input->post('type'),
 					'fk_id_rol' => $this->input->post('rol'),
 					'state' => $this->input->post('state')
 				);	

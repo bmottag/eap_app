@@ -11,6 +11,7 @@ $( document ).ready( function () {
 			usuario: 			{ required: true, minlength: 5, maxlength:25 },
 			email: 				{ required: true, email: true, maxlength:50 },
 			celular:	 		{ required: true, number: true, maxlength:12 },
+			type:		 		{ required: true },
 			rol:		 		{ required: true },
 			state:	 			{ required: true }
 		},
