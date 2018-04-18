@@ -57,7 +57,7 @@ $minutosFin = substr($fin, 14, 2);
 	<div class="control-group">
 		<div class="controls">
 			<div class="col-md-11 xdisplay_inputx form-group has-feedback">
-				<input type="text" class="form-control has-feedback-left" id="start_date" name="start_date" aria-describedby="inputSuccess2Status">
+				<input type="text" class="form-control has-feedback-left" id="start_date" name="start_date" aria-describedby="inputSuccess2Status" value="<?php echo $fechaInicio; ?>">
 				<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
 				<span id="inputSuccess2Status" class="sr-only">(success)</span>
 			</div>
@@ -130,7 +130,7 @@ $minutosFin = substr($fin, 14, 2);
 	<div class="control-group">
 		<div class="controls">
 			<div class="col-md-11 xdisplay_inputx form-group has-feedback">
-				<input type="text" class="form-control has-feedback-left" id="finish_date" name="finish_date" aria-describedby="inputSuccess2Status">
+				<input type="text" class="form-control has-feedback-left" id="finish_date" name="finish_date" aria-describedby="inputSuccess2Status" value="<?php echo $fechaFin; ?>">
 				<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
 				<span id="inputSuccess2Status" class="sr-only">(success)</span>
 			</div>
