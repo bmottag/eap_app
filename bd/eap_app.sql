@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-04-2018 a las 20:31:32
+-- Tiempo de generación: 18-04-2018 a las 04:30:03
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 5.6.24
 
@@ -61,7 +61,31 @@ CREATE TABLE `param_company` (
 --
 
 INSERT INTO `param_company` (`id_company`, `company_name`, `contact`, `movil_number`, `email`) VALUES
-(1, 'ABS INC', 'MICHAEL', '4034089921', 'benmotta@gmail.com');
+(1, 'ABS INC', 'MICHAEL', '14034089921', 'benmotta@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `param_company_contacts`
+--
+
+CREATE TABLE `param_company_contacts` (
+  `id_contact` int(10) NOT NULL,
+  `fk_id_company` int(10) NOT NULL,
+  `contact_name` varchar(120) NOT NULL,
+  `contact_movil` varchar(12) NOT NULL,
+  `contact_email` varchar(70) NOT NULL,
+  `contact_position` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `param_company_contacts`
+--
+
+INSERT INTO `param_company_contacts` (`id_contact`, `fk_id_company`, `contact_name`, `contact_movil`, `contact_email`, `contact_position`) VALUES
+(1, 1, 'FEDERICO CAMARGO', '123456789', 'fede@gmail.com', 'OPERADOR'),
+(2, 1, 'CAMILO PEÑARADA', '45678923443', 'sinemail@gmail.com', 'PRESIDENTE'),
+(3, 1, 'OTRO', '2345234', 'benmotta@gmail.com', 'OTRO');
 
 -- --------------------------------------------------------
 
@@ -184,6 +208,26 @@ INSERT INTO `param_rol` (`id_rol`, `rol_name`, `description`, `estilos`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `param_user_type`
+--
+
+CREATE TABLE `param_user_type` (
+  `id_type` int(1) NOT NULL,
+  `user_type` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `param_user_type`
+--
+
+INSERT INTO `param_user_type` (`id_type`, `user_type`) VALUES
+(1, 'Subcontractor'),
+(2, 'Casual'),
+(3, 'Payroll');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `payroll`
 --
 
@@ -210,7 +254,8 @@ INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `fi
 (4, 1, 1, '2018-04-05 07:45:00', '2018-04-05 21:50:00', '+0 days 14:05:00', 14, 'eTOY COMO OPERADOR<br><br><br>********************<br><strong>Changue hour by SUPER ADMIN.</strong> <br>Before -> Start: 2018-04-05 21:45:08 <br>Before -> Finish: 2018-04-05 21:50:44<br>ERROR AL GUARDAAAR<br>Date: 2018-04-05 21:52:18<br>********************', ''),
 (5, 1, 1, '2018-04-09 01:37:25', '2018-04-09 05:23:32', '+0 days 03:46:07', 3.75, 'Nuevo ingreso<br><br>', ''),
 (6, 1, 3, '2018-04-09 23:15:01', '2018-04-11 12:13:38', '+1 days 12:58:37', 37, '<br><br>', ''),
-(7, 4, 2, '2018-04-11 11:51:47', '0000-00-00 00:00:00', '', 0, '', '');
+(7, 4, 2, '2018-04-11 11:51:47', '0000-00-00 00:00:00', '', 0, '', ''),
+(8, 5, 6, '2018-04-13 21:48:33', '0000-00-00 00:00:00', '', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -223,6 +268,7 @@ CREATE TABLE `project` (
   `project_name` varchar(200) NOT NULL,
   `project_state` tinyint(1) NOT NULL COMMENT '1:Active; 2:inactive',
   `project_number` varchar(50) NOT NULL,
+  `address` varchar(150) NOT NULL,
   `fk_id_company` int(10) NOT NULL,
   `fk_id_user_foreman` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -231,13 +277,13 @@ CREATE TABLE `project` (
 -- Volcado de datos para la tabla `project`
 --
 
-INSERT INTO `project` (`id_project`, `project_name`, `project_state`, `project_number`, `fk_id_company`, `fk_id_user_foreman`) VALUES
-(0, 'No project', 2, '', 1, 3),
-(1, 'CONTRUCCION DE PUENTE', 1, '1124-2', 1, 3),
-(2, ' EDIFICIO CENTRAL', 1, '1125-1', 1, 4),
-(3, 'PASO PEATONAL DOWNTOWN', 1, '1230-1', 1, 3),
-(6, 'HOME TOWN', 1, '1024-2', 1, 3),
-(7, 'WINDOW INSTALATION', 1, '1090-1', 1, 3);
+INSERT INTO `project` (`id_project`, `project_name`, `project_state`, `project_number`, `address`, `fk_id_company`, `fk_id_user_foreman`) VALUES
+(0, 'No project', 2, '', '', 1, 3),
+(1, 'CONTRUCCION DE PUENTE', 1, '1124-2', '', 1, 3),
+(2, ' EDIFICIO CENTRAL', 1, '1125-1', '3376 Spruce drive', 1, 4),
+(3, 'PASO PEATONAL DOWNTOWN', 1, '1230-1', '', 1, 3),
+(6, 'HOME TOWN', 1, '1024-2', '', 1, 3),
+(7, 'WINDOW INSTALATION', 1, '1090-1', '', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -251,25 +297,28 @@ CREATE TABLE `user` (
   `last_name` varchar(50) NOT NULL,
   `log_user` varchar(50) NOT NULL,
   `email` varchar(70) NOT NULL,
+  `fk_id_type` int(1) NOT NULL,
   `fk_id_rol` int(1) NOT NULL,
   `birthdate` date DEFAULT NULL,
   `movil` varchar(12) NOT NULL,
   `password` varchar(50) NOT NULL,
   `state` int(1) NOT NULL DEFAULT '0' COMMENT '0: newUser; 1:active; 2:inactive',
   `photo` varchar(250) NOT NULL,
-  `address` varchar(250) NOT NULL
+  `address` varchar(250) NOT NULL,
+  `hora_real` float NOT NULL,
+  `hora_contrato` float NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `log_user`, `email`, `fk_id_rol`, `birthdate`, `movil`, `password`, `state`, `photo`, `address`) VALUES
-(1, 'BENJAMIN', 'MOTTA', 'bmottag', 'benmotta@gmail.com', 1, '2018-03-19', '4033089921', '25f9e794323b453885f5181f1b624d0b', 1, '', ''),
-(2, 'EDUAR', 'ACOSTA', 'eacosta', 'eacosta@eapcontruction.com', 1, '2018-04-05', '4038895044', 'e10adc3949ba59abbe56e057f20f883e', 1, '', ''),
-(3, 'JAVIER', 'MOLINA', 'jmolina', 'jmolina@gmail.com', 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', ''),
-(4, 'ANDRES', 'PALOMARES', 'apalomares', 'apalomares@gmail.com', 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', ''),
-(5, 'ALEX', 'HERRERA', 'aherrera', 'aherrera@gmail.com', 3, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '');
+INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `log_user`, `email`, `fk_id_type`, `fk_id_rol`, `birthdate`, `movil`, `password`, `state`, `photo`, `address`, `hora_real`, `hora_contrato`) VALUES
+(1, 'BENJAMIN', 'MOTTA', 'bmottag', 'benmotta@gmail.com', 3, 1, '2018-03-19', '14034089921', '25f9e794323b453885f5181f1b624d0b', 1, '', '', 0, 0),
+(2, 'EDUAR', 'ACOSTA', 'eacosta', 'eacosta@eapcontruction.com', 1, 1, '2018-04-05', '4038895044', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 0, 0),
+(3, 'JAVIER', 'MOLINA', 'jmolina', 'jmolina@gmail.com', 1, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 0, 0),
+(4, 'ANDRES', 'PALOMARES', 'apalomares', 'apalomares@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 0, 0),
+(5, 'ALEX', 'HERRERA', 'aherrera', 'aherrera@gmail.com', 2, 3, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 26.5, 30);
 
 --
 -- Índices para tablas volcadas
@@ -289,6 +338,13 @@ ALTER TABLE `log_foreman_project`
 --
 ALTER TABLE `param_company`
   ADD PRIMARY KEY (`id_company`);
+
+--
+-- Indices de la tabla `param_company_contacts`
+--
+ALTER TABLE `param_company_contacts`
+  ADD PRIMARY KEY (`id_contact`),
+  ADD KEY `fk_id_company` (`fk_id_company`);
 
 --
 -- Indices de la tabla `param_menu`
@@ -327,6 +383,12 @@ ALTER TABLE `param_rol`
   ADD PRIMARY KEY (`id_rol`);
 
 --
+-- Indices de la tabla `param_user_type`
+--
+ALTER TABLE `param_user_type`
+  ADD PRIMARY KEY (`id_type`);
+
+--
 -- Indices de la tabla `payroll`
 --
 ALTER TABLE `payroll`
@@ -349,7 +411,8 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `log_user` (`log_user`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `fk_id_rol` (`fk_id_rol`);
+  ADD KEY `fk_id_rol` (`fk_id_rol`),
+  ADD KEY `fk_id_type` (`fk_id_type`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -365,6 +428,11 @@ ALTER TABLE `log_foreman_project`
 --
 ALTER TABLE `param_company`
   MODIFY `id_company` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `param_company_contacts`
+--
+ALTER TABLE `param_company_contacts`
+  MODIFY `id_contact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `param_menu`
 --
@@ -391,10 +459,15 @@ ALTER TABLE `param_qr_code`
 ALTER TABLE `param_rol`
   MODIFY `id_rol` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT de la tabla `param_user_type`
+--
+ALTER TABLE `param_user_type`
+  MODIFY `id_type` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT de la tabla `payroll`
 --
 ALTER TABLE `payroll`
-  MODIFY `id_payroll` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_payroll` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `project`
 --
@@ -414,6 +487,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `log_foreman_project`
   ADD CONSTRAINT `log_foreman_project_ibfk_1` FOREIGN KEY (`fk_id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `param_company_contacts`
+--
+ALTER TABLE `param_company_contacts`
+  ADD CONSTRAINT `param_company_contacts_ibfk_1` FOREIGN KEY (`fk_id_company`) REFERENCES `param_company` (`id_company`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `param_menu_links`
