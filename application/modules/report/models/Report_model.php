@@ -93,7 +93,47 @@
 				}
 		}	    
 
+		/**
+		 * Add PAYROLL
+		 * @since 3/4/2018
+		 */
+		public function savePayrollAdvanced() 
+		{
+				$observation =  $this->security->xss_clean($this->input->post('observation'));
+				$observation =  addslashes($observation);
+				
+				$activities =  $this->security->xss_clean($this->input->post('activities'));
+				$activities =  addslashes($activities);
+				
+				$fechaStart = $this->input->post('start_date');
+				$fechaFinish = $this->input->post('finish_date');
+				
+				$horaStart = $this->input->post('hora_inicio');
+				$horaStart = date("H:i:s", strtotime($horaStart));
+				
+				$horaFinish = $this->input->post('hora_final');
+				$horaFinish = date("H:i:s", strtotime($horaFinish));
+				
+				$fechaStart = $fechaStart . " " . $horaStart;
+				$fechaFinish = $fechaFinish . " " . $horaFinish; 
+				
+				$data = array(
+					'fk_id_project' => $this->input->post('project'),
+					'fk_id_user' => $this->input->post('user'),
+					'start' => $fechaStart,
+					'finish' => $fechaFinish,
+					'activities' => $activities,
+					'observation' => $observation
+				);	
+				
+				$query = $this->db->insert('payroll', $data);
 
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 
 		
 		

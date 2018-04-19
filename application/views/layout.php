@@ -22,10 +22,10 @@
 	
     <!-- bootstrap-progressbar -->
 	<link href="<?php echo base_url("assets/bootstrap/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"); ?>" rel="stylesheet">
-    <!-- JQVMap -->
-	<link href="<?php echo base_url("assets/bootstrap/vendors/jqvmap/dist/jqvmap.min.css"); ?>" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
 	<link href="<?php echo base_url("assets/bootstrap/vendors/bootstrap-daterangepicker/daterangepicker.css"); ?>" rel="stylesheet">
+	<!-- bootstrap-datetimepicker -->
+	<link href="<?php echo base_url("assets/bootstrap/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"); ?>" rel="stylesheet">	
 
     <!-- Custom Theme Style -->
 	<link href="<?php echo base_url("assets/bootstrap/build/css/custom.min.css"); ?>" rel="stylesheet">

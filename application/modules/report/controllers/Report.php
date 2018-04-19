@@ -134,6 +134,57 @@ class Report extends CI_Controller {
 			echo json_encode($data);
     }
 	
+	/**
+	 * Add payroll
+     * @since 18/4/2018
+     * @author BMOTTAG
+	 */
+	public function payroll_advanced()
+	{
+			$data['information'] = FALSE;
+			
+			$this->load->model("general_model");
+			$arrParam = array("state" => 1);
+			$data['userList'] = $this->general_model->get_user_list($arrParam);//listado de usuarios
+			
+			//project list - (active's items)
+			$arrParam = array(
+				"table" => "project",
+				"order" => "project_name",
+				"column" => "project_state",
+				"id" => 1
+			);
+			$data['project'] = $this->general_model->get_basic_search($arrParam);
+		
+			$data["view"] = "form_payroll_advanced";
+			$this->load->view("layout", $data);
+	}
+	
+	/**
+	 * Guardar payroll
+     * @since 18/4/2018
+	 */
+	public function save_payroll_advanced()
+	{			
+			header('Content-Type: application/json');
+			
+			$idPayroll = $this->input->post('hddId');
+
+			$msj = "You have add a Payroll!!";
+			if ($idPayroll != '') {
+				$msj = "You have update the Payroll!!";
+			}	
+						
+			if ($idUser = $this->report_model->savePayrollAdvanced()) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help, contact the Admin.');
+			}
+			
+			echo json_encode($data);
+    }
 
 	
 }
