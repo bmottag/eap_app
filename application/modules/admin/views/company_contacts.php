@@ -1,6 +1,6 @@
 <script>
 $(function(){ 
-	$(".btn-success").click(function () {	
+	$(".btn-info").click(function () {	
 			var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
@@ -13,7 +13,7 @@ $(function(){
             });
 	});	
 	
-	$(".btn-info").click(function () {	
+	$(".btn-success").click(function () {	
 			var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
@@ -74,11 +74,13 @@ if ($retornoError) {
 						<h4><?php echo $infoCompany[0]["company_name"]; ?></h4>
 						<ul class="list-unstyled user_data">
 							<li>
-<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $infoCompany[0]["id_company"]; ?>">
+
+<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $infoCompany[0]["id_company"]; ?>">
 	<i class="fa fa-plus"></i> Add contact
 </button>
-
-<a class="btn btn-danger btn-block" href=" <?php echo base_url().'admin/company'; ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a>
+							
+<a class="btn btn-warning btn-block" href=" <?php echo base_url().'admin/company'; ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a>
+		
 							</li>
 							
 						</ul>
@@ -111,7 +113,7 @@ if ($retornoError) {
 					echo "<td>" . $data['contact_email'] . "</td>";
 					echo "<td>";
 		?>
-				<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $data['id_contact']; ?>" >
+				<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $data['id_contact']; ?>" >
 					Edit <span class="glyphicon glyphicon-edit" aria-hidden="true">
 				</button>
 		<?php
