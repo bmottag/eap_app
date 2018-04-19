@@ -99,8 +99,14 @@
 		 */
 		public function savePayrollAdvanced() 
 		{
+				$name = $this->session->userdata['name'];//nombre de usuario conectado
+				
 				$observation =  $this->security->xss_clean($this->input->post('observation'));
 				$observation =  addslashes($observation);
+				
+				$observation .= "<br>********************<br>";
+				$observation .= "<strong>Payrrol inserted by " . $name . ".</strong>";
+				$observation .= "<br>Date: " . date("Y-m-d G:i:s") . "<br>********************";
 				
 				$activities =  $this->security->xss_clean($this->input->post('activities'));
 				$activities =  addslashes($activities);
