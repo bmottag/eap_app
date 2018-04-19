@@ -113,6 +113,8 @@
 							</div>
 						</div>
 						
+<?php date("g:i a",strtotime("18:25:00")); //usarlo para cuando se vaya a editar las horas, se debe cambiar el formato ?>
+						
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="hora_inicio">Start hour <span class="required">*</span>
 							</label>
@@ -145,10 +147,6 @@
 								<textarea id="activities" name="activities" placeholder="Activities"  class="form-control" rows="3"></textarea>
 							</div>
 						</div>
-			<?php echo date("g:i a",strtotime("18:25:00")); ?>
-			
-
-			
 			
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="observation">Observation </label>
