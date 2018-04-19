@@ -175,7 +175,18 @@ class Report extends CI_Controller {
 				$msj = "You have update the Payroll!!";
 			}	
 						
-			if ($idUser = $this->report_model->savePayrollAdvanced()) {
+			if ($idPayroll = $this->report_model->savePayrollAdvanced()) 
+			{				
+				//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
+				//START search info for the payroll
+				$this->load->model("general_model");
+				$arrParam = array("idPayroll" => $idPayroll);			
+				$infoPayroll = $this->general_model->get_payroll($arrParam);
+				//END of search				
+
+				//update working time and working hours
+				$this->report_model->updateWorkingTimePayroll($infoPayroll);
+				
 				$data["result"] = true;
 				$this->session->set_flashdata('retornoExito', $msj);
 			} else {

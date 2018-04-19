@@ -78,7 +78,7 @@
 				$workingHours = $justHours + $transformation;
 				//FINISH hours calculation
 				
-				$idPayroll =  $this->input->post('hddIdentificador');
+				$idPayroll =  $info[0]['id_payroll'];
 
 				$sql = "UPDATE payroll";
 				$sql.= " SET working_time='$workingTime', working_hours =  $workingHours";
@@ -127,9 +127,10 @@
 				);	
 				
 				$query = $this->db->insert('payroll', $data);
+				$idPayroll = $this->db->insert_id();
 
 				if ($query) {
-					return true;
+					return $idPayroll;
 				} else {
 					return false;
 				}
