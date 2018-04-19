@@ -2,13 +2,13 @@ $( document ).ready( function () {
 
 	$("#company").convertirMayuscula().maxlength(50);
 	$("#contact").convertirMayuscula().bloquearNumeros().maxlength(50);		
-	$("#movilNumber").bloquearTexto().maxlength(12);
+	$("#movilNumber").bloquearTexto().maxlength(15);
 	
 	$( "#form" ).validate( {
 		rules: {
 			company:				{ required: true, minlength: 3, maxlength:50 },
 			contact:				{ required: true, minlength: 3, maxlength:50 },
-			movilNumber:			{ required: true, number: true, maxlength:12 },
+			movilNumber:			{ required: true, number: true, maxlength:15 },
 			email:					{ required: true, email: true, maxlength:50 }
 			
 		},
