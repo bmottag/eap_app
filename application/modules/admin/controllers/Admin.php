@@ -215,7 +215,7 @@ class Admin extends CI_Controller {
 		
 		//lista de foreman
 		$arrParam = array(
-			"idRol" => 2,
+			"administradores" => TRUE,
 			"state" => 1
 		);
 		$data['infoUser'] = $this->general_model->get_user_list($arrParam);

@@ -69,6 +69,10 @@ class General_model extends CI_Model {
 				if (array_key_exists("idRol", $arrData)) {
 					$this->db->where('U.fk_id_rol', $arrData["idRol"]);
 				}
+				if (array_key_exists("administradores", $arrData)) {
+					$valores = array(1, 2);
+					$this->db->where_in('U.fk_id_rol', $valores);
+				}
 				if (array_key_exists("state", $arrData)) {
 					$this->db->where('U.state', $arrData["state"]);
 				}
