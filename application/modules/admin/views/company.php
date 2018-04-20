@@ -77,6 +77,9 @@ if ($retornoError) {
 								<th class="column-title">Contact</th>
 								<th class="column-title">Movil</th>
 								<th class="column-title">Email</th>
+								<th class="column-title">Fax</th>
+								<th class="column-title">Address</th>
+								<th class="column-title">Website</th>
 								<th class="column-title">Links</th>
 								</tr>
 							</thead>
@@ -90,6 +93,9 @@ if ($retornoError) {
 				echo "<td>" . $data['contact'] . "</td>";
 				echo "<td>" . $data['movil_number'] . "</td>";
 				echo "<td>" . $data['email'] . "</td>";
+				echo "<td>" . $data['fax'] . "</td>";
+				echo "<td>" . $data['address'] . "</td>";
+				echo "<td>" . $data['website'] . "</td>";
 
 				echo "<td>";
 		?>

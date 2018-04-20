@@ -9,7 +9,6 @@
 	<form name="form" id="form" role="form" method="post" >
 		<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_company"]:""; ?>"/>
 		
-		
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group text-left">
@@ -34,6 +33,31 @@
 				</div>
 			</div>
 
+			<div class="col-sm-6">
+				<div class="form-group text-left">
+					<label class="control-label" for="fax">Fax</label>
+					<input type="text" class="form-control" id="fax" name="fax" value="<?php echo $information?$information[0]["fax"]:""; ?>" placeholder="Fax" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group text-left">
+					<label class="control-label" for="address">Address</label>
+					<input type="text" id="address" name="address" class="form-control" value="<?php echo $information?$information[0]["address"]:""; ?>" placeholder="Address" >
+				</div>
+			</div>
+			
+			<div class="col-sm-6">
+				<div class="form-group text-left">
+					<label class="control-label" for="website">Website</label>
+					<input type="text" id="website" name="website" class="form-control" value="<?php echo $information?$information[0]["website"]:""; ?>" placeholder="Website" required >
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="email">Email</label>

@@ -147,6 +147,9 @@
 					'company_name' => $this->input->post('company'),
 					'contact' => $this->input->post('contact'),
 					'movil_number' => $this->input->post('movilNumber'),
+					'fax' => $this->input->post('fax'),
+					'address' => $this->input->post('address'),
+					'website' => $this->input->post('website'),
 					'email' => $this->input->post('email')
 				);
 				

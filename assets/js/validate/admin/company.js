@@ -9,6 +9,9 @@ $( document ).ready( function () {
 			company:				{ required: true, minlength: 3, maxlength:50 },
 			contact:				{ required: true, minlength: 3, maxlength:50 },
 			movilNumber:			{ required: true, number: true, maxlength:15 },
+			fax:					{ minlength: 3, maxlength:15 },
+			address:				{ minlength: 3, maxlength:150 },
+			website:				{ minlength: 3, maxlength:100 },
 			email:					{ required: true, email: true, maxlength:50 }
 			
 		},
