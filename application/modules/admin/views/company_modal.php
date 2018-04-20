@@ -60,11 +60,14 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="email">Email</label>
-					<input type="text" class="form-control" id="email" name="email" value="<?php echo $information?$information[0]["email"]:""; ?>" placeholder="Email" />
+					<input type="email" class="form-control has-feedback-left" id="email" name="email" value="<?php echo $information?$information[0]["email"]:""; ?>" placeholder="Email" />
+					<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
 				</div>
 			</div>
+		  
 		</div>
+		
+
 		
 		<div class="ln_solid"></div>
 		<div class="form-group">
