@@ -12,7 +12,7 @@ $( document ).ready( function () {
 			email: 				{ required: true, email: true, maxlength:50 },
 			celular:	 		{ required: true, number: true, maxlength:12 },
 			type:		 		{ required: true },
-			hora_real:	 		{ number: true, maxlength:5 },
+			hora_real:	 		{ required: true, number: true, maxlength:5 },
 			hora_contrato: 		{ number: true, maxlength:5 },
 			rol:		 		{ required: true },
 			state:	 			{ required: true }

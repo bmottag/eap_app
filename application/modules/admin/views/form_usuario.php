@@ -77,7 +77,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="hora_real">Hour value <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="hora_real" name="hora_real" class="form-control col-md-7 col-xs-12 has-feedback-left" value="<?php echo $information?$information[0]["hora_real"]:""; ?>" maxlength=5 placeholder="Hour value">
+								<input type="text" id="hora_real" name="hora_real" class="form-control col-md-7 col-xs-12 has-feedback-left" value="<?php echo $information?$information[0]["hora_real"]:""; ?>" maxlength=5 placeholder="Hour value" required="required">
 								<span class="fa fa-dollar form-control-feedback left" aria-hidden="true"></span>
 							</div>
 						</div>
