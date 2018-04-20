@@ -61,6 +61,7 @@ if ($retornoError) {
 							<tbody>
 										
 		<?php 
+		if($info){
 			foreach ($info as $data):
 				echo "<tr>";
 				echo "<td>" . $data['id_project'] . "</td>";
@@ -86,7 +87,8 @@ if ($retornoError) {
 				echo "<a href='" . base_url("admin/update_project/" . $data['id_project']) . "' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>";			
 				echo "</td>";
 				echo "</tr>";
-			endforeach 
+			endforeach;
+		}
 		?>
 
 							</tbody>
