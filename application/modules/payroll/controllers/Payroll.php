@@ -356,8 +356,34 @@ class Payroll extends CI_Controller {
 			if ($idPayroll != '') {
 				$msj = "You have update the Payroll!!";
 			}	
+			
+			$fechaStart = $this->input->post('start_date');
+			$fechaFinish = $this->input->post('finish_date');
+			
+			$horaStart = $this->input->post('hora_inicio');
+			$horaStart = date("H:i:s", strtotime($horaStart));
+			
+			$horaFinish = $this->input->post('hora_final');
+			$horaFinish = date("H:i:s", strtotime($horaFinish));
+			
+			$fechaStart = $fechaStart . " " . $horaStart;
+			$fechaFinish = $fechaFinish . " " . $horaFinish; 
+			
+			$startXXX = strtotime($fechaStart);
+			$finishXXX = strtotime($fechaFinish);
 						
-			if ($idPayroll = $this->payroll_model->savePayrollAdvanced()) 
+			$ajusteStart = $this->calcular_hora_inicio_ajustada($startXXX);//calculo la hora ajustada por arriba cada 30 minutos
+								
+			$ajusteFinish = $this->calcular_hora_fin_ajustada($finishXXX);//calculo la hora ajustada final por abajo cada 15 minutos
+			
+			$arrParam = array(
+				"start" => $fechaStart,
+				"ajusteStart" => $ajusteStart,
+				"finish" => $fechaFinish,
+				"ajusteFinish" => $ajusteFinish
+			);
+
+			if ($idPayroll = $this->payroll_model->savePayrollAdvanced($arrParam)) 
 			{				
 				//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
 				//START search info for the payroll

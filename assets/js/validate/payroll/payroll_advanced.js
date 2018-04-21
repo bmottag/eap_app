@@ -5,7 +5,7 @@ $( document ).ready( function () {
 			
 	$( "#form" ).validate( {
 		rules: {
-			project: 				{ required: true },
+			project: 			{ required: true },
 			user: 				{ required: true },
 			start_date: 		{ required: true, minlength: 10, maxlength:10 },
 			finish_date: 		{ required: true, minlength: 10, maxlength:10 },
@@ -41,7 +41,7 @@ $( document ).ready( function () {
 			
 				$.ajax({
 					type: "POST",	
-					url: base_url + "report/save_payroll_advanced",	
+					url: base_url + "payroll/save_payroll_advanced",	
 					data: $("#form").serialize(),
 					dataType: "json",
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",

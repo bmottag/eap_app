@@ -102,7 +102,7 @@
 				$workingHours = $justHours + $transformation;
 				//FINISH hours calculation
 				
-				$idPayroll =  $this->input->post('hddIdentificador');
+				$idPayroll =  $info[0]['id_payroll'];
 
 				$sql = "UPDATE payroll";
 				$sql.= " SET working_time='$workingTime', working_hours =  $workingHours";
@@ -167,7 +167,7 @@
 		 * Add PAYROLL
 		 * @since 3/4/2018
 		 */
-		public function savePayrollAdvanced() 
+		public function savePayrollAdvanced($arrData)
 		{
 				$name = $this->session->userdata['name'];//nombre de usuario conectado
 				
@@ -181,23 +181,13 @@
 				$activities =  $this->security->xss_clean($this->input->post('activities'));
 				$activities =  addslashes($activities);
 				
-				$fechaStart = $this->input->post('start_date');
-				$fechaFinish = $this->input->post('finish_date');
-				
-				$horaStart = $this->input->post('hora_inicio');
-				$horaStart = date("H:i:s", strtotime($horaStart));
-				
-				$horaFinish = $this->input->post('hora_final');
-				$horaFinish = date("H:i:s", strtotime($horaFinish));
-				
-				$fechaStart = $fechaStart . " " . $horaStart;
-				$fechaFinish = $fechaFinish . " " . $horaFinish; 
-				
 				$data = array(
 					'fk_id_project' => $this->input->post('project'),
 					'fk_id_user' => $this->input->post('user'),
-					'start' => $fechaStart,
-					'finish' => $fechaFinish,
+					'start' => $arrData["start"],
+					'adjusted_start' => $arrData["ajusteStart"],		
+					'finish' => $arrData["finish"],
+					'adjusted_finish' => $arrData["ajusteFinish"],
 					'activities' => $activities,
 					'observation' => $observation
 				);	
