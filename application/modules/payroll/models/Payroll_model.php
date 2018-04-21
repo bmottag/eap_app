@@ -70,14 +70,14 @@
 		 */
 		public function updateWorkingTimePayroll($info) 
 		{
-				$dteStart = new DateTime($info[0]['start']);
-				$dteEnd   = new DateTime($info[0]['finish']);
+				$dteStart = new DateTime($info[0]['adjusted_start']);
+				$dteEnd   = new DateTime($info[0]['adjusted_finish']);
 				
 				$dteDiff  = $dteStart->diff($dteEnd);
 				$workingTime = $dteDiff->format("%R%a days %H:%I:%S");//days hours:minutes:seconds
 			
 				//START hours calculation
-				$minutes = (strtotime($info[0]['finish'])-strtotime($info[0]['start']))/60;
+				$minutes = (strtotime($info[0]['adjusted_finish'])-strtotime($info[0]['adjusted_start']))/60;
 				$minutes = abs($minutes);  
 				$minutes = round($minutes);
 		
