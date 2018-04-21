@@ -16,7 +16,7 @@
 					
 					<div class="alert alert-success alert-dismissible fade in" role="alert">
 						<strong>User:</strong> <?php echo $this->session->name; ?><br>
-						<strong>Start time:</strong> <?php echo $information[0]["start"]; ?><br>
+						<strong>Start time:</strong> <?php echo $information[0]["adjusted_start"]; ?><br>
 						<strong>Project:</strong> <?php echo $information[0]["project_name"]; ?>
 					</div>
 				
