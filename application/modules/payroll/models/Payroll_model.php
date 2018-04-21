@@ -11,11 +11,31 @@
 		{
 				$observation =  $this->security->xss_clean($this->input->post('observation'));
 				$observation =  addslashes($observation);
+				
+				$hora = date("G");
+				$minutos = date("i");
+			
+				//calcular hora inicial con el ajuste de redondear por arriba a cada 30 min
+				if($minutos <= 30)
+				{
+					$minutos = 30;
+					$horaStart = $hora . ":" . $minutos;
+					$horaAjustada = date("Y-m-j H:i:s", strtotime($horaStart));
+				}else{
+					//si es mas de los 30 minutos enotnces redondeamos a la siguiente hora
+					$minutos = 0;
+					$horaStart = $hora . ":" . $minutos;
+					$horaAjustada = date("Y-m-j H:i:s", strtotime($horaStart));
+					
+					$horaAjustada = strtotime ( '+1 hour' , strtotime ( $horaAjustada ) ) ;
+					$horaAjustada = date ( 'Y-m-j H:i:s' , $horaAjustada );
+				}
 		
 				$data = array(
 					'fk_id_user' => $this->session->userdata('id'),
 					'fk_id_project' => $this->input->post('project'),
 					'start' => date('Y-m-d G:i:s'),
+					'adjusted_start' => $horaAjustada,
 					'observation' => $observation
 				);	
 

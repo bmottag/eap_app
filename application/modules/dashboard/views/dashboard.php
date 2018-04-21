@@ -61,7 +61,10 @@
 								foreach ($info as $data):
 									echo "<tr>";
 									echo "<td>" . $data['employee'] . "</td>";
-									echo "<td>" . date('F j, Y, g:i a', strtotime($data['start'])) . "</td>";
+									echo "<td>";
+									echo "<strong>Start</strong><br>" . date('F j, Y, g:i a', strtotime($data['start']));
+									echo "<br><strong>Adjusted start</strong><br>" . date('F j, Y, g:i a', strtotime($data['adjusted_start']));
+									echo "</td>";
 									echo "<td>";
 									if($data['finish'] == 0){
 										echo "-";
