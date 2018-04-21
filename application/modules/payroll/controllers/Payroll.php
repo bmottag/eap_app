@@ -78,8 +78,18 @@ class Payroll extends CI_Controller {
      * @author BMOTTAG
 	 */
 	public function updatePayroll()
-	{				
-		if ($this->payroll_model->updatePayroll()) {
+	{	
+		$finish = date('Y-m-d G:i:s');
+		$finishXXX = strtotime($finish);
+						
+		$ajusteFinish = $this->calcular_hora_fin_ajustada($finishXXX);//calculo la hora ajustada final por abajo cada 15 minutos
+		
+		$arrParam = array(
+			"finish" => $finish,
+			"ajusteFinish" => $ajusteFinish
+		);
+	
+		if ($this->payroll_model->updatePayroll($arrParam)) {
 
 			//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
 			//START search info for the payroll
@@ -135,6 +145,41 @@ class Payroll extends CI_Controller {
 		}
 		
 		return $ajusteStart;
+	}
+	
+	/**
+	 * calculo la hora final ajustada por abajo cada 15 minutos
+     * @since 21/4/2018
+     * @author BMOTTAG
+	 */
+	public function calcular_hora_fin_ajustada($finish)
+	{					
+		$fecha = date( 'Y-m-j' , $finish );
+		$hora = date( 'H' , $finish );
+		$minutos = date( 'i' , $finish );
+
+		//calcular hora final con el ajuste de redondear por abajo cada 15 min
+		if($minutos < 15)
+		{
+			$minutos = 0;
+			$ajusteFinish = $fecha .  " " . $hora . ":" . $minutos;
+			$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
+		}elseif($minutos >= 15 && $minutos < 30){
+			$minutos = 15;
+			$ajusteFinish = $fecha .  " " . $hora . ":" . $minutos;
+			$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
+		}elseif($minutos >= 30 && $minutos < 45){
+			$minutos = 30;
+			$ajusteFinish = $fecha .  " " . $hora . ":" . $minutos;
+			$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
+		}else{
+			//si es mas de los 30 minutos enotnces redondeamos a la siguiente hora
+			$minutos = 45;
+			$ajusteFinish = $fecha .  " " . $hora . ":" . $minutos;
+			$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
+		}
+		
+		return $ajusteFinish;
 	}
 	
 

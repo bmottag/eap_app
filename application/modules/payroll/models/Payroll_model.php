@@ -34,7 +34,7 @@
 		 * Update PAYROLL - finish and observation
 		 * @since 4/4/2018
 		 */
-		public function updatePayroll() 
+		public function updatePayroll($arrData) 
 		{
 				$idPayroll =  $this->input->post('hddIdentificador');
 				$activities =  $this->security->xss_clean($this->input->post('activities'));
@@ -48,7 +48,8 @@
 				$observation = $observationStart . "<br><br>" . $observation;
 			
 				$data = array(
-					'finish' => date('Y-m-d G:i:s'),
+					'finish' => $arrData["finish"],
+					'adjusted_finish' => $arrData["ajusteFinish"],
 					'activities' => $activities,
 					'observation' => $observation
 				);

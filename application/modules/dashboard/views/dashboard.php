@@ -69,7 +69,8 @@
 									if($data['finish'] == 0){
 										echo "-";
 									}else{
-										echo date('F j, Y, g:i a', strtotime($data['finish']));
+										echo "<strong>Finish</strong><br>" . date('F j, Y, g:i a', strtotime($data['finish']));
+										echo "<br><strong>Adjusted finish</strong><br>" . date('F j, Y, g:i a', strtotime($data['adjusted_finish']));
 									}
 									echo "</td>";
 									echo "<td class='text-center'>" . $data['working_hours'] . "</td>";
