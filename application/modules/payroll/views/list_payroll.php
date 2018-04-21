@@ -5,7 +5,7 @@ $(function(){
 			var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
-				url: base_url + 'report/cargarModalHours',
+				url: base_url + 'payroll/cargarModalHours',
                 data: {'idPayroll': oID},
                 cache: false,
                 success: function (data) {
@@ -60,9 +60,17 @@ $(function(){
 									echo "<tr>";
 									echo "<td>" . $data['employee'] . "</td>";
 									echo "<td>";
-									echo "<strong>Start</strong><br>" . $data['start'];
-									echo "<br><strong>Finish</strong><br>" . $data['finish']. "<br>";
+									echo "<strong>Start</strong><br>" . date('F j, Y, g:i a', strtotime($data['start']));
+									echo "<br><strong>Adjusted start</strong><br>" . date('F j, Y, g:i a', strtotime($data['adjusted_start']));
 
+									if($data['finish'] == 0){
+										echo "-";
+									}else{
+										echo "<br><br><strong>Finish</strong><br>" . date('F j, Y, g:i a', strtotime($data['finish']));
+										echo "<br><strong>Adjusted finish</strong><br>" . date('F j, Y, g:i a', strtotime($data['adjusted_finish']));
+									}
+								
+									echo "<br>";
 						?>
 								<button type="button" class="btn btn-info btn-xs btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $data['id_payroll']; ?>" >
 									Edit Hours <span class="glyphicon glyphicon-edit" aria-hidden="true">
