@@ -286,8 +286,34 @@ class Payroll extends CI_Controller {
 	{			
 			header('Content-Type: application/json');
 			$data = array();
-
-			if ($this->payroll_model->savePayrollHour()) {
+			
+			$fechaStart = $this->input->post('start_date');
+			$fechaFinish = $this->input->post('finish_date');
+			
+			$horaStart = $this->input->post('hora_inicio');
+			$horaStart = date("H:i:s", strtotime($horaStart));
+			
+			$horaFinish = $this->input->post('hora_final');
+			$horaFinish = date("H:i:s", strtotime($horaFinish));
+			
+			$fechaStart = $fechaStart . " " . $horaStart;
+			$fechaFinish = $fechaFinish . " " . $horaFinish; 
+	
+			$startXXX = strtotime($fechaStart);
+			$finishXXX = strtotime($fechaFinish);
+						
+			$ajusteStart = $this->calcular_hora_inicio_ajustada($startXXX);//calculo la hora ajustada por arriba cada 30 minutos
+								
+			$ajusteFinish = $this->calcular_hora_fin_ajustada($finishXXX);//calculo la hora ajustada final por abajo cada 15 minutos
+			
+			$arrParam = array(
+				"start" => $fechaStart,
+				"ajusteStart" => $ajusteStart,
+				"finish" => $fechaFinish,
+				"ajusteFinish" => $ajusteFinish
+			);
+			
+			if ($this->payroll_model->savePayrollHour($arrParam)) {
 				$data["result"] = true;
 				$this->session->set_flashdata('retornoExito', 'You have update the payroll hour');
 				

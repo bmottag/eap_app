@@ -18,9 +18,15 @@ $fechaInicio = date( 'Y-m-j' , $inicio );
 $horaInicio = date( 'H:i' , $inicio );
 
 $finish = $information[0]['finish'];
-$fin = strtotime($finish);
-$fechaFin = date( 'Y-m-j' , $fin );
-$horaFin = date( 'H:i' , $fin );
+if($finish != 0){
+	$fin = strtotime($finish);
+	$fechaFin = date( 'Y-m-j' , $fin );
+	$horaFin = date( 'H:i' , $fin );
+}else{
+	$fin = FALSE;
+	$fechaFin = FALSE;
+	$horaFin = FALSE;
+}
 
 ?>
 		<!-- se pasan los datos anteriores para compararlos con los nuevos -->

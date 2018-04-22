@@ -129,7 +129,7 @@
 		 * Update payroll hour
 		 * @since 2/2/2018
 		 */
-		public function savePayrollHour() 
+		public function savePayrollHour($arrData) 
 		{
 				$name = $this->session->userdata['name'];//nombre de usuario conectado
 				$idPayroll = $this->input->post('hddIdentificador');
@@ -154,21 +154,17 @@
 					$observation .=  "<br>" . addslashes($observationNew) . "<br>";
 				}
 				$observation .= "Date: " . date("Y-m-d G:i:s") . "<br>********************";
+					
+				$data = array(
+					'start' => $arrData["start"],
+					'adjusted_start' => $arrData["ajusteStart"],		
+					'finish' => $arrData["finish"],
+					'adjusted_finish' => $arrData["ajusteFinish"],
+					'observation' => $observation
+				);	
 
-				$fechaStart = $this->input->post('start_date');
-				$horaStart = $this->input->post('hora_inicio');
-				$fechaFinish = $this->input->post('finish_date');
-				$horaFinish = $this->input->post('hora_final');
-
-				
-				$fechaStart = $fechaStart . " " . $horaStart . ":00";
-				$fechaFinish = $fechaFinish . " " . $horaFinish . ":00"; 
-
-				$sql = "UPDATE payroll";
-				$sql.= " SET observation='$observation', finish =  '$fechaFinish', start='$fechaStart'";
-				$sql.= " WHERE id_payroll=$idPayroll";
-
-				$query = $this->db->query($sql);
+				$this->db->where('id_payroll', $idPayroll);
+				$query = $this->db->update('payroll', $data);
 
 				if ($query) {
 					return true;
