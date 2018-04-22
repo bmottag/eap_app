@@ -136,18 +136,33 @@
 				$inicio = $this->input->post('hddInicio');
 				$fin = $this->input->post('hddFin');
 				
-				$moreInfo = "<strong>Changue hour by " . $name . ".</strong> <br>Before -> Start: " . $inicio . " <br>Before -> Finish: " . $fin;
-				$observation = $this->input->post('hddObservation') . "<br>********************<br>" . $moreInfo . "<br>" . $this->input->post('observation') . "<br>Date: " . date("Y-m-d G:i:s") . "<br>********************";
+				$observationNew =  $this->security->xss_clean($this->input->post('observation'));
+				$observationAnterior =  $this->input->post('hddObservation');
+				
+				
+				if($observationAnterior){
+					$observation =  $observationAnterior . "<br>";
+				}else{
+					$observation = "";
+				}
+				
+				$observation .= "********************<br>";
+				$observation .= "<strong>Changue hour by " . $name . ".</strong>";
+				$observation .= "<br>Before -> Start: " . $inicio . " <br>Before -> Finish: " . $fin;
+				if($observationNew)
+				{
+					$observation .=  "<br>" . addslashes($observationNew) . "<br>";
+				}
+				$observation .= "Date: " . date("Y-m-d G:i:s") . "<br>********************";
 
 				$fechaStart = $this->input->post('start_date');
-				$horaStart = $this->input->post('start_hour');
-				$minStart = $this->input->post('start_min');
+				$horaStart = $this->input->post('hora_inicio');
 				$fechaFinish = $this->input->post('finish_date');
-				$horaFinish = $this->input->post('finish_hour');
-				$minFinish = $this->input->post('finish_min');
+				$horaFinish = $this->input->post('hora_final');
+
 				
-				$fechaStart = $fechaStart . " " . $horaStart . ":" . $minStart . ":00";
-				$fechaFinish = $fechaFinish . " " . $horaFinish . ":" . $minFinish . ":00"; 
+				$fechaStart = $fechaStart . " " . $horaStart . ":00";
+				$fechaFinish = $fechaFinish . " " . $horaFinish . ":00"; 
 
 				$sql = "UPDATE payroll";
 				$sql.= " SET observation='$observation', finish =  '$fechaFinish', start='$fechaStart'";
@@ -172,9 +187,14 @@
 				$name = $this->session->userdata['name'];//nombre de usuario conectado
 				
 				$observation =  $this->security->xss_clean($this->input->post('observation'));
-				$observation =  addslashes($observation);
 				
-				$observation .= "<br>********************<br>";
+				if($observation){
+					$observation =  addslashes($observation) . "<br>";
+				}else{
+					$observation = "";
+				}
+				
+				$observation .= "********************<br>";
 				$observation .= "<strong>Payrrol inserted by " . $name . ".</strong>";
 				$observation .= "<br>Date: " . date("Y-m-d G:i:s") . "<br>********************";
 				

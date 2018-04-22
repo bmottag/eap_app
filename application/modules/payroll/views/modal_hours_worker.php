@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/report/hours.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/payroll/hours.js"); ?>"></script>
 
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -12,27 +12,25 @@
 
 <?php 
 
-$inicio = $information[0]['start'];
-$fechaInicio = substr($inicio, 0, 10); 
-$horaInicio = substr($inicio, 11, 2);
-$minutosInicio = substr($inicio, 14, 2);
+$start = $information[0]['start'];
+$inicio = strtotime($start);
+$fechaInicio = date( 'Y-m-j' , $inicio );
+$horaInicio = date( 'H:i' , $inicio );
 
-$fin = $information[0]['finish'];
-$fechaFin = substr($fin, 0, 10); 
-$horaFin = substr($fin, 11, 2);
-$minutosFin = substr($fin, 14, 2);
+$finish = $information[0]['finish'];
+$fin = strtotime($finish);
+$fechaFin = date( 'Y-m-j' , $fin );
+$horaFin = date( 'H:i' , $fin );
 
 ?>
 		<!-- se pasan los datos anteriores para compararlos con los nuevos -->
-		<input type="hidden" id="hddInicio" name="hddInicio" value="<?php echo $inicio; ?>"/>
-		<input type="hidden" id="hddFin" name="hddFin" value="<?php echo $fin; ?>"/>
+		<input type="hidden" id="hddInicio" name="hddInicio" value="<?php echo $start; ?>"/>
+		<input type="hidden" id="hddFin" name="hddFin" value="<?php echo $finish; ?>"/>
 		
 		<input type="hidden" id="hddfechaInicio" name="hddfechaInicio" value="<?php echo $fechaInicio; ?>"/>
 		<input type="hidden" id="hddhoraInicio" name="hddhoraInicio" value="<?php echo $horaInicio; ?>"/>
-		<input type="hidden" id="hddminutosInicio" name="hddminutosInicio" value="<?php echo $minutosInicio; ?>"/>
 		<input type="hidden" id="hddfechaFin" name="hddfechaFin" value="<?php echo $fechaFin; ?>"/>
 		<input type="hidden" id="hddhoraFin" name="hddhoraFin" value="<?php echo $horaFin; ?>"/>
-		<input type="hidden" id="hddminutosFin" name="hddminutosFin" value="<?php echo $minutosFin; ?>"/>
 
 				
 		<div class="row">
@@ -68,42 +66,16 @@ $minutosFin = substr($fin, 14, 2);
 				</div>
 			</div>
 			
-			<div class="col-sm-3">
+			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label for="type" class="control-label">Start hour: *</label>
-					<select name="start_hour" id="start_hour" class="form-control" required>
-						<option value='' >Select...</option>
-						<?php
-						for ($i = 0; $i < 24; $i++) {
-							
-							$i = $i<10?"0".$i:$i;
-							?>
-							<option value='<?php echo $i; ?>' <?php
-							if ($information && $i == $horaInicio) {
-								echo 'selected="selected"';
-							}
-							?>><?php echo $i; ?></option>
-						<?php } ?>									
-					</select>
-				</div>
-			</div>
-				
-			<div class="col-sm-3">
-				<div class="form-group text-left">
-					<label for="type" class="control-label">Start minutes: *</label>
-					<select name="start_min" id="start_min" class="form-control" required>
-						<?php
-						for ($xxx = 0; $xxx < 60; $xxx++) {
-							
-							$xxx = $xxx<10?"0".$xxx:$xxx;
-						?>
-							<option value='<?php echo $xxx; ?>' <?php
-							if ($information && $xxx == $minutosInicio) {
-								echo 'selected="selected"';
-							}
-							?>><?php echo $xxx; ?></option>
-						<?php } ?>
-					</select>
+
+					<div class='input-group date' id='hora_inical_picker'>	
+						<input type='text' id="hora_inicio" name="hora_inicio" class="form-control" required="required" value="<?php echo $horaInicio; ?>" maxlength=8 placeholder="Start hour"/>
+						<span class="input-group-addon">
+						   <span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -141,51 +113,27 @@ $minutosFin = substr($fin, 14, 2);
 				</div>
 			</div>
 			
-			<div class="col-sm-3">
+			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label for="type" class="control-label">Finish hour: *</label>
-					<select name="finish_hour" id="finish_hour" class="form-control" required>
-						<option value='' >Select...</option>
-						<?php
-						for ($i = 0; $i < 24; $i++) {
-							
-							$i = $i<10?"0".$i:$i;
-							?>
-							<option value='<?php echo $i; ?>' <?php
-							if ($information && $i == $horaFin) {
-								echo 'selected="selected"';
-							}
-							?>><?php echo $i; ?></option>
-						<?php } ?>									
-					</select>
+					
+					<div class='input-group date' id='hora_final_picker'>	
+						<input type='text' id="hora_final" name="hora_final" class="form-control" required="required" value="<?php echo $horaFin; ?>" maxlength=8 placeholder="Finish hour"/>
+						<span class="input-group-addon">
+						   <span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+					
 				</div>
 			</div>
 				
-			<div class="col-sm-3">
-				<div class="form-group text-left">
-					<label for="type" class="control-label">Finish minutes: *</label>
-					<select name="finish_min" id="finish_min" class="form-control" required>
-						<?php
-						for ($xxx = 0; $xxx < 60; $xxx++) {
-							
-							$xxx = $xxx<10?"0".$xxx:$xxx;
-						?>
-							<option value='<?php echo $xxx; ?>' <?php
-							if ($information && $xxx == $minutosFin) {
-								echo 'selected="selected"';
-							}
-							?>><?php echo $xxx; ?></option>
-						<?php } ?>
-					</select>
-				</div>
-			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
 					<label class="control-label" for="observation">Observation: *</label>
-					<textarea id="observation" name="observation" class="form-control" rows="1"></textarea>
+					<textarea id="observation" name="observation" class="form-control" rows="2"></textarea>
 				</div>
 			</div>
 		</div>
@@ -216,3 +164,14 @@ $minutosFin = substr($fin, 14, 2);
 <!-- bootstrap-datetimepicker -->    	
 <script src="<?php echo base_url("assets/bootstrap/vendors/moment/min/moment.min.js"); ?>"></script>
 <script src="<?php echo base_url("assets/bootstrap/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"); ?>"></script>
+
+
+<script type="text/javascript">
+    $('#hora_inical_picker').datetimepicker({
+		format: 'hh:mm A'
+    });
+	
+    $('#hora_final_picker').datetimepicker({
+        format: 'hh:mm A'
+    });
+</script>

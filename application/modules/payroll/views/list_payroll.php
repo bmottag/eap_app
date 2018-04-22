@@ -63,9 +63,7 @@ $(function(){
 									echo "<strong>Start</strong><br>" . date('F j, Y, g:i a', strtotime($data['start']));
 									echo "<br><strong>Adjusted start</strong><br>" . date('F j, Y, g:i a', strtotime($data['adjusted_start']));
 
-									if($data['finish'] == 0){
-										echo "-";
-									}else{
+									if($data['finish'] != 0){
 										echo "<br><br><strong>Finish</strong><br>" . date('F j, Y, g:i a', strtotime($data['finish']));
 										echo "<br><strong>Adjusted finish</strong><br>" . date('F j, Y, g:i a', strtotime($data['adjusted_finish']));
 									}

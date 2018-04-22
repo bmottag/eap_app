@@ -3,34 +3,31 @@ $( document ).ready( function () {
 jQuery.validator.addMethod("validacion", function(value, element, param) {
 	
 	var start_date = $('#start_date').val();
-	var start_hour = $('#start_hour').val();
-	var start_min = $('#start_min').val();
-	var finish_date = $('#finish_date').val();
+	var start_hour = $('#hora_inicio').val();
+	var finish_date = $('#hora_final').val();
 	var finish_hour = $('#finish_hour').val();
-	var finish_min = $('#finish_min').val();
 	
 	var hddfechaInicio = $('#hddfechaInicio').val();
 	var hddhoraInicio = $('#hddhoraInicio').val();
-	var hddminutosInicio = $('#hddminutosInicio').val();
 	var hddfechaFin = $('#hddfechaFin').val();
 	var hddhoraFin = $('#hddhoraFin').val();
-	var hddminutosFin = $('#hddminutosFin').val();
+
 	
-	if (hddfechaInicio == start_date &&  hddhoraInicio == start_hour  &&  hddminutosInicio == start_min &&  hddfechaFin == finish_date &&  hddhoraFin == finish_hour &&  hddminutosFin == finish_min) {
+	if (hddfechaInicio == start_date &&  hddhoraInicio == start_hour &&  hddfechaFin == finish_date &&  hddhoraFin == finish_hour) {
 		return false;
 	}else{
 		return true;
 	}
 }, "One of the field have to be different.");
+
+	$("#observation").convertirMayuscula();
 	
 	$( "#formWorker" ).validate( {
 		rules: {
 			start_date:	 			{ required: true },
-			start_hour:	 			{ required: true },
-			start_min:	 			{ required: true },
+			hora_inicio: 			{ required: true },
 			finish_date:			{ required: true },
-			finish_hour:	 		{ required: true },
-			finish_min:	 			{ required: true },
+			hora_final:		 		{ required: true },
 			observation:	 		{ required: true, validacion:true }
 		},
 		errorElement: "em",
@@ -62,7 +59,7 @@ jQuery.validator.addMethod("validacion", function(value, element, param) {
 			
 				$.ajax({
 					type: "POST",	
-					url: base_url + "report/savePayrollHour",	
+					url: base_url + "payroll/savePayrollHour",	
 					data: $("#formWorker").serialize(),
 					dataType: "json",
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -82,7 +79,7 @@ jQuery.validator.addMethod("validacion", function(value, element, param) {
 							$("#div_load").css("display", "none");
 							$('#btnSubmitWorker').removeAttr('disabled');
 
-							var url = base_url + "report/search/payrollByAdmin";
+							var url = base_url + "payroll/search/payrollByAdmin";
 							$(location).attr("href", url);
 						}
 						else
