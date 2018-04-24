@@ -71,7 +71,17 @@ if ($retornoError) {
 ?> 
 
 					<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-						<h4><?php echo $infoCompany[0]["company_name"]; ?></h4>
+
+						<ul class="list-unstyled user_data">
+							<li>
+								<i class="fa fa-building user-profile-icon"></i> <strong>Company:</strong> <?php echo $infoCompany[0]["company_name"]; ?>
+							</li>
+
+							<li>
+								<i class="fa fa-map-marker user-profile-icon"></i> <strong>Address:</strong> <?php echo $infoCompany[0]["address"]; ?>
+							</li>
+						</ul>
+						
 						<ul class="list-unstyled user_data">
 							<li>
 

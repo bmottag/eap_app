@@ -37,15 +37,19 @@ $(function(){
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
+						<li><a href="<?php echo base_url().'admin/project'; ?>"><i class="fa fa-close"></i></a>
 					</ul>
 					<div class="clearfix"></div>
 				</div>
-				<div class="x_content">
-				
-					<div class="alert alert-warning alert-dismissible fade in" role="alert">
-						<strong>Info:</strong> List of purchase order number by project.
+				<div class="x_content">				
+										
+					<div class="alert alert-success">
+						<ul class="fa-ul">
+							<li>
+								<i class="fa fa-info-circle fa-lg fa-li"></i> List of <strong>purchase order number</strong> by project.
+							</li>
+						</ul>
 					</div>
-					
 <?php
 $retornoExito = $this->session->flashdata('retornoExito');
 if ($retornoExito) {
@@ -80,24 +84,22 @@ if ($retornoError) {
 								<i class="fa fa-dashboard user-profile-icon"></i> <strong>Project No.:</strong> <?php echo $infoProject[0]["project_number"]; ?>
 							</li>
 						</ul>
-				
-						<ul class="list-unstyled user_data">
-							<li>
+						
+						<div class="col-md-12">
+						  <div class="btn-group">
+							
+							<a class="btn btn-sm btn-primary" href="<?php echo base_url().'admin/project'; ?>"><span class="fa fa-reply" aria-hidden="true"></span> Go back </a>
+							
+							<button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Add purchase order number"><i class="fa fa-plus"></i> Add</button>
 
-<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $infoProject[0]["id_project"]; ?>">
-	<i class="fa fa-plus"></i> Add purchase order number
-</button>
-							
-<a class="btn btn-warning btn-block" href=" <?php echo base_url().'admin/project'; ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a>
-		
-							</li>
-							
-						</ul>
+						  </div>
+						</div>
+				
 					 </div>
 
 					<div class="col-md-9 col-sm-9 col-xs-12">
 
-						<table class="table table-striped projects">
+						<table class="table table-striped jambo_table bulk_action">
 							<thead>
 								<tr>
 									<th style="width: 1%">#</th>
