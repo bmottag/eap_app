@@ -417,6 +417,90 @@ class Admin extends CI_Controller {
 
 			echo json_encode($data);	
     }
+	
+	/**
+	 * purchase_order_number
+     * @since 24/4/2018
+     * @author BMOTTAG
+	 */
+	public function purchase_order_number($idProject)
+	{
+			$this->load->model("general_model");
+
+			//project info
+			$arrParam = array("idProject" => $idProject);
+			$data['infoProject'] = $this->general_model->get_project($arrParam);
+			
+			//purchase_order_number
+			$arrParam = array(
+				"table" => "project_purchase_order",
+				"order" => "purchase_order",
+				"column" => "fk_id_project",
+				"id" => $idProject
+			);
+			$data['infoPO'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'projects_po';
+			$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario purchase order
+     * @since 24/4/2018
+     */
+    public function cargarModalProjectPO() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idProject"] = $this->input->post("idProject");
+			$data["idPO"] = $this->input->post("idPO");
+						
+			if ($data["idPO"] != 'x') {
+				$this->load->model("general_model");
+				$arrParam = array(
+					"table" => "project_purchase_order",
+					"order" => "id_purchase_order",
+					"column" => "id_purchase_order",
+					"id" => $data["idPO"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+				
+				$data["idProject"] = $data['information'][0]['fk_id_project'];
+			}
+			
+			$this->load->view("projects_po_modal", $data);
+    }
+	
+	/**
+	 * Save purchase order number
+     * @since 24/4/2018
+     * @author BMOTTAG
+	 */
+	public function save_project_po()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idProject = $this->input->post('hddIdProject');
+			$idPurchaseOrder = $this->input->post('hddIdProjectPO');
+			$data["idRecord"] = $idProject;
+			
+			$msj = "You have add a new purchase order!!";
+			if ($idPurchaseOrder != '') {
+				$msj = "You have update a purchase order!!";
+			}
+
+			if ($idPurchaseOrder = $this->admin_model->savePurchaseOrder()) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 
 
 	

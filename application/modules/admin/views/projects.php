@@ -84,7 +84,10 @@ if ($retornoError) {
 					echo '<p class="' . $clase . '"><strong>' . $valor . '</strong></p>';
 				echo "</td>";
 				echo "<td>";
-				echo "<a href='" . base_url("admin/update_project/" . $data['id_project']) . "' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>";			
+				echo "<a href='" . base_url("admin/update_project/" . $data['id_project']) . "' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>";
+
+				echo "<a href='" . base_url("admin/purchase_order_number/" . $data['id_project']) . "' class='btn btn-warning btn-xs'><i class='fa fa-plus'></i> PO No. </a>";
+				
 				echo "</td>";
 				echo "</tr>";
 			endforeach;

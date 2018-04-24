@@ -198,6 +198,34 @@
 				}
 		}
 		
+		/**
+		 * Add/Edit PRUCHASE ORDER
+		 * @since 24/4/2018
+		 */
+		public function savePurchaseOrder() 
+		{
+				$idPurchaseOrder = $this->input->post('hddIdProjectPO');
+				
+				$data = array(
+					'fk_id_project' => $this->input->post('hddIdProject'),
+					'purchase_order' => $this->input->post('purchase_order'),
+					'description' => $this->input->post('description')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idPurchaseOrder == '') {
+					$query = $this->db->insert('project_purchase_order', $data);				
+				} else {
+					$this->db->where('id_purchase_order', $idPurchaseOrder);
+					$query = $this->db->update('project_purchase_order', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+		
 		
 		
 	    
