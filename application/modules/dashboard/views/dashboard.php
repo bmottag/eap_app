@@ -35,17 +35,24 @@
 				
 					foreach ($infoProjects as $data):
 				?>
+				
+						<div class="row">
+							<div class="col-xs-12 invoice-header">
+								<h3>
+									<i class="fa fa-road"></i> Project:  <?php echo $data['project_name']; ?>
+								</h3>
+							</div>
+						</div>
+					
 					<div class="table-responsive">
-						<table id="datatable" class="table table-striped jambo_table bulk_action">
+					
+						<table class="table table-striped jambo_table bulk_action" id="dataTables">
 							<thead>
-								<tr class="headings">
-									<th class="column-title" colspan="7"><strong>Project: </strong> <?php echo $data['project_name']; ?> </th>
-								</tr>
 								<tr class="headings">
 								<th class="column-title" style="width: 15%">User </th>
 								<th class="column-title" style="width: 17%">Start</th>
 								<th class="column-title" style="width: 17%">Finish</th>
-								<th class="column-title" style="width: 10%">Working hours</th>
+								<th class="column-title" style="width: 10%">Hours</th>
 								<th class="column-title" style="width: 21%">Observation</th>
 								<th class="column-title" style="width: 20%">Activities</th>
 								</tr>
@@ -92,3 +99,15 @@
 		</div>
 	</div>
 </div>
+
+<!-- Tables -->
+<script>
+$(document).ready(function() {
+    $('#dataTables').DataTable( {
+        "paging":   false,
+        "ordering": true,
+        "info":     true,
+		"searching": false
+    } );
+} );
+</script>
