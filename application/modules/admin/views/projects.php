@@ -15,7 +15,7 @@
 
 				<div class="x_content">
 				
-					<a href="<?php echo base_url("admin/update_project"); ?>" class="btn btn-success"><i class="fa fa-plus"></i> Add Project</a>
+					<a href="<?php echo base_url("admin/update_project"); ?>" class="btn btn-info"><i class="fa fa-plus"></i> Add Project</a>
 				
 <?php
 $retornoExito = $this->session->flashdata('retornoExito');

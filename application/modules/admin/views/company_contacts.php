@@ -1,6 +1,6 @@
 <script>
 $(function(){ 
-	$(".btn-info").click(function () {	
+	$(".btn-default").click(function () {	
 			var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
@@ -42,8 +42,12 @@ $(function(){
 				</div>
 				<div class="x_content">
 				
-					<div class="alert alert-warning alert-dismissible fade in" role="alert">
-						<strong>Info:</strong> List of company contacts.
+					<div class="alert alert-success">
+						<ul class="fa-ul">
+							<li>
+								<i class="fa fa-info-circle fa-lg fa-li"></i> <strong>Company contacts</strong> list.
+							</li>
+						</ul>
 					</div>
 					
 <?php
@@ -82,18 +86,18 @@ if ($retornoError) {
 							</li>
 						</ul>
 						
-						<ul class="list-unstyled user_data">
-							<li>
+						<div class="col-md-12">
+							<div class="btn-group">
 
-<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $infoCompany[0]["id_company"]; ?>">
-	<i class="fa fa-plus"></i> Add contact
-</button>
-							
-<a class="btn btn-warning btn-block" href=" <?php echo base_url().'admin/company'; ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a>
-		
-							</li>
-							
-						</ul>
+								<a class="btn btn-sm btn-primary" href="<?php echo base_url().'admin/company'; ?>"><span class="fa fa-reply" aria-hidden="true"></span> Go back </a>
+
+								<button type="button" class="btn btn-sm btn-default"  data-placement="top" data-toggle="modal" data-target="#modal" data-original-title="Add contact" id="<?php echo $infoCompany[0]["id_company"]; ?>">
+									<i class="fa fa-plus"></i> Add
+								</button>
+
+							</div>
+						</div>
+						
 					 </div>
 
 					<div class="col-md-9 col-sm-9 col-xs-12">
