@@ -1,6 +1,6 @@
 <script>
 $(function(){ 
-	$(".btn-info").click(function () {	
+	$(".btn-default").click(function () {	
 			var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
@@ -46,7 +46,7 @@ $(function(){
 					<div class="alert alert-success">
 						<ul class="fa-ul">
 							<li>
-								<i class="fa fa-info-circle fa-lg fa-li"></i> List of <strong>purchase order number</strong> by project.
+								<i class="fa fa-info-circle fa-lg fa-li"></i> <strong>Purchase order number</strong> list.
 							</li>
 						</ul>
 					</div>
@@ -86,16 +86,18 @@ if ($retornoError) {
 						</ul>
 						
 						<div class="col-md-12">
-						  <div class="btn-group">
-							
-							<a class="btn btn-sm btn-primary" href="<?php echo base_url().'admin/project'; ?>"><span class="fa fa-reply" aria-hidden="true"></span> Go back </a>
-							
-							<button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Add purchase order number"><i class="fa fa-plus"></i> Add</button>
+							<div class="btn-group">
 
-						  </div>
+								<a class="btn btn-sm btn-primary" href="<?php echo base_url().'admin/project'; ?>"><span class="fa fa-reply" aria-hidden="true"></span> Go back </a>
+
+								<button type="button" class="btn btn-sm btn-default"  data-placement="top" data-toggle="modal" data-target="#modal" data-original-title="Add contact" id="<?php echo $infoProject[0]["id_project"]; ?>">
+									<i class="fa fa-plus"></i> Add
+								</button>
+								
+							</div>
 						</div>
-				
-					 </div>
+					
+					</div>
 
 					<div class="col-md-9 col-sm-9 col-xs-12">
 
