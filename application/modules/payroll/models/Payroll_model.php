@@ -40,13 +40,19 @@
 				$activities =  $this->security->xss_clean($this->input->post('activities'));
 				$activities =  addslashes($activities);
 
-				$observation =  $this->security->xss_clean($this->input->post('observation'));
-				$observation =  addslashes($observation);
+				$observationNew =  $this->security->xss_clean($this->input->post('observation'));
+				$observationNew =  addslashes($observationNew);
 				
 				$observationStart =  $this->input->post('hddObservationStart');
 				
-				$observation = $observationStart . "<br><br>" . $observation;
-			
+				if($observationStart){
+					$observation =  $observationStart . "<br><br>";
+				}else{
+					$observation = "";
+				}
+				
+				$observation .= $observationNew;
+				
 				$data = array(
 					'finish' => $arrData["finish"],
 					'adjusted_finish' => $arrData["ajusteFinish"],
@@ -68,48 +74,18 @@
 		 * Update PAYROLL - workin time and workin hours
 		 * @since 17/11/2016
 		 */
-		public function updateWorkingTimePayroll($info) 
+		public function updateWorkingTimePayroll($arrData) 
 		{
-				$dteStart = new DateTime($info[0]['adjusted_start']);
-				$dteEnd   = new DateTime($info[0]['adjusted_finish']);
+				$data = array(
+					'working_time' => $arrData["workingTime"],
+					'working_hours' => $arrData["workingHours"],
+					'valor_hora' => $arrData["valorHora"],
+					'valor_total' => $arrData["valorTotal"]
+				);
 				
-				$dteDiff  = $dteStart->diff($dteEnd);
-				$workingTime = $dteDiff->format("%R%a days %H:%I:%S");//days hours:minutes:seconds
-			
-				//START hours calculation
-				$minutes = (strtotime($info[0]['adjusted_finish'])-strtotime($info[0]['adjusted_start']))/60;
-				$minutes = abs($minutes);  
-				$minutes = round($minutes);
-		
-				$hours = $minutes/60;
-				$hours = round($hours,2);
+				$this->db->where('id_payroll', $arrData["idPayroll"]);
+				$query = $this->db->update('payroll', $data);
 				
-				$justHours = intval($hours);
-				$decimals=$hours-$justHours; 
-
-				//Ajuste de los decimales para redondearlos a .25 / .5 / .75
-				if($decimals<0.12){
-					$transformation = 0;
-				}elseif($decimals>=0.12 && $decimals<0.37){
-					$transformation = 0.25;
-				}elseif($decimals>=0.37 && $decimals<0.62){
-					$transformation = 0.5;
-				}elseif($decimals>=0.62 && $decimals<0.87){
-					$transformation = 0.75;
-				}elseif($decimals>=0.87){
-					$transformation = 1;
-				}
-				$workingHours = $justHours + $transformation;
-				//FINISH hours calculation
-				
-				$idPayroll =  $info[0]['id_payroll'];
-
-				$sql = "UPDATE payroll";
-				$sql.= " SET working_time='$workingTime', working_hours =  $workingHours";
-				$sql.= " WHERE id_payroll=$idPayroll";
-
-				$query = $this->db->query($sql);
-
 				if ($query) {
 					return true;
 				} else {

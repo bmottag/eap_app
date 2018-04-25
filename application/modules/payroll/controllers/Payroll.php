@@ -89,20 +89,14 @@ class Payroll extends CI_Controller {
 			"ajusteFinish" => $ajusteFinish
 		);
 	
-		if ($this->payroll_model->updatePayroll($arrParam)) {
-
-			//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
-			//START search info for the payroll
-			$this->load->model("general_model");
-			$arrParam = array(
-				"idPayroll" => $this->input->post('hddIdentificador')
-			);			
-			$infoPayroll = $this->general_model->get_payroll($arrParam);
-			//END of search				
-
-			//update working time and working hours
+		if ($this->payroll_model->updatePayroll($arrParam)) 
+		{
+			//calculo de total de horas trabajadas, valor total y se guarda en la base de datos
+			$idPayroll = $this->input->post('hddIdentificador');
+			$calculo = $this->calcular_datos($idPayroll);//metodo para calcular horas y sacar el valor total
+		
 			$hour = date("G:i");
-			if ($this->payroll_model->updateWorkingTimePayroll($infoPayroll)) {
+			if ($calculo) {
 				$this->session->set_flashdata('retornoExito', 'have a good night, you finished at ' . $hour . '.');
 			}else{
 				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> bad at math.');
@@ -431,7 +425,73 @@ class Payroll extends CI_Controller {
 			echo json_encode($data);
     }
 	 
+	/**
+	 * Calculo de horas trabajadas y valor total y se guarda en la base dedatos
+     * @since 24/4/2018
+	 */
+    function calcular_datos($idPayroll) 
+	{
+			//info for the payroll
+			$this->load->model("general_model");
+			$arrParam = array("idPayroll" => $idPayroll);			
+			$infoPayroll = $this->general_model->get_payroll($arrParam);
+			
+			$dteStart = new DateTime($infoPayroll[0]['adjusted_start']);
+			$dteEnd   = new DateTime($infoPayroll[0]['adjusted_finish']);
+			
+			$dteDiff  = $dteStart->diff($dteEnd);
+			$workingTime = $dteDiff->format("%R%a days %H:%I:%S");//days hours:minutes:seconds
+		
+			//START hours calculation
+			$minutes = (strtotime($infoPayroll[0]['adjusted_finish'])-strtotime($infoPayroll[0]['adjusted_start']))/60;
+			$minutes = abs($minutes);  
+			$minutes = round($minutes);
+	
+			$hours = $minutes/60;
+			$hours = round($hours,2);
+			
+			$justHours = intval($hours);
+			$decimals=$hours-$justHours; 
 
+			//Ajuste de los decimales para redondearlos a .25 / .5 / .75
+			if($decimals<0.12){
+				$transformation = 0;
+			}elseif($decimals>=0.12 && $decimals<0.37){
+				$transformation = 0.25;
+			}elseif($decimals>=0.37 && $decimals<0.62){
+				$transformation = 0.5;
+			}elseif($decimals>=0.62 && $decimals<0.87){
+				$transformation = 0.75;
+			}elseif($decimals>=0.87){
+				$transformation = 1;
+			}
+			$workingHours = $justHours + $transformation;
+			//FINISH hours calculation
+			
+			//buscar informacion del usuario
+			$arrParam = array("idUser" => $infoPayroll[0]['fk_id_user']);
+			$infoUser = $this->general_model->get_user_list($arrParam);
+
+			$valorHora = $infoUser[0]['hora_real'];//valor hora real
+			$valorTotal = $valorHora * $workingHours;//valor de las horas trabajadas
+			
+			$userType = $infoUser[0]['fk_id_type'];//tipo de usuario
+			
+			$arrParam = array(
+				"idPayroll" => $idPayroll,
+				"workingTime" => $workingTime,
+				"workingHours" => $workingHours,
+				"valorHora" => $valorHora,
+				"valorTotal" => $valorTotal
+			);
+
+			if ($this->payroll_model->updateWorkingTimePayroll($arrParam)) {
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+
+    }
 	 
 	 
 	
