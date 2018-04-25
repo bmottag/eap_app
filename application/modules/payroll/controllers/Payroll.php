@@ -116,18 +116,16 @@ class Payroll extends CI_Controller {
 	 */
 	public function calcular_hora_inicio_ajustada($start)
 	{					
-		$ajusteStart = date("Y-m-j H:i:s", $start);
-
 		$fecha = date( 'Y-m-j' , $start );
 		$hora = date( 'H' , $start );
 		$minutos = date( 'i' , $start );
 
 		//calcular hora inicial con el ajuste de redondear por arriba a cada 30 min
-		if($minutos <= 30)
-		{
+		if($minutos == 0){
+			$ajusteStart = $fecha .  " " . $hora . ":" . $minutos;
+		}elseif($minutos <= 30){
 			$minutos = 30;
 			$ajusteStart = $fecha .  " " . $hora . ":" . $minutos;
-			$ajusteStart = date("Y-m-j H:i:s", strtotime($ajusteStart));
 		}else{
 			//si es mas de los 30 minutos enotnces redondeamos a la siguiente hora
 			$minutos = 0;
@@ -135,8 +133,8 @@ class Payroll extends CI_Controller {
 			$ajusteStart = date("Y-m-j H:i:s", strtotime($ajusteStart));
 			
 			$ajusteStart = strtotime ( '+1 hour' , strtotime ( $ajusteStart ) ) ;//le sumo una hora
-			$ajusteStart = date ( 'Y-m-j H:i:s' , $ajusteStart );
 		}
+		$ajusteStart = date("Y-m-j H:i:s", strtotime($ajusteStart));
 		
 		return $ajusteStart;
 	}
@@ -307,26 +305,20 @@ class Payroll extends CI_Controller {
 				"ajusteFinish" => $ajusteFinish
 			);
 			
-			if ($this->payroll_model->savePayrollHour($arrParam)) {
-				$data["result"] = true;
-				$this->session->set_flashdata('retornoExito', 'You have update the payroll hour');
-				
-				//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
-				//START search info for the task
-				$this->load->model("general_model");
-				$arrParam = array(
-					"idPayroll" => $this->input->post('hddIdentificador')
-				);
-				$infoPayroll = $this->general_model->get_payroll($arrParam);
-				//END of search	
-
-				//update working time and working hours
-				if ($this->payroll_model->updateWorkingTimePayroll($infoPayroll)) {
+			if ($this->payroll_model->savePayrollHour($arrParam)) 
+			{
+				//calculo de total de horas trabajadas, valor total y se guarda en la base de datos
+				$idPayroll = $this->input->post('hddIdentificador');
+				$calculo = $this->calcular_datos($idPayroll);//metodo para calcular horas y sacar el valor total
+			
+				$hour = date("G:i");
+				if ($calculo) {
+					$data["result"] = true;
 					$this->session->set_flashdata('retornoExito', 'You have update the payroll hour');
 				}else{
+					$data["result"] = "error";
 					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> bad at math.');
 				}
-				
 				
 			} else {
 				$data["result"] = "error";
@@ -404,19 +396,17 @@ class Payroll extends CI_Controller {
 			);
 
 			if ($idPayroll = $this->payroll_model->savePayrollAdvanced($arrParam)) 
-			{				
-				//busco inicio y fin para calcular horas de trabajo y guardar en la base de datos
-				//START search info for the payroll
-				$this->load->model("general_model");
-				$arrParam = array("idPayroll" => $idPayroll);			
-				$infoPayroll = $this->general_model->get_payroll($arrParam);
-				//END of search				
-
-				//update working time and working hours
-				$this->payroll_model->updateWorkingTimePayroll($infoPayroll);
-				
-				$data["result"] = true;
-				$this->session->set_flashdata('retornoExito', $msj);
+			{
+				//calculo de total de horas trabajadas, valor total y se guarda en la base de datos
+				$calculo = $this->calcular_datos($idPayroll);//metodo para calcular horas y sacar el valor total
+			
+				if ($calculo) {
+					$data["result"] = true;
+					$this->session->set_flashdata('retornoExito', $msj);
+				}else{
+					$data["result"] = "error";
+					$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> bad at math.');
+				}
 			} else {
 				$data["result"] = "error";
 				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help, contact the Admin.');
