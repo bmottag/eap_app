@@ -80,7 +80,7 @@
 										echo "<br><strong>Adjusted finish</strong><br>" . date('F j, Y, g:i a', strtotime($data['adjusted_finish']));
 									}
 									echo "</td>";
-									echo "<td>" . $data['observation'] . "</td>";
+									echo "<td><small>" . $data['observation'] . "</small></td>";
 									echo "<td class='text-right'>" . $data['working_hours'] . "</td>";
 									echo "<td class='text-right'>";
 									echo "$ ". $data['valor_total'];
