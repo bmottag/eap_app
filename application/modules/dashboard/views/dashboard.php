@@ -52,9 +52,9 @@
 								<th class="column-title" style="width: 15%">User </th>
 								<th class="column-title" style="width: 17%">Start</th>
 								<th class="column-title" style="width: 17%">Finish</th>
+								<th class="column-title" style="width: 25%">Observation</th>
 								<th class="column-title" style="width: 10%">Hours</th>
-								<th class="column-title" style="width: 21%">Observation</th>
-								<th class="column-title" style="width: 20%">Activities</th>
+								<th class="column-title" style="width: 16%">Total $</th>
 								</tr>
 							</thead>
 
@@ -66,7 +66,7 @@
 								$info = $this->general_model->get_payroll($arrParam);
 								
 								foreach ($info as $data):
-									echo "<tr>";
+									echo "<tr class='even pointer'>";
 									echo "<td>" . $data['employee'] . "</td>";
 									echo "<td>";
 									echo "<strong>Start</strong><br>" . date('F j, Y, g:i a', strtotime($data['start']));
@@ -80,9 +80,12 @@
 										echo "<br><strong>Adjusted finish</strong><br>" . date('F j, Y, g:i a', strtotime($data['adjusted_finish']));
 									}
 									echo "</td>";
-									echo "<td class='text-center'>" . $data['working_hours'] . "</td>";
 									echo "<td>" . $data['observation'] . "</td>";
-									echo "<td>" . $data['activities'] . "</td>";
+									echo "<td class='text-right'>" . $data['working_hours'] . "</td>";
+									echo "<td class='text-right'>";
+									echo "$ ". $data['valor_total'];
+									echo "<br><strong>Hour value</strong><br>$ ". $data['valor_hora'];
+									echo "</td>";
 									echo "</tr>";
 								endforeach;
 							?>
