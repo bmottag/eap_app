@@ -123,9 +123,11 @@ class Payroll extends CI_Controller {
 		//calcular hora inicial con el ajuste de redondear por arriba a cada 30 min
 		if($minutos == 0){
 			$ajusteStart = $fecha .  " " . $hora . ":" . $minutos;
+			$ajusteStart = date("Y-m-j H:i:s", strtotime($ajusteStart));
 		}elseif($minutos <= 30){
 			$minutos = 30;
 			$ajusteStart = $fecha .  " " . $hora . ":" . $minutos;
+			$ajusteStart = date("Y-m-j H:i:s", strtotime($ajusteStart));
 		}else{
 			//si es mas de los 30 minutos enotnces redondeamos a la siguiente hora
 			$minutos = 0;
@@ -133,8 +135,8 @@ class Payroll extends CI_Controller {
 			$ajusteStart = date("Y-m-j H:i:s", strtotime($ajusteStart));
 			
 			$ajusteStart = strtotime ( '+1 hour' , strtotime ( $ajusteStart ) ) ;//le sumo una hora
+			$ajusteStart = date("Y-m-j H:i:s", $ajusteStart);
 		}
-		$ajusteStart = date("Y-m-j H:i:s", strtotime($ajusteStart));
 		
 		return $ajusteStart;
 	}
@@ -155,21 +157,19 @@ class Payroll extends CI_Controller {
 		{
 			$minutos = 0;
 			$ajusteFinish = $fecha .  " " . $hora . ":" . $minutos;
-			$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
 		}elseif($minutos >= 15 && $minutos < 30){
 			$minutos = 15;
 			$ajusteFinish = $fecha .  " " . $hora . ":" . $minutos;
-			$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
 		}elseif($minutos >= 30 && $minutos < 45){
 			$minutos = 30;
 			$ajusteFinish = $fecha .  " " . $hora . ":" . $minutos;
-			$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
 		}else{
 			//si es mas de los 30 minutos enotnces redondeamos a la siguiente hora
 			$minutos = 45;
 			$ajusteFinish = $fecha .  " " . $hora . ":" . $minutos;
-			$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
+			
 		}
+		$ajusteFinish = date("Y-m-j H:i:s", strtotime($ajusteFinish));
 		
 		return $ajusteFinish;
 	}
