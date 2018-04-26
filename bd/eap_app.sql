@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2018 a las 04:30:03
+-- Tiempo de generación: 26-04-2018 a las 17:42:24
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 5.6.24
 
@@ -53,15 +53,18 @@ CREATE TABLE `param_company` (
   `company_name` varchar(120) NOT NULL,
   `contact` varchar(100) NOT NULL,
   `movil_number` varchar(12) NOT NULL,
-  `email` varchar(70) NOT NULL
+  `email` varchar(70) NOT NULL,
+  `fax` varchar(20) NOT NULL,
+  `address` varchar(250) NOT NULL,
+  `website` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `param_company`
 --
 
-INSERT INTO `param_company` (`id_company`, `company_name`, `contact`, `movil_number`, `email`) VALUES
-(1, 'ABS INC', 'MICHAEL', '14034089921', 'benmotta@gmail.com');
+INSERT INTO `param_company` (`id_company`, `company_name`, `contact`, `movil_number`, `email`, `fax`, `address`, `website`) VALUES
+(1, 'ABS INC', 'MICHAEL', '14034089921', 'benmotta@gmail', '123456789', '3376 Spruce drive', 'eapconstruction.com');
 
 -- --------------------------------------------------------
 
@@ -85,7 +88,8 @@ CREATE TABLE `param_company_contacts` (
 INSERT INTO `param_company_contacts` (`id_contact`, `fk_id_company`, `contact_name`, `contact_movil`, `contact_email`, `contact_position`) VALUES
 (1, 1, 'FEDERICO CAMARGO', '123456789', 'fede@gmail.com', 'OPERADOR'),
 (2, 1, 'CAMILO PEÑARADA', '45678923443', 'sinemail@gmail.com', 'PRESIDENTE'),
-(3, 1, 'OTRO', '2345234', 'benmotta@gmail.com', 'OTRO');
+(3, 1, 'OTRO', '2345234', 'benmotta@gmail.com', 'OTRO'),
+(4, 1, 'PEDRO PABLO', '3234234', 'aja@gmail.com', 'NOSE');
 
 -- --------------------------------------------------------
 
@@ -105,8 +109,9 @@ CREATE TABLE `param_menu` (
 --
 
 INSERT INTO `param_menu` (`id_menu`, `menu_name`, `menu_icono`, `orden`) VALUES
-(1, 'Report', 'fa-pie-chart', 1),
-(2, 'Settings', 'fa-cog', 2);
+(1, 'Report', 'fa-pie-chart', 2),
+(2, 'Settings', 'fa-cog', 3),
+(3, 'Payroll', 'fa-book', 1);
 
 -- --------------------------------------------------------
 
@@ -128,11 +133,13 @@ CREATE TABLE `param_menu_links` (
 --
 
 INSERT INTO `param_menu_links` (`id_link`, `fk_id_menu`, `link_name`, `link_url`, `link_icono`, `orden`) VALUES
-(1, 1, 'Payroll report', 'report/search/payrollByAdmin', 'fa-book', 1),
+(1, 3, 'Search payroll', 'payroll/search/payrollByAdmin', 'fa-book', 1),
 (3, 2, 'Users', 'admin/usuarios', 'fa-users', 1),
 (4, 2, 'Company', 'admin/company', 'fa-building', 2),
 (5, 2, 'Projects', 'admin/project', 'fa-road', 3),
-(6, 2, 'QR Code', 'codeqr', 'fa-qrcode', 4);
+(6, 2, 'QR Code', 'codeqr', 'fa-qrcode', 4),
+(7, 1, 'Reports', 'public/reportico/run.php?execute_mode=MENU&project=Payroll', 'fa-area-chart', 2),
+(8, 3, 'Add payroll', 'payroll/payroll_advanced', 'fa-book', 2);
 
 -- --------------------------------------------------------
 
@@ -153,7 +160,9 @@ CREATE TABLE `param_menu_permisos` (
 INSERT INTO `param_menu_permisos` (`id_permiso`, `fk_id_menu`, `fk_id_rol`) VALUES
 (1, 1, 1),
 (2, 2, 1),
-(3, 1, 2);
+(3, 1, 2),
+(4, 3, 1),
+(5, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -213,17 +222,18 @@ INSERT INTO `param_rol` (`id_rol`, `rol_name`, `description`, `estilos`) VALUES
 
 CREATE TABLE `param_user_type` (
   `id_type` int(1) NOT NULL,
-  `user_type` varchar(50) NOT NULL
+  `user_type` varchar(50) NOT NULL,
+  `style` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `param_user_type`
 --
 
-INSERT INTO `param_user_type` (`id_type`, `user_type`) VALUES
-(1, 'Subcontractor'),
-(2, 'Casual'),
-(3, 'Payroll');
+INSERT INTO `param_user_type` (`id_type`, `user_type`, `style`) VALUES
+(1, 'Subcontractor', 'label-warning'),
+(2, 'Casual', 'label-success'),
+(3, 'Payroll', 'label-primary');
 
 -- --------------------------------------------------------
 
@@ -237,25 +247,26 @@ CREATE TABLE `payroll` (
   `fk_id_project` int(10) NOT NULL,
   `start` datetime NOT NULL,
   `finish` datetime NOT NULL,
+  `adjusted_start` datetime NOT NULL,
+  `adjusted_finish` datetime NOT NULL,
   `working_time` varchar(30) NOT NULL,
   `working_hours` float NOT NULL,
   `observation` text NOT NULL,
-  `activities` text NOT NULL
+  `activities` text NOT NULL,
+  `valor_hora` float NOT NULL,
+  `valor_total` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `payroll`
 --
 
-INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `finish`, `working_time`, `working_hours`, `observation`, `activities`) VALUES
-(1, 1, 1, '2018-04-04 06:11:58', '2018-04-05 19:11:40', '+1 days 12:59:42', 37, 'Nuevas cosas<br><br>Observaciones', 'Actividades'),
-(2, 1, 2, '2018-04-11 19:11:00', '2018-04-11 23:00:00', '+0 days 03:49:00', 3.75, 'Nuevo proyecto<br>********************<br><strong>Changue hour by SUPER ADMIN.</strong> <br>Before -> Start: 2018-04-05 19:11:58 <br>Before -> Finish: 0000-00-00 00:00:00<br>Pruebas de cambio de hora<br>Date: 2018-04-05 20:25:41<br>********************<br>********************<br><strong>Changue hour by ANDRES PALOMARES.</strong> <br>Before -> Start: 2018-04-05 19:11:00 <br>Before -> Finish: 2018-04-05 22:00:00<br>Ajuste por la hora de almuerzo<br>Date: 2018-04-11 12:02:22<br>********************', ''),
-(3, 1, 1, '2018-04-05 21:17:01', '2018-04-05 21:43:45', '+0 days 00:26:44', 0.5, 'Ingreso a un nuevo proyecto<br><br>', ''),
-(4, 1, 1, '2018-04-05 07:45:00', '2018-04-05 21:50:00', '+0 days 14:05:00', 14, 'eTOY COMO OPERADOR<br><br><br>********************<br><strong>Changue hour by SUPER ADMIN.</strong> <br>Before -> Start: 2018-04-05 21:45:08 <br>Before -> Finish: 2018-04-05 21:50:44<br>ERROR AL GUARDAAAR<br>Date: 2018-04-05 21:52:18<br>********************', ''),
-(5, 1, 1, '2018-04-09 01:37:25', '2018-04-09 05:23:32', '+0 days 03:46:07', 3.75, 'Nuevo ingreso<br><br>', ''),
-(6, 1, 3, '2018-04-09 23:15:01', '2018-04-11 12:13:38', '+1 days 12:58:37', 37, '<br><br>', ''),
-(7, 4, 2, '2018-04-11 11:51:47', '0000-00-00 00:00:00', '', 0, '', ''),
-(8, 5, 6, '2018-04-13 21:48:33', '0000-00-00 00:00:00', '', 0, '', '');
+INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `finish`, `adjusted_start`, `adjusted_finish`, `working_time`, `working_hours`, `observation`, `activities`, `valor_hora`, `valor_total`) VALUES
+(1, 1, 2, '2018-04-21 19:03:00', '2018-04-21 22:16:00', '2018-04-21 19:30:00', '2018-04-21 22:15:00', '+0 days 02:45:00', 2.75, '********************<br><strong>Changue hour by BENJAMIN MOTTA.</strong><br>Before -> Start: 2018-04-21 19:03:33 <br>Before -> Finish: 0000-00-00 00:00:00<br>PRUEBAS CON LA EDICION DE HORAS<br>Date: 2018-04-21 19:30:25<br>********************', '', 0, 0),
+(2, 1, 2, '2018-04-24 12:00:00', '2018-04-24 14:00:00', '2018-04-24 12:00:00', '2018-04-24 14:00:00', '+0 days 02:00:00', 2, '********************<br><strong>Changue hour by BENJAMIN MOTTA.</strong><br>Before -> Start: 2018-04-24 12:00:00 <br>Before -> Finish: 2018-04-24 14:00:00<br>REVISAR DATOS<br>Date: 2018-04-24 20:03:14<br>********************', '', 25, 50),
+(3, 1, 1, '2018-04-24 10:57:19', '2018-04-24 19:03:00', '2018-04-24 11:00:00', '2018-04-24 19:00:00', '+0 days 08:00:00', 8, 'NUEVA OBERVACION DE SALIDA', 'que pasa calabaza', 25, 200),
+(4, 1, 2, '2018-04-24 20:04:00', '2018-04-24 23:05:00', '2018-04-24 20:30:00', '2018-04-24 23:00:00', '+0 days 02:30:00', 2.5, '********************<br><strong>Payrrol inserted by BENJAMIN MOTTA.</strong><br>Date: 2018-04-24 20:05:05<br>********************', '', 25, 62.5),
+(5, 1, 6, '2018-04-25 08:10:49', '0000-00-00 00:00:00', '2018-04-25 08:30:00', '0000-00-00 00:00:00', '', 0, '', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -288,6 +299,19 @@ INSERT INTO `project` (`id_project`, `project_name`, `project_state`, `project_n
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `project_purchase_order`
+--
+
+CREATE TABLE `project_purchase_order` (
+  `id_purchase_order` int(10) NOT NULL,
+  `fk_id_project` int(10) NOT NULL,
+  `purchase_order` varchar(12) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `user`
 --
 
@@ -314,9 +338,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `log_user`, `email`, `fk_id_type`, `fk_id_rol`, `birthdate`, `movil`, `password`, `state`, `photo`, `address`, `hora_real`, `hora_contrato`) VALUES
-(1, 'BENJAMIN', 'MOTTA', 'bmottag', 'benmotta@gmail.com', 3, 1, '2018-03-19', '14034089921', '25f9e794323b453885f5181f1b624d0b', 1, '', '', 0, 0),
+(1, 'BENJAMIN', 'MOTTA', 'bmottag', 'benmotta@gmail.com', 3, 1, '2018-03-19', '14034089921', '25f9e794323b453885f5181f1b624d0b', 1, '', '', 25, 0),
 (2, 'EDUAR', 'ACOSTA', 'eacosta', 'eacosta@eapcontruction.com', 1, 1, '2018-04-05', '4038895044', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 0, 0),
-(3, 'JAVIER', 'MOLINA', 'jmolina', 'jmolina@gmail.com', 1, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 0, 0),
+(3, 'JAVIER', 'MOLINA', 'jmolina', 'jmolina@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 26, 0),
 (4, 'ANDRES', 'PALOMARES', 'apalomares', 'apalomares@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 0, 0),
 (5, 'ALEX', 'HERRERA', 'aherrera', 'aherrera@gmail.com', 2, 3, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 26.5, 30);
 
@@ -405,6 +429,13 @@ ALTER TABLE `project`
   ADD KEY `fk_id_user_foreman` (`fk_id_user_foreman`);
 
 --
+-- Indices de la tabla `project_purchase_order`
+--
+ALTER TABLE `project_purchase_order`
+  ADD PRIMARY KEY (`id_purchase_order`),
+  ADD KEY `fk_id_project` (`fk_id_project`);
+
+--
 -- Indices de la tabla `user`
 --
 ALTER TABLE `user`
@@ -432,22 +463,22 @@ ALTER TABLE `param_company`
 -- AUTO_INCREMENT de la tabla `param_company_contacts`
 --
 ALTER TABLE `param_company_contacts`
-  MODIFY `id_contact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_contact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `param_menu`
 --
 ALTER TABLE `param_menu`
-  MODIFY `id_menu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_menu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `param_menu_links`
 --
 ALTER TABLE `param_menu_links`
-  MODIFY `id_link` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_link` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `param_menu_permisos`
 --
 ALTER TABLE `param_menu_permisos`
-  MODIFY `id_permiso` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_permiso` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `param_qr_code`
 --
@@ -467,12 +498,17 @@ ALTER TABLE `param_user_type`
 -- AUTO_INCREMENT de la tabla `payroll`
 --
 ALTER TABLE `payroll`
-  MODIFY `id_payroll` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_payroll` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `project`
 --
 ALTER TABLE `project`
   MODIFY `id_project` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT de la tabla `project_purchase_order`
+--
+ALTER TABLE `project_purchase_order`
+  MODIFY `id_purchase_order` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
@@ -518,6 +554,12 @@ ALTER TABLE `payroll`
 --
 ALTER TABLE `project`
   ADD CONSTRAINT `project_ibfk_1` FOREIGN KEY (`fk_id_company`) REFERENCES `param_company` (`id_company`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `project_purchase_order`
+--
+ALTER TABLE `project_purchase_order`
+  ADD CONSTRAINT `project_purchase_order_ibfk_1` FOREIGN KEY (`fk_id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
