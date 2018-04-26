@@ -193,6 +193,27 @@
 					return false;
 				}
 		}
+		
+		/**
+		 * Add PERIOD
+		 * @since 26/4/2018
+		 */
+		public function savePeriod($arrData)
+		{				
+				$data = array(
+					'date_start' => $arrData["periodoIniNew"],
+					'date_finish' => $arrData["periodoFinNew"]
+				);	
+				
+				$query = $this->db->insert('payroll_period', $data);
+				$idPeriod = $this->db->insert_id();
+
+				if ($query) {
+					return $idPeriod;
+				} else {
+					return false;
+				}
+		}
 
 
 

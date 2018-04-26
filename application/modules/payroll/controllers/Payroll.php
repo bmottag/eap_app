@@ -95,6 +95,9 @@ class Payroll extends CI_Controller {
 			$idPayroll = $this->input->post('hddIdentificador');
 			$calculo = $this->calcular_datos($idPayroll);//metodo para calcular horas y sacar el valor total
 		
+			//busco el periodo sino existe lo creo y guarda el id del periodo en la tabla payroll
+			$periodo = $this->buscar_periodo($idPayroll);//metodo para calcular horas y sacar el valor total
+		
 			$hour = date("G:i");
 			if ($calculo) {
 				$this->session->set_flashdata('retornoExito', 'have a good night, you finished at ' . $hour . '.');
@@ -476,6 +479,69 @@ class Payroll extends CI_Controller {
 			);
 
 			if ($this->payroll_model->updateWorkingTimePayroll($arrParam)) {
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+    }
+	
+	/**
+	 * Busco a que periodo pertenece y se guarda el id periodo en la tabla de payroll
+     * @since 26/4/2018
+	 */
+    function buscar_periodo($idPayroll) 
+	{
+			//info for the payroll
+			$this->load->model("general_model");
+			$arrParam = array("idPayroll" => $idPayroll);			
+			$infoPayroll = $this->general_model->get_payroll($arrParam);//informacion del payroll
+			
+			$start = strtotime($infoPayroll[0]['adjusted_start']);
+			$fechaStart = date( 'Y-m-j' , $start );
+			
+			$arrParam = array("limit" => 1);	
+			$infoPeriod = $this->general_model->get_period($arrParam);//lista de periodos los ultimos 2
+			
+			
+			//valido si la fecha esta dentro del ultimo periodo
+			
+			$fechaStart = date_create($fechaStart);
+			$periodoIni = date_create($infoPeriod[0]['date_start']);
+			$periodoFin = date_create($infoPeriod[0]['date_finish']);
+			
+			if($fechaStart >= $periodoIni && $fechaStart <= $periodoFin) {
+				//esta dentro del periodo entonces saco el id del periodo
+				$idPeriod = $infoPeriod[0]['id_period'];
+				
+				
+			}else{
+				//no esta dentro del periodo entonces se debe generar el nuevo periodo
+				//fecha inicial del siguiente period se le suma un dia a la fecha final del periodo anterior
+				//fecha final del siguiente periodo se le suma 14 dias a la fecha final del periodo anterior				
+				$periodoIniNew = date('Y-m-d', strtotime ( '+1 day ' , strtotime ( $infoPeriod[0]['date_finish'] ) ) );//le sumo un dia 
+				$periodoFinNew = date('Y-m-d',strtotime ( '+14 day ' , strtotime ( $infoPeriod[0]['date_finish'] ) ) );//le sumo 14 dias
+				
+				//guardo el nuevo periodo y saco el id guardado
+				$arrParam = array(
+					"periodoIniNew" => $periodoIniNew,
+					"periodoFinNew" => $periodoFinNew
+				);
+
+				$idPeriod = $this->payroll_model->savePeriod($arrParam);				
+			}
+		
+			//guardo el id en la tabla payroll			
+			$arrParam = array(
+				"table" => "payroll",
+				"primaryKey" => "id_payroll",
+				"id" => $idPayroll,
+				"column" => "fk_id_period",
+				"value" => $idPeriod
+			);
+			$this->load->model("general_model");
+			
+			//guardo el id en la tabla payroll	
+			if ($this->general_model->updateRecord($arrParam)) {
 				return TRUE;
 			}else{
 				return FALSE;

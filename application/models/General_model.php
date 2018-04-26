@@ -288,6 +288,31 @@ class General_model extends CI_Model {
 					return false;
 				}
 		}
+		
+		/**
+		 * PERIOD
+		 * @since 26/4/2018
+		 */
+		public function get_period($arrData) 
+		{				
+				if (array_key_exists("idPeriod", $arrData)) {
+					$this->db->where('id_period', $arrData["idPeriod"]);
+				}
+				
+				$this->db->order_by('id_period', 'desc');
+				
+				if (array_key_exists("limit", $arrData)) {
+					$query = $this->db->get('payroll_period', $arrData["limit"]);
+				}else{
+					$query = $this->db->get('payroll_period');
+				}				
+
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
 	
 		
 
