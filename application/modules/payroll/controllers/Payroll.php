@@ -222,7 +222,10 @@ class Payroll extends CI_Controller {
 			//Si envian los datos del filtro entonces lo direcciono a la lista respectiva con los datos de la consulta
 			if($this->input->post('datetimepicker_from')){
 				$data['from'] =  $this->input->post('datetimepicker_from');
-				$data['to'] =  $this->input->post('datetimepicker_to');
+				
+				//le sumo un dia al dia final para que ingrese ese dia en la consulta
+				$data['to'] = date('Y-m-d',strtotime ( '+1 day ' , strtotime ( $this->input->post('datetimepicker_to') ) ) );
+				
 				$data['user'] =  $this->input->post('user');
 				$data['user'] = $data['user']==''?'x':$data['user'];
 				
