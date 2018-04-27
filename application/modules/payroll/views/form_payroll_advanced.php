@@ -56,6 +56,8 @@
 			locale: {
 				format: 'YYYY-MM-DD'
 			},
+			minDate: moment().subtract(14, 'days'),
+			maxDate: moment(),
 			singleDatePicker: true,
 			singleClasses: "picker_1"
 		}, function(start, end, label) {
@@ -90,6 +92,8 @@
 			locale: {
 				format: 'YYYY-MM-DD'
 			},
+			minDate: moment().subtract(14, 'days'),
+			maxDate: moment(),
 			singleDatePicker: true,
 			singleClasses: "picker_1"
 		}, function(start, end, label) {
