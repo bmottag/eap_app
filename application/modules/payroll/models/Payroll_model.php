@@ -214,6 +214,38 @@
 					return false;
 				}
 		}
+		
+		/**
+		 * Add/Edit PAYROLL PROJECT PERIOD
+		 * @since 26/4/2018
+		 */
+		public function updatePayrollProjectPeriod($arrData) 
+		{				
+				$idProjectPeriod = $arrData["idProjectPeriod"];
+				
+				$data = array(
+					'total_hours' => $arrData["hotalHoras"],
+					'hour_value_cad' => $arrData["valorHora"],
+					'subtotal_cad' => $arrData["valorSubTotal"],
+					'total_cad' => $arrData["valorTotal"]
+				);	
+
+				//revisar si es para adicionar o editar
+				if ($idProjectPeriod == '') {
+					$data['fk_id_user'] = $arrData["idUser"];
+					$data['fk_id_project'] = $arrData["idProject"];
+					$data['fk_id_period'] = $arrData["idPeriod"];
+					$query = $this->db->insert('payroll_project_period', $data);
+				} else {
+					$this->db->where('id_project_period', $idProjectPeriod);
+					$query = $this->db->update('payroll_project_period', $data);
+				}
+				if ($query) {
+					return TRUE;
+				} else {
+					return false;
+				}
+		}
 
 
 

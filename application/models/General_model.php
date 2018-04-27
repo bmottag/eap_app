@@ -313,6 +313,33 @@ class General_model extends CI_Model {
 					return false;
 				}
 		}
+		
+		/**
+		 * PROJECT PERIOD
+		 * @since 26/4/2018
+		 */
+		public function get_project_period($arrData) 
+		{				
+				if (array_key_exists("idUser", $arrData)) {
+					$this->db->where('fk_id_user', $arrData["idUser"]);
+				}
+				if (array_key_exists("idProject", $arrData)) {
+					$this->db->where('fk_id_project', $arrData["idProject"]);
+				}
+				if (array_key_exists("idPeriod", $arrData)) {
+					$this->db->where('fk_id_period', $arrData["idPeriod"]);
+				}
+				
+				$this->db->order_by('id_project_period', 'desc');
+				
+				$query = $this->db->get('payroll_project_period');
+
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
 	
 		
 

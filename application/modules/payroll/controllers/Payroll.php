@@ -97,6 +97,10 @@ class Payroll extends CI_Controller {
 		
 			//busco el periodo sino existe lo creo y guarda el id del periodo en la tabla payroll
 			$periodo = $this->buscar_periodo($idPayroll);//metodo para calcular horas y sacar el valor total
+			
+			//llevo control del horas por proyecto por periodo en la tabla PAYROLL_PROJECT_PERIOD
+			//se va sumando las horas por proyecto y se saca el todal en CAD
+			$total = $this->total_proyecto($idPayroll);
 		
 			$hour = date("G:i");
 			if ($calculo) {
@@ -546,7 +550,75 @@ class Payroll extends CI_Controller {
 			}else{
 				return FALSE;
 			}
+    }
+	
+	/**
+	 * Calculo de total de horas trabajadas por un usuario en un proyecto en un periodo
+     * @since 26/4/2018
+	 */
+    function total_proyecto($idPayroll) 
+	{
+			//info for the payroll
+			$this->load->model("general_model");
+			$arrParam = array("idPayroll" => $idPayroll);			
+			$infoPayroll = $this->general_model->get_payroll($arrParam);//informacion del payroll
+			
+			$idUser = $infoPayroll[0]['fk_id_user'];
+			$idProject = $infoPayroll[0]['fk_id_project'];
+			$idPeriod = $infoPayroll[0]['fk_id_period'];
+			$valorHora = $infoPayroll[0]['valor_hora'];
+			$workingHours = $infoPayroll[0]['working_hours'];
+			$valor_total = $infoPayroll[0]['valor_total'];
+			
+			//buscar informacion anterior en la tabla PAYROLL_PROJECT_PERIOD
+			$arrParamFiltro = array(
+				"idUser" => $idUser,
+				"idProject" => $idProject,
+				"idPeriod" => $idPeriod
+			);
+			$infoProjectPeriod = $this->general_model->get_project_period($arrParamFiltro);
+			
+			if($infoProjectPeriod){
+				$totalHorasAnterior = $infoProjectPeriod[0]['total_hours'];
+				$idProjectPeriod = $infoProjectPeriod[0]['id_project_period'];
+			}else{
+				$totalHorasAnterior = 0;
+				$idProjectPeriod = '';
+			}
+			
+			//numero de horas totales para este proyecto
+			$totalHorasNuevo = $totalHorasAnterior + $workingHours; //suma total anterior mas el nuevo registro
+			$valorSubTotal = $totalHorasNuevo * $valorHora;//subtotal: total horas proyecto por el valor de la hora
+			
+			//revisar el tipo de usuario
+			//si es subcontractor el totla en mas el 5% de GST del subtotal
+			//si es casual es el mismo valor
+			//si es payroll se debe hacer calculo
+			
+//*****REVISAR ESTA PARTE DE MIRAR QUE TIPO DE UUSARIO ES ***************** ///////////
+			$valorTotal = $valorSubTotal;
+			
+			
 
+
+			
+			//guardo informacion en la base de datos
+			$arrParam = array(
+				"idProjectPeriod" => $idProjectPeriod,
+				"idUser" => $idUser,
+				"idProject" => $idProject,
+				"idPeriod" => $idPeriod,
+				"hotalHoras" => $totalHorasNuevo,
+				"valorHora" => $valorHora,
+				"valorSubTotal" => $valorSubTotal,
+				"valorTotal" => $valorTotal
+			);
+
+			if ($this->payroll_model->updatePayrollProjectPeriod($arrParam)) {
+				return TRUE;
+			}else{
+				return FALSE;
+			}
     }
 	 
 	 
