@@ -68,7 +68,15 @@
 									<?php } ?>
 								</select>
 							</div>
-						</div>						
+						</div>	
+
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="purchase_order">Purchase order number <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="purchase_order" name="purchase_order" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["purchase_order_general"]:""; ?>" maxlength=30 placeholder="Purchase order number">
+							</div>
+						</div>
 						
 						<div class="form-group">
 							<label for="estado" class="control-label col-md-3 col-sm-3 col-xs-12">State <span class="required">*</span></label>

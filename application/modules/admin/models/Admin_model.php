@@ -103,7 +103,8 @@
 					'address' => $this->input->post('address'),
 					'fk_id_company' => $this->input->post('company'),
 					'fk_id_user_foreman' => $idUserForeman,
-					'project_state' => $this->input->post('state')
+					'project_state' => $this->input->post('state'),
+					'purchase_order_general' => $this->input->post('purchase_order')
 				);
 
 				//revisar si es para adicionar o editar
