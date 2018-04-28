@@ -37,8 +37,8 @@
 					'email' => $this->input->post('email'),
 					'movil' => $this->input->post('celular'),
 					'fk_id_type' => $this->input->post('type'),
-					'hora_real' => $this->input->post('hora_real'),
-					'hora_contrato' => $this->input->post('hora_contrato'),
+					'hora_real_cad' => $this->input->post('hora_real'),
+					'hora_contrato_cad' => $this->input->post('hora_contrato'),
 					'fk_id_rol' => $this->input->post('rol'),
 					'state' => $this->input->post('state')
 				);	
