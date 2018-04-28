@@ -30,15 +30,32 @@
 		{
 				$idUser = $this->input->post('hddId');
 				
+				$userType = $this->input->post('type');
+				$valueHoraReal = $this->input->post('hora_real');
+				$valueHoraContrato = $this->input->post('hora_contrato');
+				
+				switch ($userType) {
+					case 1://subcontractor
+						$noHorasMaximo = 500;//este es un valor cualquiera pero que sea mayor al posible valor de horas porque al subcontractor se le paga completo
+						break;
+					case 2://casual
+						$noHorasMaximo = 88;
+						break;
+					case 3://payroll
+						$noHorasMaximo = $valueHoraContrato * 88 / $valueHoraReal;
+						break;
+				}
+				
 				$data = array(
 					'first_name' => $this->input->post('nombres'),
 					'last_name' => $this->input->post('apellidos'),
 					'log_user' => $this->input->post('usuario'),
 					'email' => $this->input->post('email'),
 					'movil' => $this->input->post('celular'),
-					'fk_id_type' => $this->input->post('type'),
-					'hora_real_cad' => $this->input->post('hora_real'),
-					'hora_contrato_cad' => $this->input->post('hora_contrato'),
+					'fk_id_type' => $userType,
+					'hora_real_cad' => $valueHoraReal,
+					'hora_contrato_cad' => $valueHoraContrato,
+					'no_horas_max' => $noHorasMaximo,
 					'fk_id_rol' => $this->input->post('rol'),
 					'state' => $this->input->post('state')
 				);	
