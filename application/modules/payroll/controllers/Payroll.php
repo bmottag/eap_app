@@ -472,7 +472,7 @@ class Payroll extends CI_Controller {
 			$arrParam = array("idUser" => $infoPayroll[0]['fk_id_user']);
 			$infoUser = $this->general_model->get_user_list($arrParam);
 
-			$valorHora = $infoUser[0]['hora_real'];//valor hora real
+			$valorHora = $infoUser[0]['hora_real_cad'];//valor hora real
 			$valorTotal = $valorHora * $workingHours;//valor de las horas trabajadas
 			
 			$userType = $infoUser[0]['fk_id_type'];//tipo de usuario
@@ -598,9 +598,26 @@ class Payroll extends CI_Controller {
 			//si es casual es el mismo valor
 			//si es payroll se debe hacer calculo
 			
-//*****REVISAR ESTA PARTE DE MIRAR QUE TIPO DE UUSARIO ES ***************** ///////////
-			$valorTotal = $valorSubTotal;
+			//*****REVISAR QUE TIPO DE UUSARIO ES ***************** ///////////
 			
+			//buscar informacion del usuario
+			$arrParam = array("idUser" => $infoPayroll[0]['fk_id_user']);
+			$infoUser = $this->general_model->get_user_list($arrParam);			
+			
+			$tipoUsuario = $infoUser[0]['fk_id_type'];
+			switch ($tipoUsuario) {
+				case 1://subcontractor: el total se le suma el 5% del GST del subtotal
+					$GST = 0.05*$valorSubTotal;
+					$valorTotal = $valorSubTotal + $GST;
+					break;
+				case 2://casual: el total es el mismo subtotal
+					$valorTotal = $valorSubTotal;
+					break;
+				case 3:
+					$valor = 'SUPER ADMIN';
+					$clase = "text-danger";
+					break;
+			}
 			
 
 
