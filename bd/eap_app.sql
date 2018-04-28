@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-04-2018 a las 17:42:24
+-- Tiempo de generación: 28-04-2018 a las 18:56:44
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 5.6.24
 
@@ -254,19 +254,68 @@ CREATE TABLE `payroll` (
   `observation` text NOT NULL,
   `activities` text NOT NULL,
   `valor_hora` float NOT NULL,
-  `valor_total` float NOT NULL
+  `valor_total` float NOT NULL,
+  `fk_id_period` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `payroll`
 --
 
-INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `finish`, `adjusted_start`, `adjusted_finish`, `working_time`, `working_hours`, `observation`, `activities`, `valor_hora`, `valor_total`) VALUES
-(1, 1, 2, '2018-04-21 19:03:00', '2018-04-21 22:16:00', '2018-04-21 19:30:00', '2018-04-21 22:15:00', '+0 days 02:45:00', 2.75, '********************<br><strong>Changue hour by BENJAMIN MOTTA.</strong><br>Before -> Start: 2018-04-21 19:03:33 <br>Before -> Finish: 0000-00-00 00:00:00<br>PRUEBAS CON LA EDICION DE HORAS<br>Date: 2018-04-21 19:30:25<br>********************', '', 0, 0),
-(2, 1, 2, '2018-04-24 12:00:00', '2018-04-24 14:00:00', '2018-04-24 12:00:00', '2018-04-24 14:00:00', '+0 days 02:00:00', 2, '********************<br><strong>Changue hour by BENJAMIN MOTTA.</strong><br>Before -> Start: 2018-04-24 12:00:00 <br>Before -> Finish: 2018-04-24 14:00:00<br>REVISAR DATOS<br>Date: 2018-04-24 20:03:14<br>********************', '', 25, 50),
-(3, 1, 1, '2018-04-24 10:57:19', '2018-04-24 19:03:00', '2018-04-24 11:00:00', '2018-04-24 19:00:00', '+0 days 08:00:00', 8, 'NUEVA OBERVACION DE SALIDA', 'que pasa calabaza', 25, 200),
-(4, 1, 2, '2018-04-24 20:04:00', '2018-04-24 23:05:00', '2018-04-24 20:30:00', '2018-04-24 23:00:00', '+0 days 02:30:00', 2.5, '********************<br><strong>Payrrol inserted by BENJAMIN MOTTA.</strong><br>Date: 2018-04-24 20:05:05<br>********************', '', 25, 62.5),
-(5, 1, 6, '2018-04-25 08:10:49', '0000-00-00 00:00:00', '2018-04-25 08:30:00', '0000-00-00 00:00:00', '', 0, '', '', 0, 0);
+INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `finish`, `adjusted_start`, `adjusted_finish`, `working_time`, `working_hours`, `observation`, `activities`, `valor_hora`, `valor_total`, `fk_id_period`) VALUES
+(1, 1, 2, '2018-04-26 10:37:41', '2018-04-26 23:38:14', '2018-04-26 11:00:00', '2018-04-26 23:30:00', '+0 days 12:30:00', 12.5, '', '', 25, 312.5, 8),
+(2, 1, 2, '2018-04-26 14:38:23', '2018-04-26 23:38:56', '2018-04-25 15:00:00', '2018-04-26 23:30:00', '+1 days 08:30:00', 32.5, '', '', 25, 812.5, 8),
+(3, 1, 6, '2018-04-27 11:26:35', '0000-00-00 00:00:00', '2018-04-27 11:30:00', '0000-00-00 00:00:00', '', 0, '', '', 0, 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `payroll_period`
+--
+
+CREATE TABLE `payroll_period` (
+  `id_period` int(10) NOT NULL,
+  `date_start` date NOT NULL,
+  `date_finish` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `payroll_period`
+--
+
+INSERT INTO `payroll_period` (`id_period`, `date_start`, `date_finish`) VALUES
+(1, '2018-01-07', '2018-01-20'),
+(2, '2018-01-21', '2018-02-03'),
+(3, '2018-02-04', '2018-02-17'),
+(4, '2018-02-18', '2018-03-03'),
+(5, '2018-03-04', '2018-03-17'),
+(6, '2018-03-18', '2018-03-31'),
+(7, '2018-04-01', '2018-04-14'),
+(8, '2018-04-15', '2018-04-28');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `payroll_project_period`
+--
+
+CREATE TABLE `payroll_project_period` (
+  `id_project_period` int(10) NOT NULL,
+  `fk_id_user` int(10) NOT NULL,
+  `fk_id_project` int(10) NOT NULL,
+  `fk_id_period` int(10) NOT NULL,
+  `total_hours` float NOT NULL,
+  `hour_value_cad` float NOT NULL,
+  `subtotal_cad` float NOT NULL,
+  `total_cad` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `payroll_project_period`
+--
+
+INSERT INTO `payroll_project_period` (`id_project_period`, `fk_id_user`, `fk_id_project`, `fk_id_period`, `total_hours`, `hour_value_cad`, `subtotal_cad`, `total_cad`) VALUES
+(1, 1, 2, 8, 45, 25, 1125, 1125);
 
 -- --------------------------------------------------------
 
@@ -281,20 +330,21 @@ CREATE TABLE `project` (
   `project_number` varchar(50) NOT NULL,
   `address` varchar(150) NOT NULL,
   `fk_id_company` int(10) NOT NULL,
-  `fk_id_user_foreman` int(10) NOT NULL
+  `fk_id_user_foreman` int(10) NOT NULL,
+  `purchase_order_general` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `project`
 --
 
-INSERT INTO `project` (`id_project`, `project_name`, `project_state`, `project_number`, `address`, `fk_id_company`, `fk_id_user_foreman`) VALUES
-(0, 'No project', 2, '', '', 1, 3),
-(1, 'CONTRUCCION DE PUENTE', 1, '1124-2', '', 1, 3),
-(2, ' EDIFICIO CENTRAL', 1, '1125-1', '3376 Spruce drive', 1, 4),
-(3, 'PASO PEATONAL DOWNTOWN', 1, '1230-1', '', 1, 3),
-(6, 'HOME TOWN', 1, '1024-2', '', 1, 3),
-(7, 'WINDOW INSTALATION', 1, '1090-1', '', 1, 3);
+INSERT INTO `project` (`id_project`, `project_name`, `project_state`, `project_number`, `address`, `fk_id_company`, `fk_id_user_foreman`, `purchase_order_general`) VALUES
+(0, 'No project', 2, '', '', 1, 3, ''),
+(1, 'CONTRUCCION DE PUENTE', 1, '1124-2', '3376 Spruce drive', 1, 3, 'asdfasdf'),
+(2, ' EDIFICIO CENTRAL', 1, '1125-1', '3376 Spruce drive', 1, 4, ''),
+(3, 'PASO PEATONAL DOWNTOWN', 1, '1230-1', '', 1, 3, ''),
+(6, 'HOME TOWN', 1, '1024-2', '', 1, 3, ''),
+(7, 'WINDOW INSTALATION', 1, '1090-1', '', 1, 3, '');
 
 -- --------------------------------------------------------
 
@@ -329,20 +379,21 @@ CREATE TABLE `user` (
   `state` int(1) NOT NULL DEFAULT '0' COMMENT '0: newUser; 1:active; 2:inactive',
   `photo` varchar(250) NOT NULL,
   `address` varchar(250) NOT NULL,
-  `hora_real` float NOT NULL,
-  `hora_contrato` float NOT NULL
+  `hora_real_cad` float NOT NULL,
+  `hora_contrato_cad` float NOT NULL,
+  `no_horas_max` float(5,2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `log_user`, `email`, `fk_id_type`, `fk_id_rol`, `birthdate`, `movil`, `password`, `state`, `photo`, `address`, `hora_real`, `hora_contrato`) VALUES
-(1, 'BENJAMIN', 'MOTTA', 'bmottag', 'benmotta@gmail.com', 3, 1, '2018-03-19', '14034089921', '25f9e794323b453885f5181f1b624d0b', 1, '', '', 25, 0),
-(2, 'EDUAR', 'ACOSTA', 'eacosta', 'eacosta@eapcontruction.com', 1, 1, '2018-04-05', '4038895044', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 0, 0),
-(3, 'JAVIER', 'MOLINA', 'jmolina', 'jmolina@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 26, 0),
-(4, 'ANDRES', 'PALOMARES', 'apalomares', 'apalomares@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 0, 0),
-(5, 'ALEX', 'HERRERA', 'aherrera', 'aherrera@gmail.com', 2, 3, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 26.5, 30);
+INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `log_user`, `email`, `fk_id_type`, `fk_id_rol`, `birthdate`, `movil`, `password`, `state`, `photo`, `address`, `hora_real_cad`, `hora_contrato_cad`, `no_horas_max`) VALUES
+(1, 'BENJAMIN', 'MOTTA', 'bmottag', 'benmotta@gmail.com', 3, 1, '2018-03-19', '14034089921', '25f9e794323b453885f5181f1b624d0b', 1, '', '', 26, 28, 94.77),
+(2, 'EDUAR', 'ACOSTA', 'eacosta', 'eacosta@eapcontruction.com', 1, 1, '2018-04-05', '4038895044', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 24, 0, 500.00),
+(3, 'JAVIER', 'MOLINA', 'jmolina', 'jmolina@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 26, 0, 88.00),
+(4, 'ANDRES', 'PALOMARES', 'apalomares', 'apalomares@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 25, 0, 88.00),
+(5, 'ALEX', 'HERRERA', 'aherrera', 'aherrera@gmail.com', 2, 3, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 26, 0, 88.00);
 
 --
 -- Índices para tablas volcadas
@@ -418,7 +469,23 @@ ALTER TABLE `param_user_type`
 ALTER TABLE `payroll`
   ADD PRIMARY KEY (`id_payroll`),
   ADD KEY `fk_id_user` (`fk_id_user`),
-  ADD KEY `fk_id_project_start` (`fk_id_project`);
+  ADD KEY `fk_id_project_start` (`fk_id_project`),
+  ADD KEY `fk_id_period` (`fk_id_period`);
+
+--
+-- Indices de la tabla `payroll_period`
+--
+ALTER TABLE `payroll_period`
+  ADD PRIMARY KEY (`id_period`);
+
+--
+-- Indices de la tabla `payroll_project_period`
+--
+ALTER TABLE `payroll_project_period`
+  ADD PRIMARY KEY (`id_project_period`),
+  ADD KEY `fk_id_user` (`fk_id_user`),
+  ADD KEY `fk_id_project` (`fk_id_project`),
+  ADD KEY `fk_id_period` (`fk_id_period`);
 
 --
 -- Indices de la tabla `project`
@@ -498,7 +565,17 @@ ALTER TABLE `param_user_type`
 -- AUTO_INCREMENT de la tabla `payroll`
 --
 ALTER TABLE `payroll`
-  MODIFY `id_payroll` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_payroll` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `payroll_period`
+--
+ALTER TABLE `payroll_period`
+  MODIFY `id_period` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT de la tabla `payroll_project_period`
+--
+ALTER TABLE `payroll_project_period`
+  MODIFY `id_project_period` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `project`
 --
@@ -547,7 +624,15 @@ ALTER TABLE `param_menu_permisos`
 -- Filtros para la tabla `payroll`
 --
 ALTER TABLE `payroll`
-  ADD CONSTRAINT `payroll_ibfk_3` FOREIGN KEY (`fk_id_project`) REFERENCES `project` (`id_project`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `payroll_ibfk_3` FOREIGN KEY (`fk_id_project`) REFERENCES `project` (`id_project`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `payroll_ibfk_4` FOREIGN KEY (`fk_id_period`) REFERENCES `payroll_period` (`id_period`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `payroll_project_period`
+--
+ALTER TABLE `payroll_project_period`
+  ADD CONSTRAINT `payroll_project_period_ibfk_1` FOREIGN KEY (`fk_id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `payroll_project_period_ibfk_2` FOREIGN KEY (`fk_id_period`) REFERENCES `payroll_period` (`id_period`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `project`
