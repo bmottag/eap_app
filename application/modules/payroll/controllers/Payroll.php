@@ -568,11 +568,9 @@ class Payroll extends CI_Controller {
 			
 			$idUser = $infoPayroll[0]['fk_id_user'];
 			$idProject = $infoPayroll[0]['fk_id_project'];
-			$idPeriod = $infoPayroll[0]['fk_id_period'];
-			$valorHora = $infoPayroll[0]['valor_hora'];
+			$idPeriod = $infoPayroll[0]['fk_id_period'];			
 			$workingHours = $infoPayroll[0]['working_hours'];
-			$valor_total = $infoPayroll[0]['valor_total'];
-			
+
 			//buscar informacion anterior en la tabla PAYROLL_PROJECT_PERIOD
 			$arrParamFiltro = array(
 				"idUser" => $idUser,
@@ -589,38 +587,51 @@ class Payroll extends CI_Controller {
 				$idProjectPeriod = '';
 			}
 			
-			//numero de horas totales para este proyecto
-			$totalHorasNuevo = $totalHorasAnterior + $workingHours; //suma total anterior mas el nuevo registro
-			$valorSubTotal = $totalHorasNuevo * $valorHora;//subtotal: total horas proyecto por el valor de la hora
-			
 			//revisar el tipo de usuario
 			//si es subcontractor el totla en mas el 5% de GST del subtotal
 			//si es casual es el mismo valor
 			//si es payroll se debe hacer calculo
 			
-			//*****REVISAR QUE TIPO DE UUSARIO ES ***************** ///////////
+			//*****REVISAR QUE TIPO DE USUARIO ES ***************** ///////////
 			
 			//buscar informacion del usuario
 			$arrParam = array("idUser" => $infoPayroll[0]['fk_id_user']);
-			$infoUser = $this->general_model->get_user_list($arrParam);			
+			$infoUser = $this->general_model->get_user_list($arrParam);	
+
 			
 			$tipoUsuario = $infoUser[0]['fk_id_type'];
-			switch ($tipoUsuario) {
-				case 1://subcontractor: el total se le suma el 5% del GST del subtotal
-					$GST = 0.05*$valorSubTotal;
-					$valorTotal = $valorSubTotal + $GST;
-					break;
-				case 2://casual: el total es el mismo subtotal
-					$valorTotal = $valorSubTotal;
-					break;
-				case 3:
-					$valor = 'SUPER ADMIN';
-					$clase = "text-danger";
-					break;
+			$valorHora = $infoUser[0]['hora_real_cad'];
+			$valorHoraContrato = $infoUser[0]['hora_contrato_cad'];
+			$noHorasMaximo = $infoUser[0]['no_horas_max'];
+			
+			//numero de horas totales para este proyecto
+			$totalHorasNuevo = $totalHorasAnterior + $workingHours; //suma total anterior mas el nuevo registro
+			
+			if($totalHorasNuevo > $noHorasMaximo){
+				$flatHours = $noHorasMaximo;
+				$bonosHours = $totalHorasNuevo - $noHorasMaximo;
+			}else{
+				$flatHours = $totalHorasNuevo;
+				$bonosHours = 0;
 			}
 			
-
-
+			switch ($tipoUsuario) {
+				case 1://subcontractor: el total se le suma el 5% del GST del subtotal					
+					$valorSubTotal = $totalHorasNuevo * $valorHora;//subtotal: total horas proyecto por el valor de la hora
+					$bonos_GST = 0.05 * $valorSubTotal;
+					$valorTotal = $valorSubTotal + $bonos_GST;
+					break;
+				case 2://casual: si horas mayor a $numeroMaximoHoras entonces se se pagan el resto en bonos
+					$valorSubTotal = $flatHours * $valorHora;
+					$bonos_GST = $bonosHours * $valorHora;
+					$valorTotal = $valorSubTotal + $bonos_GST;
+					break;
+				case 3://payroll:
+					$valorSubTotal = $flatHours * $valorHora / $valorHoraContrato ;
+					$bonos_GST = $bonosHours * $valorHora;
+					$valorTotal = $valorSubTotal + $bonos_GST;
+					break;
+			}
 			
 			//guardo informacion en la base de datos
 			$arrParam = array(
@@ -630,7 +641,12 @@ class Payroll extends CI_Controller {
 				"idPeriod" => $idPeriod,
 				"hotalHoras" => $totalHorasNuevo,
 				"valorHora" => $valorHora,
+				"valorHoraContrato" => $valorHoraContrato,
+				"noHorasMaximo" => $noHorasMaximo,
+				"flatHours" => $flatHours,
+				"bonosHours" => $bonosHours,
 				"valorSubTotal" => $valorSubTotal,
+				"bonos_GST" => $bonos_GST,
 				"valorTotal" => $valorTotal
 			);
 
