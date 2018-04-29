@@ -224,7 +224,12 @@
 				$data = array(
 					'total_hours' => $arrData["hotalHoras"],
 					'hour_value_cad' => $arrData["valorHora"],
+					'hour_value_contract_cad' => $arrData["valorHoraContrato"],
+					'max_hours' => $arrData["noHorasMaximo"],
+					'flat_hours' => $arrData["flatHours"],
+					'bonos_hours' => $arrData["bonosHours"],
 					'subtotal_cad' => $arrData["valorSubTotal"],
+					'bonos_gst_cad' => $arrData["bonos_GST"],
 					'total_cad' => $arrData["valorTotal"]
 				);	
 

@@ -587,7 +587,6 @@ class Payroll extends CI_Controller {
 			$arrParam = array("idUser" => $infoPayroll[0]['fk_id_user']);
 			$infoUser = $this->general_model->get_user_list($arrParam);	
 
-			
 			$tipoUsuario = $infoUser[0]['fk_id_type'];
 			$valorHora = $infoUser[0]['hora_real_cad'];
 			$valorHoraContrato = $infoUser[0]['hora_contrato_cad'];
@@ -596,28 +595,39 @@ class Payroll extends CI_Controller {
 			//numero de horas totales para este proyecto
 			$totalHorasNuevo = $totalHorasAnterior + $workingHours; //suma total anterior mas el nuevo registro
 			
-			if($totalHorasNuevo > $noHorasMaximo){
-				$flatHours = $noHorasMaximo;
-				$bonosHours = $totalHorasNuevo - $noHorasMaximo;
-			}else{
-				$flatHours = $totalHorasNuevo;
-				$bonosHours = 0;
-			}
-			
 			switch ($tipoUsuario) {
 				case 1://subcontractor: el total se le suma el 5% del GST del subtotal					
+					$flatHours = $totalHorasNuevo;
+					$bonosHours = 0;
+				
 					$valorSubTotal = $totalHorasNuevo * $valorHora;//subtotal: total horas proyecto por el valor de la hora
 					$bonos_GST = 0.05 * $valorSubTotal;
 					$valorTotal = $valorSubTotal + $bonos_GST;
 					break;
 				case 2://casual: si horas mayor a $numeroMaximoHoras entonces se se pagan el resto en bonos
+					$flatHours = $totalHorasNuevo;
+					$bonosHours = 0;
+				
+					if($totalHorasNuevo > $noHorasMaximo){
+						$flatHours = $noHorasMaximo;
+						$bonosHours = $totalHorasNuevo - $noHorasMaximo;
+					}
+				
 					$valorSubTotal = $flatHours * $valorHora;
 					$bonos_GST = $bonosHours * $valorHora;
 					$valorTotal = $valorSubTotal + $bonos_GST;
 					break;
 				case 3://payroll:
-					$valorSubTotal = $flatHours * $valorHora / $valorHoraContrato ;
-					$bonos_GST = $bonosHours * $valorHora;
+					$flatHours = $totalHorasNuevo * $valorHora / $valorHoraContrato;
+					$bonosHours = 0;
+					
+					if($flatHours > $noHorasMaximo){
+						$flatHours = $noHorasMaximo;
+						$bonosHours = $flatHours - $noHorasMaximo;
+					}
+
+					$valorSubTotal = $flatHours * $valorHoraContrato;
+					$bonos_GST = $bonosHours * $valorHoraContrato;
 					$valorTotal = $valorSubTotal + $bonos_GST;
 					break;
 			}
