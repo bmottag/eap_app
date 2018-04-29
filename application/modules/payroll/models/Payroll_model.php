@@ -78,9 +78,7 @@
 		{
 				$data = array(
 					'working_time' => $arrData["workingTime"],
-					'working_hours' => $arrData["workingHours"],
-					'valor_hora' => $arrData["valorHora"],
-					'valor_total' => $arrData["valorTotal"]
+					'working_hours' => $arrData["workingHours"]
 				);
 				
 				$this->db->where('id_payroll', $arrData["idPayroll"]);

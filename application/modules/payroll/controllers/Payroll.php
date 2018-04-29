@@ -468,21 +468,10 @@ class Payroll extends CI_Controller {
 			$workingHours = $justHours + $transformation;
 			//FINISH hours calculation
 			
-			//buscar informacion del usuario
-			$arrParam = array("idUser" => $infoPayroll[0]['fk_id_user']);
-			$infoUser = $this->general_model->get_user_list($arrParam);
-
-			$valorHora = $infoUser[0]['hora_real_cad'];//valor hora real
-			$valorTotal = $valorHora * $workingHours;//valor de las horas trabajadas
-			
-			$userType = $infoUser[0]['fk_id_type'];//tipo de usuario
-			
 			$arrParam = array(
 				"idPayroll" => $idPayroll,
 				"workingTime" => $workingTime,
-				"workingHours" => $workingHours,
-				"valorHora" => $valorHora,
-				"valorTotal" => $valorTotal
+				"workingHours" => $workingHours
 			);
 
 			if ($this->payroll_model->updateWorkingTimePayroll($arrParam)) {

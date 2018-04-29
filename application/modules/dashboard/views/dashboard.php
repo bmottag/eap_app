@@ -50,11 +50,10 @@
 							<thead>
 								<tr class="headings">
 								<th class="column-title" style="width: 15%">User </th>
-								<th class="column-title" style="width: 17%">Start</th>
-								<th class="column-title" style="width: 17%">Finish</th>
-								<th class="column-title" style="width: 25%">Observation</th>
+								<th class="column-title" style="width: 20%">Start</th>
+								<th class="column-title" style="width: 20%">Finish</th>
+								<th class="column-title" style="width: 35%">Observation</th>
 								<th class="column-title" style="width: 10%">Hours</th>
-								<th class="column-title" style="width: 16%">Total $</th>
 								</tr>
 							</thead>
 
@@ -82,10 +81,7 @@
 									echo "</td>";
 									echo "<td><small>" . $data['observation'] . "</small></td>";
 									echo "<td class='text-right'>" . $data['working_hours'] . "</td>";
-									echo "<td class='text-right'>";
-									echo "$ ". $data['valor_total'];
-									echo "<br><strong>Hour value</strong><br>$ ". $data['valor_hora'];
-									echo "</td>";
+
 									echo "</tr>";
 								endforeach;
 							?>
