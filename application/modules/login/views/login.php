@@ -57,7 +57,7 @@
 			<form  name="form" id="form" role="form" method="post" action="<?php echo base_url("login/validateUser"); ?>" >
               <h1>Sign in</h1>
               <div>
-                <input type="text" id="inputLogin" name="inputLogin" class="form-control" placeholder="User" maxlength="15" data-minlength="3" required />
+                <input type="text" id="inputLogin" name="inputLogin" class="form-control" placeholder="User" maxlength="25" data-minlength="5" required />
               </div>
               <div>
                 <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required />
