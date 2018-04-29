@@ -146,3 +146,12 @@ if($data['fk_id_user']){
 	</div>
 </div>                       
 <!--FIN Modal-->
+
+<!-- Tables -->
+<script>
+$(document).ready(function() {
+    $('#dataTables').DataTable( {
+        "pageLength": 50
+    } );
+} );
+</script>
