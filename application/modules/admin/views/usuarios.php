@@ -43,7 +43,7 @@ if ($retornoError) {
 				
 					<div class="table-responsive">
 					
-<table id="dataTables" class="table table-striped jambo_table bulk_action table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+						<table id="dataTables" class="table table-striped jambo_table bulk_action table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 							<thead>
 								<tr class="headings">
 								<th class="column-title">Name </th>

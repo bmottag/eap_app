@@ -69,7 +69,7 @@ if ($retornoError) {
 				<?php }else{ ?>
 					<div class="table-responsive">
 					
-						<table id="datatable" class="table table-striped jambo_table bulk_action">
+						<table id="dataTables" class="table table-striped jambo_table bulk_action table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 							<thead>
 								<tr class="headings">
 								<th class="column-title">ID </th>
@@ -130,3 +130,12 @@ if ($retornoError) {
 	</div>
 </div>                       
 <!--FIN Modal-->
+
+<!-- Tables -->
+<script>
+$(document).ready(function() {
+    $('#dataTables').DataTable( {
+        "pageLength": 50
+    } );
+} );
+</script>
