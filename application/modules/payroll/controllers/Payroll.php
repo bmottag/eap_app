@@ -409,6 +409,13 @@ class Payroll extends CI_Controller {
 			{
 				//calculo de total de horas trabajadas, valor total y se guarda en la base de datos
 				$calculo = $this->calcular_datos($idPayroll);//metodo para calcular horas y sacar el valor total
+				
+				//busco el periodo sino existe lo creo y guarda el id del periodo en la tabla payroll
+				$periodo = $this->buscar_periodo($idPayroll);//metodo para calcular horas y sacar el valor total
+				
+				//llevo control del horas por proyecto por periodo en la tabla PAYROLL_PROJECT_PERIOD
+				//se va sumando las horas por proyecto y se saca el todal en CAD
+				$total = $this->total_proyecto($idPayroll);
 			
 				if ($calculo) {
 					$data["result"] = true;
