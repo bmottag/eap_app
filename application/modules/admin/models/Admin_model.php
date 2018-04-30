@@ -53,6 +53,8 @@
 					'email' => $this->input->post('email'),
 					'movil' => $this->input->post('celular'),
 					'fk_id_type' => $userType,
+					'company_name' => $this->input->post('company_name'),
+					'gst_number' => $this->input->post('gst_number'),
 					'hora_real_cad' => $valueHoraReal,
 					'hora_contrato_cad' => $valueHoraContrato,
 					'no_horas_max' => $noHorasMaximo,

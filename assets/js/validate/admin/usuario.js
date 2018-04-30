@@ -1,4 +1,14 @@
 $( document ).ready( function () {
+
+//se valida si es contratista enotnces se debe ingresar el nombre de la empresa y el GST
+jQuery.validator.addMethod("subcontractor", function(value, element, param) {
+	var type = $('#type').val();
+	if (type == 1 && value == "") {
+		return false;
+	}else{
+		return true;
+	}
+}, "This file is required.");
 			
 	$("#nombres").convertirMayuscula().bloquearNumeros().maxlength(25);
 	$("#apellidos").convertirMayuscula().bloquearNumeros().maxlength(25);
@@ -12,6 +22,8 @@ $( document ).ready( function () {
 			email: 				{ required: true, email: true, maxlength:50 },
 			celular:	 		{ required: true, number: true, maxlength:12 },
 			type:		 		{ required: true },
+			company_name:		{ maxlength: 150, subcontractor: "#type" },
+			gst_number:			{ maxlength: 100, subcontractor: "#type" },
 			hora_real:	 		{ required: true, number: true, maxlength:5 },
 			hora_contrato: 		{ number: true, maxlength:5 },
 			rol:		 		{ required: true },

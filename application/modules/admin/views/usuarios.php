@@ -55,6 +55,8 @@ if ($retornoError) {
 								<th class="column-title">LMIA hour value CAD</th>
 								<th class="column-title">State</th>
 								<th class="column-title">Links</th>
+								<th class="column-title">Company name</th>
+								<th class="column-title">GST number</th>
 								</tr>
 							</thead>
 
@@ -94,6 +96,8 @@ if ($retornoError) {
 				echo "<a href='" . base_url("admin/update_usuario/" . $data['id_user']) . "' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>";
 				echo "<a href='" . base_url("admin/change_password/" . $data['id_user']) . "' class='btn btn-default btn-xs'><i class='glyphicon glyphicon-lock'></i> Change password </a>";				
 				echo "</td>";
+				echo "<td>" . $data['comapany_name'] . "</td>";
+				echo "<td>" . $data['gst_number'] . "</td>";
 				echo "</tr>";
 			endforeach 
 		?>

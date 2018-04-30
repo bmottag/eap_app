@@ -74,6 +74,24 @@
 						</div>
 						
 						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="company_name">Company name
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="company_name" name="company_name" class="form-control col-md-7 col-xs-12 has-feedback-left" value="<?php echo $information?$information[0]["company_name"]:""; ?>" maxlength=150 placeholder="Company name">
+								<span class="fa fa-copyright form-control-feedback left" aria-hidden="true"></span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="gst_number">GST number 
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="gst_number" name="gst_number" class="form-control col-md-7 col-xs-12 has-feedback-left" value="<?php echo $information?$information[0]["gst_number"]:""; ?>" maxlength=100 placeholder="GST number">
+								<span class="fa fa-calculator form-control-feedback left" aria-hidden="true"></span>
+							</div>
+						</div>
+						
+						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="hora_real">Hour value CAD <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="hora_real" name="hora_real" class="form-control col-md-7 col-xs-12 has-feedback-left" value="<?php echo $information?$information[0]["hora_real_cad"]:""; ?>" maxlength=5 placeholder="Hour value" required="required">
@@ -84,7 +102,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="hora_contrato">LMIA hour value CAD </label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="hora_contrato" name="hora_contrato" class="form-control col-md-7 col-xs-12 has-feedback-left" value="<?php echo $information?$information[0]["hora_contrato_cad"]:""; ?>" maxlength=5 placeholder="Hour contract value">
+								<input type="text" id="hora_contrato" name="hora_contrato" class="form-control col-md-7 col-xs-12 has-feedback-left" value="<?php echo $information?$information[0]["hora_contrato_cad"]:""; ?>" maxlength=5 placeholder="LMIA hour value CAD">
 								<span class="fa fa-dollar form-control-feedback left" aria-hidden="true"></span>
 							</div>
 						</div>
