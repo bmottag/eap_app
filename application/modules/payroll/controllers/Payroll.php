@@ -317,9 +317,25 @@ class Payroll extends CI_Controller {
 			
 			if ($this->payroll_model->savePayrollHour($arrParam)) 
 			{
-				//calculo de total de horas trabajadas, valor total y se guarda en la base de datos
+				//como se esta editando tengo que ver el valor de total de WORKING HOURS anterior para hacer el ajuste
+				//en la tabla de payroll_project_period
+				//si la fecha final es 0 entonces no hay calculos y se puede hacer normal
+				//si es diferente de 0 entonces si hay informacion
+				$this->load->model("general_model");
 				$idPayroll = $this->input->post('hddIdentificador');
+				$arrParam = array("idPayroll" => $idPayroll);			
+				$infoPayrollAnterior = $this->general_model->get_payroll($arrParam);
+				$workingHoursAnteriores = $infoPayrollAnterior[0]['working_hours'];
+				
+				//calculo de total de horas trabajadas, valor total y se guarda en la base de datos
 				$calculo = $this->calcular_datos($idPayroll);//metodo para calcular horas y sacar el valor total
+				
+				//busco el periodo sino existe lo creo y guarda el id del periodo en la tabla payroll
+				$periodo = $this->buscar_periodo($idPayroll);//metodo para calcular horas y sacar el valor total
+				
+				//llevo control del horas por proyecto por periodo en la tabla PAYROLL_PROJECT_PERIOD
+				//se va sumando las horas por proyecto y se saca el todal en CAD
+				$total = $this->total_proyecto($idPayroll, $workingHoursAnteriores);
 			
 				$hour = date("G:i");
 				if ($calculo) {
@@ -555,7 +571,7 @@ class Payroll extends CI_Controller {
 	 * Calculo de total de horas trabajadas por un usuario en un proyecto en un periodo
      * @since 26/4/2018
 	 */
-    function total_proyecto($idPayroll) 
+    function total_proyecto($idPayroll, $workingHoursAnteriores = 0 ) 
 	{
 			//info for the payroll
 			$this->load->model("general_model");
@@ -600,7 +616,7 @@ class Payroll extends CI_Controller {
 			$noHorasMaximo = $infoUser[0]['no_horas_max'];
 			
 			//numero de horas totales para este proyecto
-			$totalHorasNuevo = $totalHorasAnterior + $workingHours; //suma total anterior mas el nuevo registro
+			$totalHorasNuevo = $totalHorasAnterior + $workingHours - $workingHoursAnteriores; //suma total anterior mas el nuevo registro -las horas que tenia antes si se esta editando el registro
 			
 			switch ($tipoUsuario) {
 				case 1://subcontractor: el total se le suma el 5% del GST del subtotal					
