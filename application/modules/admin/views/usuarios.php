@@ -96,7 +96,7 @@ if ($retornoError) {
 				echo "<a href='" . base_url("admin/update_usuario/" . $data['id_user']) . "' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>";
 				echo "<a href='" . base_url("admin/change_password/" . $data['id_user']) . "' class='btn btn-default btn-xs'><i class='glyphicon glyphicon-lock'></i> Change password </a>";				
 				echo "</td>";
-				echo "<td>" . $data['comapany_name'] . "</td>";
+				echo "<td>" . $data['company_name'] . "</td>";
 				echo "<td>" . $data['gst_number'] . "</td>";
 				echo "</tr>";
 			endforeach 
