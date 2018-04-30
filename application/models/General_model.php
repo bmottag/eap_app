@@ -182,7 +182,7 @@ class General_model extends CI_Model {
 				$rol = $this->session->userdata['rol'];
 				$idUser = $this->session->userdata['id'];
 				
-				$this->db->select('P.*, C.*, CONCAT(U.first_name, " " , U.last_name) foreman');
+				$this->db->select('P.*, C.company_name, C.id_company, CONCAT(U.first_name, " " , U.last_name) foreman');
 				$this->db->join('param_company C', 'C.id_company = P.fk_id_company', 'INNER');
 				$this->db->join('user U', 'U.id_user = P.fk_id_user_foreman', 'INNER');
 				
