@@ -107,7 +107,7 @@ class General_model extends CI_Model {
 				}
 				if (array_key_exists("idProject", $arrData) && $arrData["idProject"] != 'x') {
 					$this->db->where('fk_id_project', $arrData["idProject"]);
-				}elseif($rol == 2){
+				}elseif($rol == 2 && !array_key_exists("idUser", $arrData)){
 					$this->db->where('J.fk_id_user_foreman', $idUser);
 				}
 				if (array_key_exists("idPayroll", $arrData)) {
