@@ -10,8 +10,8 @@ jQuery.validator.addMethod("subcontractor", function(value, element, param) {
 	}
 }, "This file is required.");
 			
-	$("#nombres").convertirMayuscula().bloquearNumeros().maxlength(25);
-	$("#apellidos").convertirMayuscula().bloquearNumeros().maxlength(25);
+	$("#nombres").convertirMayuscula().maxlength(25);
+	$("#apellidos").convertirMayuscula().maxlength(25);
 	$("#celular").bloquearTexto().maxlength(12);
 			
 	$( "#form" ).validate( {
