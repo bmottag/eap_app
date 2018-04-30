@@ -82,7 +82,7 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="hora_contrato">Hour contract value CAD </label>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="hora_contrato">LMIA hour value CAD </label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="hora_contrato" name="hora_contrato" class="form-control col-md-7 col-xs-12 has-feedback-left" value="<?php echo $information?$information[0]["hora_contrato_cad"]:""; ?>" maxlength=5 placeholder="Hour contract value">
 								<span class="fa fa-dollar form-control-feedback left" aria-hidden="true"></span>

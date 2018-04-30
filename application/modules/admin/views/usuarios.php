@@ -52,7 +52,7 @@ if ($retornoError) {
 								<th class="column-title">User type</th>
 								<th class="column-title">Rol</th>
 								<th class="column-title">Hour value CAD</th>
-								<th class="column-title">Hour contract value CAD</th>
+								<th class="column-title">LMIA hour value CAD</th>
 								<th class="column-title">State</th>
 								<th class="column-title">Links</th>
 								</tr>
