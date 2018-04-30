@@ -55,6 +55,7 @@ if ($retornoError) {
 								<th class="column-title">PO</th>
 								<th class="column-title">State</th>
 								<th class="column-title">Links</th>
+								<th class="column-title">Description</th>
 								</tr>
 							</thead>
 
@@ -90,6 +91,7 @@ if ($retornoError) {
 				echo "<a href='" . base_url("admin/purchase_order_number/" . $data['id_project']) . "' class='btn btn-warning btn-xs'><i class='fa fa-plus'></i> PO No. </a>";
 				
 				echo "</td>";
+				echo "<td>" . $data['description'] . "</td>";
 				echo "</tr>";
 			endforeach;
 		}

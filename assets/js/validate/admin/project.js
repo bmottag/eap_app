@@ -9,8 +9,9 @@ $( document ).ready( function () {
 			address:			{ required: true, minlength: 3, maxlength:50 },
 			company:			{ required: true },
 			foreman:			{ required: true },
-			state:	 			{ required: true },
-			purchase_order:		{ required: true, minlength: 3, maxlength:10 }
+			purchase_order:		{ required: true, minlength: 3, maxlength:10 },
+			description:	 	{ required: true },
+			state:	 			{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {

@@ -79,6 +79,13 @@
 						</div>
 						
 						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Work description <span class="required">*</span></label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<textarea id="description" name="description" placeholder="Work description"  class="form-control" rows="3"><?php echo $information?$information[0]["description"]:""; ?></textarea>
+							</div>
+						</div>
+						
+						<div class="form-group">
 							<label for="estado" class="control-label col-md-3 col-sm-3 col-xs-12">State <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select name="state" id="state" class="form-control" required>
