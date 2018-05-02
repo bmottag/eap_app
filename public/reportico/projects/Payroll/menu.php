@@ -19,6 +19,7 @@ $dropdown_menu = array(
                         "title" => "Payroll",
                         "items" => array (
 							array ( "reportfile" => "General.xml" ),
+							array ( "reportfile" => "project.xml" ),
 							array ( "reportfile" => "master.xml" )
                             )
                         ),
