@@ -654,7 +654,7 @@ class Payroll extends CI_Controller {
 			$infoTotalPeriod = $this->general_model->get_total_period($arrParamFiltro);
 			
 			if($infoTotalPeriod){
-				$totalHorasAnterior = $infoTotalPeriod[0]['total_hours'];
+				$totalHorasAnterior = $infoTotalPeriod[0]['total_hours_user'];
 				$idTotalPeriod = $infoTotalPeriod[0]['id_total_period'];
 			}else{
 				$totalHorasAnterior = 0;
