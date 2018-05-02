@@ -63,7 +63,11 @@
 	    				redirect("/employee","location",301);
 	    				break;
 	    		case 1: //ACTIVE USER
-						redirect("/dashboard","location",301);
+						if($userRol!=1){//vista para FOREMAN Y USUARIO NORMAL
+							redirect("payroll","location",301);
+						}else{
+							redirect("/dashboard","location",301);
+						}
 	    				break;
 	    		case 2: //INACTIVE USER
 	    				$this->session->sess_destroy();
