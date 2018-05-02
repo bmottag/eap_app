@@ -57,6 +57,7 @@ if ($retornoError) {
 								<th class="column-title">Links</th>
 								<th class="column-title">Company name</th>
 								<th class="column-title">GST number</th>
+								<th class="column-title">User</th>
 								</tr>
 							</thead>
 
@@ -105,6 +106,7 @@ if ($retornoError) {
 				echo "</td>";
 				echo "<td>" . $data['company_name'] . "</td>";
 				echo "<td>" . $data['gst_number'] . "</td>";
+				echo "<td>" . $data['log_user'] . "</td>";
 				echo "</tr>";
 			endforeach 
 		?>
