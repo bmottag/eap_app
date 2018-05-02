@@ -42,7 +42,10 @@
 						$noHorasMaximo = 88;
 						break;
 					case 3://payroll
-						$noHorasMaximo = $valueHoraContrato * 88 / $valueHoraReal;
+						$noHorasMaximo = 88;
+						if($valueHoraContrato > 0){
+							$noHorasMaximo = $valueHoraContrato * 88 / $valueHoraReal;
+						}
 						break;
 				}
 				
