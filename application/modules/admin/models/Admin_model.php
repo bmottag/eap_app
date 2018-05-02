@@ -36,7 +36,7 @@
 				
 				switch ($userType) {
 					case 1://subcontractor
-						$noHorasMaximo = 500;//este es un valor cualquiera pero que sea mayor al posible valor de horas porque al subcontractor se le paga completo
+						$noHorasMaximo = 0;
 						break;
 					case 2://casual
 						$noHorasMaximo = 88;
