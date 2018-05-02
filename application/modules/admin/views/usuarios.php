@@ -68,8 +68,8 @@ if ($retornoError) {
 				echo "<td>" . $data['first_name'] . " " . $data['last_name'] . "</td>";
 				echo "<td>" . $data['email'] . "</td>";
 				echo "<td>" . $data['movil'] . "</td>";
-				echo "<td class='text-center'>";
-				echo "<span class='label " . $data['style'] . "'>" . $data['user_type'] . "</span>";
+				echo "<td class='text-center'>";				
+				echo '<button class="btn btn-sm ' . $data['style'] . ' btn-block" type="button">' . $data['user_type'] . '</button>';
 				echo "</td>";
 				
 				echo "<td class='text-center'>";
