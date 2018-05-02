@@ -23,18 +23,18 @@
 						<input type="hidden" id="hddIdUserForemanAnterior" name="hddIdUserForemanAnterior" value="<?php echo $information?$information[0]["fk_id_user_foreman"]:""; ?>"/>
 
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address <span class="required">*</span>
-							</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["address"]:""; ?>" maxlength=50 placeholder="Address">
-							</div>
-						</div>
-						
-						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="project">Project name <span class="required">*</span>
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="project" name="project" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["project_name"]:""; ?>" maxlength=30 placeholder="Project name">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $information?$information[0]["address"]:""; ?>" maxlength=50 placeholder="Address">
 							</div>
 						</div>
 						
