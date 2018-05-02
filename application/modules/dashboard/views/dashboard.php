@@ -80,8 +80,10 @@
 									}
 									echo "</td>";
 									echo "<td><small>" . $data['observation'] . "</small></td>";
-									echo "<td class='text-right'>" . $data['working_hours'] . "</td>";
-
+									echo "<td class='text-right'>";
+									echo "<strong><span class='value text-success'> " . $data['working_hours'] . " </span></strong>";
+									echo "</td>";
+ 
 									echo "</tr>";
 								endforeach;
 							?>
