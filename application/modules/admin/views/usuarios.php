@@ -51,8 +51,8 @@ if ($retornoError) {
 								<th class="column-title">Movil</th>
 								<th class="column-title">User type</th>
 								<th class="column-title">Rol</th>
-								<th class="column-title">Hour value CAD</th>
-								<th class="column-title">LMIA hour value CAD</th>
+								<th class="column-title">Hour price</th>
+								<th class="column-title">Hour price LMIA</th>
 								<th class="column-title">State</th>
 								<th class="column-title">Links</th>
 								<th class="column-title">Company name</th>
