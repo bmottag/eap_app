@@ -68,8 +68,15 @@ if ($retornoError) {
 				echo "<td>" . $data['first_name'] . " " . $data['last_name'] . "</td>";
 				echo "<td>" . $data['email'] . "</td>";
 				echo "<td>" . $data['movil'] . "</td>";
+				
+				$LMIA = "";
+				//si es PAYROLL y tiene precio LMIA entonces lo identifico
+				if($data['fk_id_type'] == 3 && $data['hora_contrato_cad'] > 0){
+					$LMIA = " <span class='badge'>LMIA</span>";
+				}
+				
 				echo "<td class='text-center'>";				
-				echo '<button class="btn btn-sm ' . $data['style'] . ' btn-block" type="button">' . $data['user_type'] . '</button>';
+				echo '<button class="btn btn-sm ' . $data['style'] . ' btn-block" type="button">' . $data['user_type'] . $LMIA . '</button>';
 				echo "</td>";
 				
 				echo "<td class='text-center'>";
