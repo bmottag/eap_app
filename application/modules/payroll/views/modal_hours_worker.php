@@ -49,7 +49,7 @@ if($finish != 0){
 			locale: {
 				format: 'YYYY-MM-DD'
 			},
-			minDate: moment().subtract(14, 'days'),
+			minDate: moment().subtract(31, 'days'),
 			maxDate: moment(),
 			singleDatePicker: true,
 			singleClasses: "picker_1"
@@ -98,7 +98,7 @@ if($finish != 0){
 			locale: {
 				format: 'YYYY-MM-DD'
 			},
-			minDate: moment().subtract(14, 'days'),
+			minDate: moment().subtract(31, 'days'),
 			maxDate: moment(),
 			singleDatePicker: true,
 			singleClasses: "picker_1"

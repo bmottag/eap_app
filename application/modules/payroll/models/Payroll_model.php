@@ -223,14 +223,6 @@
 				
 				$data = array(
 					'total_hours' => $arrData["hotalHoras"],
-					'hour_value_cad' => $arrData["valorHora"],
-					'hour_value_contract_cad' => $arrData["valorHoraContrato"],
-					'max_hours' => $arrData["noHorasMaximo"],
-					'flat_hours' => $arrData["flatHours"],
-					'bonos_hours' => $arrData["bonosHours"],
-					'subtotal_cad' => $arrData["valorSubTotal"],
-					'bonos_gst_cad' => $arrData["bonos_GST"],
-					'total_cad' => $arrData["valorTotal"]
 				);	
 
 				//revisar si es para adicionar o editar
@@ -250,6 +242,42 @@
 				}
 		}
 
+		/**
+		 * Add/Edit PAYROLL TOTAL PERIOD
+		 * @since 2/5/2018
+		 */
+		public function updatePayrollTotalPeriod($arrData) 
+		{				
+				$idTotalPeriod = $arrData["idTotalPeriod"];
+				
+				$data = array(
+					'total_hours_user' => $arrData["hotalHoras"],
+					'hour_price' => $arrData["valorHora"],
+					'hour_price_lmia' => $arrData["valorHoraLMIA"],
+					'max_hours' => $arrData["noHorasMaximo"],
+					'less_max_hours' => $arrData["lessMaxHours"],
+					'over_max_hours' => $arrData["overMaxHours"],
+					'gross_amount' => $arrData["grossAmount"],
+					'casual_amount' => $arrData["casualAmount"],
+					'gst_amount' => $arrData["GST"],
+					'total_user' => $arrData["valorTotal"]
+				);	
+
+				//revisar si es para adicionar o editar
+				if ($idTotalPeriod == '') {
+					$data['fk_id_user'] = $arrData["idUser"];
+					$data['fk_id_period'] = $arrData["idPeriod"];
+					$query = $this->db->insert('payroll_total_period', $data);
+				} else {
+					$this->db->where('id_total_period', $idTotalPeriod);
+					$query = $this->db->update('payroll_total_period', $data);
+				}
+				if ($query) {
+					return TRUE;
+				} else {
+					return false;
+				}
+		}
 
 
 		

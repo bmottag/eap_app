@@ -99,8 +99,12 @@ class Payroll extends CI_Controller {
 			$periodo = $this->buscar_periodo($idPayroll);//metodo para calcular horas y sacar el valor total
 			
 			//llevo control del horas por proyecto por periodo en la tabla PAYROLL_PROJECT_PERIOD
-			//se va sumando las horas por proyecto y se saca el todal en CAD
+			//se va sumando las horas por proyecto
 			$total = $this->total_proyecto($idPayroll);
+			
+			//llevo control del horas por periodo en la tabla PAYROLL_TOTAL_PERIOD
+			//se va sumando las horas por PERIODO PARA CADA USUARIO y se saca el todal en CAD
+			$totalUsuario = $this->total_user($idPayroll);
 		
 			$hour = date("G:i");
 			if ($calculo) {
@@ -598,62 +602,10 @@ class Payroll extends CI_Controller {
 				$totalHorasAnterior = 0;
 				$idProjectPeriod = '';
 			}
-			
-			//revisar el tipo de usuario
-			//si es subcontractor el totla en mas el 5% de GST del subtotal
-			//si es casual es el mismo valor
-			//si es payroll se debe hacer calculo
-			
-			//*****REVISAR QUE TIPO DE USUARIO ES ***************** ///////////
-			
-			//buscar informacion del usuario
-			$arrParam = array("idUser" => $infoPayroll[0]['fk_id_user']);
-			$infoUser = $this->general_model->get_user_list($arrParam);	
 
-			$tipoUsuario = $infoUser[0]['fk_id_type'];
-			$valorHora = $infoUser[0]['hora_real_cad'];
-			$valorHoraContrato = $infoUser[0]['hora_contrato_cad'];
-			$noHorasMaximo = $infoUser[0]['no_horas_max'];
-			
 			//numero de horas totales para este proyecto
 			$totalHorasNuevo = $totalHorasAnterior + $workingHours - $workingHoursAnteriores; //suma total anterior mas el nuevo registro -las horas que tenia antes si se esta editando el registro
-			
-			switch ($tipoUsuario) {
-				case 1://subcontractor: el total se le suma el 5% del GST del subtotal					
-					$flatHours = $totalHorasNuevo;
-					$bonosHours = 0;
-				
-					$valorSubTotal = $totalHorasNuevo * $valorHora;//subtotal: total horas proyecto por el valor de la hora
-					$bonos_GST = 0.05 * $valorSubTotal;
-					$valorTotal = $valorSubTotal + $bonos_GST;
-					break;
-				case 2://casual: si horas mayor a $numeroMaximoHoras entonces se se pagan el resto en bonos
-					$flatHours = $totalHorasNuevo;
-					$bonosHours = 0;
-				
-					if($totalHorasNuevo > $noHorasMaximo){
-						$flatHours = $noHorasMaximo;
-						$bonosHours = $totalHorasNuevo - $noHorasMaximo;
-					}
-				
-					$valorSubTotal = $flatHours * $valorHora;
-					$bonos_GST = $bonosHours * $valorHora;
-					$valorTotal = $valorSubTotal + $bonos_GST;
-					break;
-				case 3://payroll:
-					$flatHours = $totalHorasNuevo * $valorHora / $valorHoraContrato;
-					$bonosHours = 0;
-					
-					if($flatHours > $noHorasMaximo){
-						$flatHours = $noHorasMaximo;
-						$bonosHours = $flatHours - $noHorasMaximo;
-					}
 
-					$valorSubTotal = $flatHours * $valorHoraContrato;
-					$bonos_GST = $bonosHours * $valorHoraContrato;
-					$valorTotal = $valorSubTotal + $bonos_GST;
-					break;
-			}
 			
 			//guardo informacion en la base de datos
 			$arrParam = array(
@@ -661,18 +613,122 @@ class Payroll extends CI_Controller {
 				"idUser" => $idUser,
 				"idProject" => $idProject,
 				"idPeriod" => $idPeriod,
-				"hotalHoras" => $totalHorasNuevo,
-				"valorHora" => $valorHora,
-				"valorHoraContrato" => $valorHoraContrato,
-				"noHorasMaximo" => $noHorasMaximo,
-				"flatHours" => $flatHours,
-				"bonosHours" => $bonosHours,
-				"valorSubTotal" => $valorSubTotal,
-				"bonos_GST" => $bonos_GST,
-				"valorTotal" => $valorTotal
+				"hotalHoras" => $totalHorasNuevo
 			);
 
 			if ($this->payroll_model->updatePayrollProjectPeriod($arrParam)) {
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+    }
+	
+	/**
+	 * Calculo de total de horas trabajadas por un usuario en un periodo
+     * @since 2/5/2018
+	 */
+    function total_user($idPayroll, $workingHoursAnteriores = 0 ) 
+	{
+			//info for the payroll
+			$this->load->model("general_model");
+			$arrParam = array("idPayroll" => $idPayroll);			
+			$infoPayroll = $this->general_model->get_payroll($arrParam);//informacion del payroll
+			
+			$idUser = $infoPayroll[0]['fk_id_user'];
+			$idPeriod = $infoPayroll[0]['fk_id_period'];			
+			$workingHours = $infoPayroll[0]['working_hours'];
+
+			//buscar informacion anterior en la tabla PAYROLL_TOTAL_PERIOD
+			$arrParamFiltro = array(
+				"idUser" => $idUser,
+				"idPeriod" => $idPeriod
+			);
+			$infoTotalPeriod = $this->general_model->get_total_period($arrParamFiltro);
+			
+			if($infoTotalPeriod){
+				$totalHorasAnterior = $infoTotalPeriod[0]['total_hours'];
+				$idTotalPeriod = $infoTotalPeriod[0]['id_total_period'];
+			}else{
+				$totalHorasAnterior = 0;
+				$idTotalPeriod = '';
+			}
+			
+			//***** REVISAR QUE TIPO DE USUARIO ES ******
+			//si es subcontractor el totla es mas el 5% de GST del subtotal
+			//si es casual es el mismo valor
+			//si es payroll se debe hacer calculo
+						
+			//buscar informacion del usuario
+			$arrParam = array("idUser" => $infoPayroll[0]['fk_id_user']);
+			$infoUser = $this->general_model->get_user_list($arrParam);	
+
+			$tipoUsuario = $infoUser[0]['fk_id_type'];
+			$valorHora = $infoUser[0]['hora_real_cad'];
+			$valorHoraLMIA = $infoUser[0]['hora_contrato_cad'];
+			$noHorasMaximo = $infoUser[0]['no_horas_max'];
+			
+			//numero de horas totales para este periodo
+			$totalHorasNuevo = $totalHorasAnterior + $workingHours - $workingHoursAnteriores; //suma total anterior mas el nuevo registro menos las horas que tenia antes si se esta editando el registro
+
+			$lessMaxHours = 0;
+			$overMaxHours = 0;
+			$casualAmount = 0;
+			$GST = 0;
+			switch ($tipoUsuario) {
+				case 1://subcontractor: el total se le suma el 5% del GST del subtotal					
+					$grossAmount = $totalHorasNuevo * $valorHora;//subtotal: total horas proyecto por el valor de la hora
+					$GST = 0.05 * $grossAmount;
+					$valorTotal = $grossAmount + $GST;
+					break;
+				case 2://casual: si horas mayor a $numeroMaximoHoras entonces se se pagan el resto por casual
+					$lessMaxHours = $totalHorasNuevo;
+					if($totalHorasNuevo > $noHorasMaximo){
+						$lessMaxHours = $noHorasMaximo;
+						$overMaxHours = $totalHorasNuevo - $noHorasMaximo;
+					}
+				
+					$grossAmount = $lessMaxHours * $valorHora;
+					$casualAmount = $overMaxHours * $valorHora;
+					$valorTotal = $grossAmount + $casualAmount;
+					break;
+				case 3://payroll:
+					$lessMaxHours = $totalHorasNuevo;
+					if($totalHorasNuevo > $noHorasMaximo){
+						$lessMaxHours = $noHorasMaximo;
+						$overMaxHours = $lessMaxHours - $noHorasMaximo;
+					}
+								
+					/* Revisar que se hace con LMIA
+					if($valorHoraLMIA > 0){
+						$conversionHours = $lessMaxHours * $valorHora / $valorHoraLMIA;
+						$grossAmount = $conversionHours * $valorHoraLMIA;
+					}
+					*/
+
+					$grossAmount = $lessMaxHours * $valorHoraLMIA;
+					$casualAmount = $overMaxHours * $valorHoraLMIA;
+					$valorTotal = $grossAmount + $casualAmount;
+					break;
+			}
+			
+			//guardo informacion en la base de datos
+			$arrParam = array(
+				"idTotalPeriod" => $idTotalPeriod,
+				"idUser" => $idUser,
+				"idPeriod" => $idPeriod,
+				"hotalHoras" => $totalHorasNuevo,
+				"valorHora" => $valorHora,
+				"valorHoraLMIA" => $valorHoraLMIA,
+				"noHorasMaximo" => $noHorasMaximo,
+				"lessMaxHours" => $lessMaxHours,
+				"overMaxHours" => $overMaxHours,
+				"grossAmount" => $grossAmount,
+				"casualAmount" => $casualAmount,
+				"GST" => $GST,
+				"valorTotal" => $valorTotal
+			);
+
+			if ($this->payroll_model->updatePayrollTotalPeriod($arrParam)) {
 				return TRUE;
 			}else{
 				return FALSE;
