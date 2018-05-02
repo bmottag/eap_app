@@ -340,6 +340,10 @@ class Payroll extends CI_Controller {
 				//llevo control del horas por proyecto por periodo en la tabla PAYROLL_PROJECT_PERIOD
 				//se va sumando las horas por proyecto y se saca el todal en CAD
 				$total = $this->total_proyecto($idPayroll, $workingHoursAnteriores);
+				
+				//llevo control del horas por periodo en la tabla PAYROLL_TOTAL_PERIOD
+				//se va sumando las horas por PERIODO PARA CADA USUARIO y se saca el todal en CAD
+				$totalUsuario = $this->total_user($idPayroll);
 			
 				$hour = date("G:i");
 				if ($calculo) {
@@ -436,6 +440,10 @@ class Payroll extends CI_Controller {
 				//llevo control del horas por proyecto por periodo en la tabla PAYROLL_PROJECT_PERIOD
 				//se va sumando las horas por proyecto y se saca el todal en CAD
 				$total = $this->total_proyecto($idPayroll);
+				
+				//llevo control del horas por periodo en la tabla PAYROLL_TOTAL_PERIOD
+				//se va sumando las horas por PERIODO PARA CADA USUARIO y se saca el todal en CAD
+				$totalUsuario = $this->total_user($idPayroll);
 			
 				if ($calculo) {
 					$data["result"] = true;
