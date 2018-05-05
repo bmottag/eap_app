@@ -703,18 +703,18 @@ class Payroll extends CI_Controller {
 					$lessMaxHours = $totalHorasNuevo;
 					if($totalHorasNuevo > $noHorasMaximo){
 						$lessMaxHours = $noHorasMaximo;
-						$overMaxHours = $lessMaxHours - $noHorasMaximo;
+						$overMaxHours = $totalHorasNuevo - $noHorasMaximo;
 					}
 								
-					/* Revisar que se hace con LMIA
+					/* Revisar que se hace con LMIA 
 					if($valorHoraLMIA > 0){
 						$conversionHours = $lessMaxHours * $valorHora / $valorHoraLMIA;
 						$grossAmount = $conversionHours * $valorHoraLMIA;
 					}
 					*/
 
-					$grossAmount = $lessMaxHours * $valorHoraLMIA;
-					$casualAmount = $overMaxHours * $valorHoraLMIA;
+					$grossAmount = $lessMaxHours * $valorHora;
+					$casualAmount = $overMaxHours * $valorHora;
 					$valorTotal = $grossAmount + $casualAmount;
 					break;
 			}
