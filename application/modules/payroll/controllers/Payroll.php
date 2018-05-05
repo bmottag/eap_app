@@ -343,7 +343,7 @@ class Payroll extends CI_Controller {
 				
 				//llevo control del horas por periodo en la tabla PAYROLL_TOTAL_PERIOD
 				//se va sumando las horas por PERIODO PARA CADA USUARIO y se saca el todal en CAD
-				$totalUsuario = $this->total_user($idPayroll);
+				$totalUsuario = $this->total_user($idPayroll, $workingHoursAnteriores);
 			
 				$hour = date("G:i");
 				if ($calculo) {
