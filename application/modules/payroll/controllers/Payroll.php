@@ -522,44 +522,18 @@ class Payroll extends CI_Controller {
 	 */
     function buscar_periodo($idPayroll) 
 	{
-			//info for the payroll
 			$this->load->model("general_model");
-			$arrParam = array("idPayroll" => $idPayroll);			
-			$infoPayroll = $this->general_model->get_payroll($arrParam);//informacion del payroll
-			
-			$start = strtotime($infoPayroll[0]['adjusted_start']);
-			$fechaStart = date( 'Y-m-j' , $start );
-			
-			$arrParam = array("limit" => 1);	
-			$infoPeriod = $this->general_model->get_period($arrParam);//lista de periodos los ultimos 2
-			
-			
-			//valido si la fecha esta dentro del ultimo periodo
-			
-			$fechaStart = date_create($fechaStart);
-			$periodoIni = date_create($infoPeriod[0]['date_start']);
-			$periodoFin = date_create($infoPeriod[0]['date_finish']);
-			
-			if($fechaStart >= $periodoIni && $fechaStart <= $periodoFin) {
-				//esta dentro del periodo entonces saco el id del periodo
-				$idPeriod = $infoPeriod[0]['id_period'];
-				
-				
-			}else{
-				//no esta dentro del periodo entonces se debe generar el nuevo periodo
-				//fecha inicial del siguiente period se le suma un dia a la fecha final del periodo anterior
-				//fecha final del siguiente periodo se le suma 14 dias a la fecha final del periodo anterior				
-				$periodoIniNew = date('Y-m-d', strtotime ( '+1 day ' , strtotime ( $infoPeriod[0]['date_finish'] ) ) );//le sumo un dia 
-				$periodoFinNew = date('Y-m-d',strtotime ( '+14 day ' , strtotime ( $infoPeriod[0]['date_finish'] ) ) );//le sumo 14 dias
-				
-				//guardo el nuevo periodo y saco el id guardado
-				$arrParam = array(
-					"periodoIniNew" => $periodoIniNew,
-					"periodoFinNew" => $periodoFinNew
-				);
+			$idPeriod = FALSE;
 
-				$idPeriod = $this->payroll_model->savePeriod($arrParam);				
-			}
+			//miesntras no tenga ID PERIDO entonces lo busco y si no existe creo 6 mas
+			while (!$idPeriod) {
+				$idPeriod = $this->buscar_periodo_2($idPayroll);//busco el ID del periodo en los ultimos 10
+								
+				//no esta dentro de ninguno de los ultimos 10 periodos entonces se genero 2 peridos mas
+				if(!$idPeriod){
+					$this->generate_period();
+				}
+			} 
 		
 			//guardo el id en la tabla payroll			
 			$arrParam = array(
@@ -741,6 +715,72 @@ class Payroll extends CI_Controller {
 			}else{
 				return FALSE;
 			}
+    }
+	
+	/**
+	 * Genera 2 secuencias de periodos
+     * @since 5/5/2018
+     * @author BMOTTAG
+	 */
+	public function generate_period()
+	{			
+			$this->load->model("general_model");
+			
+			//genero 2 periodos nuevos
+			for ($i = 0; $i < 2; $i++) 
+			{
+				$arrParam = array("limit" => 1);
+				$infoPeriod = $this->general_model->get_period($arrParam);//info ultimo periodo
+			
+				//fecha inicial del siguiente periodo se le suma un dia a la fecha final del ultimo periodo
+				//fecha final del siguiente periodo se le suma 14 dias a la fecha final del ultimo periodo
+				$periodoIniNew = date('Y-m-d', strtotime ( '+1 day ' , strtotime ( $infoPeriod[0]['date_finish'] ) ) );//le sumo un dia 
+				$periodoFinNew = date('Y-m-d',strtotime ( '+14 day ' , strtotime ( $infoPeriod[0]['date_finish'] ) ) );//le sumo 14 dias
+				
+				//guardo el nuevo periodo
+				$arrParam = array(
+					"periodoIniNew" => $periodoIniNew,
+					"periodoFinNew" => $periodoFinNew
+				);
+
+				$this->payroll_model->savePeriod($arrParam);
+			}
+			return TRUE;
+	}
+	
+	/**
+	 * Busco a que periodo pertenece
+     * @since 5/5/2018
+	 */
+    function buscar_periodo_2($idPayroll) 
+	{
+			//info for the payroll
+			$this->load->model("general_model");
+			$arrParam = array("idPayroll" => $idPayroll);			
+			$infoPayroll = $this->general_model->get_payroll($arrParam);//informacion del payroll
+			
+			$start = strtotime($infoPayroll[0]['adjusted_start']);
+			$fechaStart = date( 'Y-m-j' , $start );
+			
+			$arrParam = array("limit" => 10);
+			$infoPeriod = $this->general_model->get_period($arrParam);//lista de periodos los ultimos 10
+
+			//valido si la fecha esta dentro de alguno de los 10 ultimos periodos
+			$fechaStart = date_create($fechaStart);
+			
+			$idPeriod = FALSE;
+			foreach ($infoPeriod as $data):
+				$periodoIni = date_create($data['date_start']);
+				$periodoFin = date_create($data['date_finish']);
+				
+				if($fechaStart >= $periodoIni && $fechaStart <= $periodoFin) {
+					//esta dentro del periodo entonces saco el id del periodo
+					$idPeriod = $data['id_period'];
+					break;
+				}
+			endforeach;
+		
+			return $idPeriod;
     }
 	 
 	 
