@@ -198,9 +198,12 @@
 		 */
 		public function savePeriod($arrData)
 		{				
+				$period = $arrData["periodoIniNew"] . " --> " . $arrData["periodoFinNew"];
+				
 				$data = array(
 					'date_start' => $arrData["periodoIniNew"],
-					'date_finish' => $arrData["periodoFinNew"]
+					'date_finish' => $arrData["periodoFinNew"],
+					'period' => $period
 				);	
 				
 				$query = $this->db->insert('payroll_period', $data);
