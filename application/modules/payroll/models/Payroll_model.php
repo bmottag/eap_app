@@ -18,6 +18,7 @@
 					'fk_id_project' => $this->input->post('project'),
 					'start' => $arrData["start"],
 					'adjusted_start' => $arrData["ajusteStart"],
+					'lunch' => $this->input->post('lunch'),
 					'observation' => $observation
 				);	
 

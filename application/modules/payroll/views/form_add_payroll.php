@@ -30,6 +30,13 @@
 									<?php } ?>
 								</select>
 							</div>
+						</div>						
+
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="lunch">With lunch? </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="checkbox" id="lunch" name="lunch" value=1 checked>
+							</div>
 						</div>
 						
 						<div class="form-group">
