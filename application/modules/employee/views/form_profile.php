@@ -51,49 +51,52 @@
 					</div>
 					<div class="col-md-9 col-sm-9 col-xs-12">
 
-						<div class="profile_title">
-							<div class="col-md-6">
-								<h2>User photo</h2>
-							</div>
-							<div class="col-md-6">
-
-							</div>
+						<div class="alert alert-success alert-dismissible fade in" role="alert">
+							<strong>Info:</strong> Form to upload your photo.
 						</div>
 						
 						<form  name="form" id="form" class="form-horizontal" method="post" enctype="multipart/form-data" action="<?php echo base_url("employee/do_upload"); ?>">
 						
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="hddTask">Photo</label>
-								<div class="col-sm-5">
-									 <input type="file" name="userfile" capture="camera" accept="image/*">
+							<div class="col-lg-6">	
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="nombres">Photo <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input type="file" name="userfile" capture="camera" accept="image/*">
+									</div>
 								</div>
 							</div>
-							
-							<div class="form-group">
-								<div class="row" align="center">
-									<div style="width:50%;" align="center">
-										<input type="submit" id="btnSubmit" name="btnSubmit" value="Upload" class="btn btn-primary"/>
+
+							<div class="col-lg-6">	
+								<div class="form-group">
+									<div class="row" align="center">
+										<div style="width:50%;" align="center">
+											<input type="submit" id="btnSubmit" name="btnSubmit" value="Upload" class="btn btn-primary"/>
+										</div>
 									</div>
 								</div>
 							</div>
 							
 							<?php if($error){ ?>
-							<div class="alert alert-danger">
-								<?php 
-									echo "<strong>Error :</strong>";
-									pr($error); 
-								?><!--$ERROR MUESTRA LOS ERRORES QUE PUEDAN HABER AL SUBIR LA IMAGEN-->
+							<div class="col-lg-12">
+								<div class="alert alert-danger">
+									<?php 
+										echo "<strong>Error :</strong>";
+										pr($error); 
+									?><!--$ERROR MUESTRA LOS ERRORES QUE PUEDAN HABER AL SUBIR LA IMAGEN-->
+								</div>
 							</div>
 							<?php } ?>
-							<div class="alert alert-danger">
-									<strong>Note :</strong><br>
-									Allowed format: gif - jpg - png<br>
-									Maximum size: 3000 KB<br>
-									Maximum width: 2024 pixels<br>
-									Maximum height: 2008 pixels<br>
+							<div class="col-lg-12">
+								<div class="alert alert-danger">
+										<strong>Note :</strong><br>
+										Allowed format: gif - jpg - png<br>
+										Maximum size: 3000 KB<br>
+										Maximum width: 2024 pixels<br>
+										Maximum height: 2008 pixels<br>
 
+								</div>
 							</div>
-							
 						</form>
 
 						<!-- start of user-activity-graph -->
@@ -113,7 +116,7 @@
 
 <script>
 			
-			if ($('#graph_bar_2').length){ 
+			if ($('#graph_bar_5').length){ 
 			
 				Morris.Bar({
 				  element: 'graph_bar_2',
