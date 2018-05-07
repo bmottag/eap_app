@@ -19,7 +19,7 @@
 							</div>
 							
 							<?php if($linkBack){ ?>
-							<a class="btn btn-success" href=" <?php echo base_url($linkBack); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Regresar </a> 
+							<a class="btn btn-success" href=" <?php echo base_url($linkBack); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Go back </a> 
 							<?php } ?>
 						</div>
 					</div>	
