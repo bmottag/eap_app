@@ -124,6 +124,7 @@
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select name="state" id="state" class="form-control" required>
 									<option value=''>Select...</option>
+									<option value=0 <?php if($information[0]["state"] == 0) { echo "selected"; }  ?>>New user</option>
 									<option value=1 <?php if($information[0]["state"] == 1) { echo "selected"; }  ?>>Active</option>
 									<option value=2 <?php if($information[0]["state"] == 2) { echo "selected"; }  ?>>Inactive</option>
 								</select>

@@ -89,6 +89,10 @@ if ($retornoError) {
 				
 				echo "<td class='text-center'>";
 					switch ($data['state']) {
+						case 0:
+							$valor = 'New worker';
+							$clase = "text-alert";
+							break;
 						case 1:
 							$valor = 'Active';
 							$clase = "text-success";
