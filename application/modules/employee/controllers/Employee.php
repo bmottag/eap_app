@@ -17,7 +17,7 @@ class Employee extends CI_Controller {
 			
 			$this->load->model("general_model");
 			$arrParam = array("idUser" => $idUser);
-			$data['information'] = $this->general_model->get_user_list($arrParam);//info cliente
+			$data['information'] = $this->general_model->get_user_list($arrParam);//info usuario
 			
 			$data["view"] = "form_password";
 			$this->load->view("layout", $data);
@@ -60,24 +60,18 @@ class Employee extends CI_Controller {
 	}
 	
 	/**
-	 * photo
+	 * profile
 	 */
-	public function photo($error = '')
+	public function profile($error = '')
 	{
 			$idUser = $this->session->userdata("id");
 			
-			//busco datos del empleado
-			$arrParam = array(
-				"table" => "user",
-				"order" => "id_user",
-				"column" => "id_user",
-				"id" => $idUser
-			);
 			$this->load->model("general_model");
-			$data['UserInfo'] = $this->general_model->get_basic_search($arrParam);
-						
-			$data['error'] = $error; //se usa para mostrar los errores al cargar la imagen 
-			$data["view"] = 'form_photo';
+			$arrParam = array("idUser" => $idUser);
+			$data['UserInfo'] = $this->general_model->get_user_list($arrParam);//info usuario
+
+			$data['error'] = $error; //se usa para mostrar los errores al cargar la imagen 			
+			$data["view"] = 'form_profile';
 			$this->load->view("layout", $data);
 	}
 	
@@ -97,7 +91,7 @@ class Employee extends CI_Controller {
 			//SI LA IMAGEN FALLA AL SUBIR MOSTRAMOS EL ERROR EN LA VISTA 
 			if (!$this->upload->do_upload()) {
 				$error = $this->upload->display_errors();
-				$this->photo($error);
+				$this->profile($error);
 			} else {
 				$file_info = $this->upload->data();//subimos la imagen
 				
@@ -118,7 +112,7 @@ class Employee extends CI_Controller {
 				);
 
 				$this->load->model("general_model");
-				$data['linkBack'] = "employee/photo";
+				$data['linkBack'] = "employee/profile";
 				$data['titulo'] = "<i class='fa fa-user fa-fw'></i>USER PROFILE";
 				
 				if($this->general_model->updateRecord($arrParam))
