@@ -45,7 +45,7 @@
 							<?php } ?>
 						</ul>
 
-						<a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+						<a href='<?php echo base_url("employee"); ?>' class="btn btn-success"><i class="fa fa-unlock m-right-xs"></i> Change password</a>
 						<br />
 
 					</div>
