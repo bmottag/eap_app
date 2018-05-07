@@ -140,6 +140,15 @@ if($finish != 0){
 		</div>
 		
 		<div class="row">
+			<div class="col-sm-6">		
+				<div class="form-group text-left">
+					<label class="control-label" for="finish_date">With lunch?</label>
+					<input type="checkbox" id="lunch" name="lunch" value=1 <?php if($information[0]["lunch"]){echo "checked";} ?>>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
 					<label class="control-label" for="observation">Observation: *</label>

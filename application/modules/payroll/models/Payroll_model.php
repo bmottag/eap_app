@@ -135,6 +135,7 @@
 					'adjusted_start' => $arrData["ajusteStart"],		
 					'finish' => $arrData["finish"],
 					'adjusted_finish' => $arrData["ajusteFinish"],
+					'lunch' => $this->input->post('lunch'),
 					'observation' => $observation
 				);	
 
@@ -179,6 +180,7 @@
 					'adjusted_start' => $arrData["ajusteStart"],		
 					'finish' => $arrData["finish"],
 					'adjusted_finish' => $arrData["ajusteFinish"],
+					'lunch' => $this->input->post('lunch'),
 					'activities' => $activities,
 					'observation' => $observation
 				);	
