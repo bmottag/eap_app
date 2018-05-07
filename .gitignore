@@ -30,3 +30,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/tests/
 /tests/results/
 images/qrcode/
+bd/eap_app_2018.sql
