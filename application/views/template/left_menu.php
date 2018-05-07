@@ -8,31 +8,32 @@
 
 	<!-- menu profile quick info -->
 	<div class="profile clearfix">
-	  <div class="profile_pic">
-		<img src="<?php echo base_url("images/oxalis.png"); ?>" alt="..." class="img-circle profile_img">
-	  </div>
+
 	  <div class="profile_info">
+	  	  
+		<?php if($this->session->photo){ ?>
+		<img src="<?php echo base_url($this->session->photo); ?>" class="img-rounded" width="45" height="45" />
+		<?php }?>
+	  
 		<span>Welcome,</span>
 		<h2><?php echo $userRol = $this->session->name; ?></h2>
 	  </div>
 	</div>
 	<!-- /menu profile quick info -->
 
-	<br />
-
 	<!-- sidebar menu -->
 	<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-	  <div class="menu_section">
-		<h3>General</h3>
-		<ul class="nav side-menu">
-		  <li><a><i class="fa fa-edit"></i> Recor task<span class="fa fa-chevron-down"></span></a>
-			<ul class="nav child_menu">
-			  <li><a href="<?php echo base_url("payroll"); ?>">Payroll</a></li>
-			</ul>
-		  </li>
-		</ul>
-	  </div>
+		<div class="menu_section">
 
+			<ul class="nav side-menu">
+				<li>
+					<a href="<?php echo base_url("payroll"); ?>"><i class="fa fa-edit"></i> Payroll</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url("employee/profile"); ?>"><i class="fa fa-user"></i> Profile</a>
+				</li>
+			</ul>
+		</div>
 
 	</div>
 	<!-- /sidebar menu -->
