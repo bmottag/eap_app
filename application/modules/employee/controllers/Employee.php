@@ -140,8 +140,8 @@ class Employee extends CI_Controller {
         $config['maintain_ratio'] = TRUE;
         //CARPETA EN LA QUE GUARDAMOS LA MINIATURA
         $config['new_image'] = 'images/employee/thumbs/';
-        $config['width'] = 150;
-        $config['height'] = 150;
+        $config['width'] = 220;
+        $config['height'] = 220;
         $this->load->library('image_lib', $config);
         $this->image_lib->resize();
     }
