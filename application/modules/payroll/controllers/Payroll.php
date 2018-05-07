@@ -501,6 +501,11 @@ class Payroll extends CI_Controller {
 				$transformation = 1;
 			}
 			$workingHours = $justHours + $transformation;
+			
+			//si tomo hora de almuerzo entonces se le descuenta media hora del total
+			if($infoPayroll[0]['lunch'] == 1){
+				$workingHours = $workingHours - 0.5;
+			}
 			//FINISH hours calculation
 			
 			$arrParam = array(
