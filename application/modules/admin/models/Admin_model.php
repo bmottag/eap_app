@@ -44,7 +44,7 @@
 					case 3://payroll
 						$noHorasMaximo = 88;
 						if($valueHoraContrato > 0){
-							$noHorasMaximo = $valueHoraContrato * 88 / $valueHoraReal;
+							$noHorasMaximo = $valueHoraReal * 88 / $valueHoraContrato;
 						}
 						break;
 				}
@@ -70,7 +70,6 @@
 					$data['birthdate'] = date("Y-m-d");
 					$data['password'] = 'e10adc3949ba59abbe56e057f20f883e';//123456
 					$data['address'] = '';
-					$data['state'] = 0;//para que cambie la contraseña
 					$query = $this->db->insert('user', $data);
 					$idUser = $this->db->insert_id();
 				} else {
