@@ -692,8 +692,8 @@ class Payroll extends CI_Controller {
 					}
 					*/
 
-					$grossAmount = $lessMaxHours * $valorHora;
-					$casualAmount = $overMaxHours * $valorHora;
+					$grossAmount = $lessMaxHours * $valorHoraLMIA;
+					$casualAmount = $overMaxHours * $valorHoraLMIA;
 					$valorTotal = $grossAmount + $casualAmount;
 					break;
 			}
