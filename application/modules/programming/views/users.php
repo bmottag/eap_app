@@ -1,0 +1,125 @@
+<script>
+$(function(){ 
+			
+	$(".btn-info").click(function () {	
+			var oID = $(this).attr("id");
+            $.ajax ({
+                type: 'POST',
+				url: base_url + 'programming/cargarModalUsers',
+                data: {'idUser': oID},
+                cache: false,
+                success: function (data) {
+                    $('#tablaDatos').html(data);
+                }
+            });
+	});
+
+});
+</script>
+
+<div class="right_col" role="main">
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><i class='fa fa-users'></i> AVAILBLE USERS </h2>
+					
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content">
+				
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal" id="x" >
+						<i class="fa fa-plus"></i> Add user
+					</button>
+<?php
+$retornoExito = $this->session->flashdata('retornoExito');
+if ($retornoExito) {
+    ?>
+	<div class="alert alert-success alert-dismissible fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+		</button>
+		<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		<strong>Ok!</strong> <?php echo $retornoExito ?>	
+	</div>
+    <?php
+}
+
+$retornoError = $this->session->flashdata('retornoError');
+if ($retornoError) {
+    ?>
+	<div class="alert alert-danger alert-dismissible fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+		</button>
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<strong>Error!</strong> <?php echo $retornoError ?>
+	</div>	
+    <?php
+}
+?> 				
+				
+					<div class="table-responsive">
+					
+						<table id="dataTables" class="table table-striped jambo_table bulk_action table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+							<thead>
+								<tr class="headings">
+								<th class="column-title">Full name </th>
+								<th class="column-title">Movil </th>
+								<th class="column-title">Skills</th>
+								<th class="column-title">Links</th>
+								</tr>
+							</thead>
+
+							<tbody>
+										
+		<?php 
+		if($info){
+			foreach ($info as $data):
+				echo "<tr>";
+				echo "<td>" . $data['full_name'] . "</td>";
+				echo "<td>" . $data['movil_number'] . "</td>";
+				echo "<td></td>";
+				
+				echo "<td class='text-center'>";
+				echo "<a href='" . base_url("admin/update_usuario/" . $data['id_programming_users']) . "' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>";
+				echo "<a href='" . base_url("admin/change_password/" . $data['id_programming_users']) . "' class='btn btn-default btn-xs'><i class='glyphicon glyphicon-lock'></i> Change password </a>";
+				echo "</td>";
+				echo "</tr>";
+			endforeach;
+		}
+		?>
+
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--INICIO Modal usuarios-->
+<div class="modal fade text-center" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" id="tablaDatos">
+
+		</div>
+	</div>
+</div>                       
+<!--FIN Modal-->
+
+
+<!-- Tables -->
+<script>
+$(document).ready(function() {
+    $('#dataTables').DataTable( {
+        "pageLength": 50
+    } );
+} );
+</script>
