@@ -71,7 +71,7 @@ if ($retornoError) {
 								<th class="column-title">Full name </th>
 								<th class="column-title">Movil </th>
 								<th class="column-title">Skills</th>
-								<th class="column-title">Links</th>
+								<th class="column-title">Edit</th>
 								</tr>
 							</thead>
 
@@ -83,11 +83,19 @@ if ($retornoError) {
 				echo "<tr>";
 				echo "<td>" . $data['full_name'] . "</td>";
 				echo "<td>" . $data['movil_number'] . "</td>";
-				echo "<td></td>";
 				
 				echo "<td class='text-center'>";
-				echo "<a href='" . base_url("admin/update_usuario/" . $data['id_programming_users']) . "' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>";
-				echo "<a href='" . base_url("admin/change_password/" . $data['id_programming_users']) . "' class='btn btn-default btn-xs'><i class='glyphicon glyphicon-lock'></i> Change password </a>";
+				echo "<a href='" . base_url("admin/change_password/" . $data['id_programming_users']) . "' class='btn btn-default btn-xs'><i class='glyphicon glyphicon-lock'></i> Add skill </a>";
+				echo "</td>";
+				
+				echo "<td class='text-center'>";
+				
+		?>
+				<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $data['id_programming_users']; ?>" >
+					Edit <span class="glyphicon glyphicon-edit" aria-hidden="true">
+				</button>
+				
+		<?php
 				echo "</td>";
 				echo "</tr>";
 			endforeach;
