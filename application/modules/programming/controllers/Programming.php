@@ -14,10 +14,14 @@ class Programming extends CI_Controller {
      * @author BMOTTAG
 	 */
 	public function users()
-	{
+	{		
 		$this->load->model("general_model");
-		$arrParam = array();
-		$data['info'] = $this->general_model->get_programming_users($arrParam);
+		$arrParam = array(
+			"table" => "programming_users",
+			"order" => "id_programming_users",
+			"id" => "x"
+		);
+		$data['info'] = $this->general_model->get_basic_search($arrParam);
 
 		$data["view"] = 'users';
 		$this->load->view("layout", $data);
@@ -32,15 +36,15 @@ class Programming extends CI_Controller {
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
 			$data['information'] = FALSE;
-			$data["idUser"] = $this->input->post("idUser");	
+			$idUser = $this->input->post("idUser");	
 			
-			if ($data["idUser"] != 'x') {
+			if ($idUser != 'x') {
 				$this->load->model("general_model");
 				$arrParam = array(
 					"table" => "programming_users",
 					"order" => "id_programming_users",
 					"column" => "id_programming_users",
-					"id" => $data["idUser"]
+					"id" => $idUser
 				);
 				$data['information'] = $this->general_model->get_basic_search($arrParam);
 			}
@@ -66,6 +70,78 @@ class Programming extends CI_Controller {
 			}
 
 			if ($idUser = $this->programming_model->saveUser()) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
+	
+	/**
+	 * lista de skills
+     * @since 1/7/2018
+     * @author BMOTTAG
+	 */
+	public function skills()
+	{		
+		$this->load->model("general_model");
+		$arrParam = array(
+			"table" => "programming_skills",
+			"order" => "id_programming_skill",
+			"id" => "x"
+		);
+		$data['info'] = $this->general_model->get_basic_search($arrParam);
+		
+		$data["view"] = 'skills';
+		$this->load->view("layout", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario skills
+     * @since 1/7/2018
+     */
+    public function cargarModalSkills() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$idSkill = $this->input->post("idSkill");	
+			
+			if ($idSkill != 'x') {
+				$this->load->model("general_model");
+				$arrParam = array(
+					"table" => "programming_skills",
+					"order" => "id_programming_skill",
+					"column" => "id_programming_skill",
+					"id" => $idSkill
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("skills_modal", $data);
+    }
+	
+	/**
+	 * Update skills
+     * @since 1/6/2018
+     * @author BMOTTAG
+	 */
+	public function save_skill()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idSkill = $this->input->post('hddIdSkill');
+			
+			$msj = "You have add a new skill!!";
+			if ($idSkill != '') {
+				$msj = "You have update a skill!!";
+			}
+
+			if ($idSkill = $this->programming_model->saveSkill()) {
 				$data["result"] = true;
 				$this->session->set_flashdata('retornoExito', $msj);
 			} else {

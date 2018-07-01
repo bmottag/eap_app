@@ -364,31 +364,6 @@ class General_model extends CI_Model {
 					return false;
 				}
 		}
-		
-		/**
-		 * Active User list
-		 * @since 1/7/2018
-		 */
-		public function get_programming_users($arrData) 
-		{
-				$this->db->select();
-				if (array_key_exists("idUser", $arrData)) {
-					$this->db->where('U.id_programming_users', $arrData["idUser"]);
-				}
-
-				if (array_key_exists("state", $arrData)) {
-					$this->db->where('U.state', $arrData["state"]);
-				}
-
-				$this->db->order_by("U.full_name", "ASC");
-				$query = $this->db->get("programming_users U");
-
-				if ($query->num_rows() >= 1) {
-					return $query->result_array();
-				} else {
-					return false;
-				}
-		}
 	
 		
 
