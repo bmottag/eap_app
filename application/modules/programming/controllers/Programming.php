@@ -9,6 +9,30 @@ class Programming extends CI_Controller {
     }
 	
 	/**
+	 * Listado de programaciones
+     * @since 2/7/2018
+     * @author BMOTTAG
+	 */
+	public function index($idProgramming = 'x')
+	{			
+		$this->load->model("general_model");
+		$data['information'] = FALSE;
+		$data['informationHistorico'] = FALSE;
+						
+		$arrParam = array();
+		$data['information'] = $this->general_model->get_programming($arrParam);//info solicitudes
+		
+		//si envio el id, entonces busco la informacion 
+		if ($idProgramming != 'x') {
+			$arrParam = array("idProgramming" => $idProgramming);
+			$data['information'] = $this->general_model->get_programming($arrParam);//info inspecciones
+		}
+
+		$data["view"] = 'programming';
+		$this->load->view("layout", $data);
+	}
+	
+	/**
 	 * lista de usuarios
      * @since 1/7/2018
      * @author BMOTTAG
