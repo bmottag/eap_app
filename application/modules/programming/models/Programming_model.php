@@ -55,6 +55,55 @@
 					return false;
 				}
 		}
+		
+		/**
+		 * Add/Edit PROGRAMMING
+		 * @since 2/7/2018
+		 */
+		public function saveProgramming() 
+		{
+				$idUser = $this->session->userdata("id");
+				$idProgramming = $this->input->post('hddId');
+				
+				$data = array(
+					'fk_id_project' => $this->input->post('project'),
+					'date_programming' => $this->input->post('date_programming'),
+					'quantity' => $this->input->post('quantity'),
+					'observation' => $this->input->post('observation')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idProgramming == '') {
+					$data['fk_id_user'] = $idUser;
+					$data['date_issue'] = date("Y-m-d G:i:s");	
+					
+					$query = $this->db->insert('programming', $data);				
+				} else {
+					$this->db->where('id_programming', $idProgramming);
+					$query = $this->db->update('programming', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+		
+		/**
+		 * Verify if the project already exist for that date
+		 * @author BMOTTAG
+		 * @since  1/7/2018
+		 */
+		public function verifyProject($arrData) 
+		{
+				$this->db->where('fk_id_project', $arrData["idProject"]);
+				$this->db->where('date_programming', $arrData["date"]);
+				$query = $this->db->get("programming");
+
+				if ($query->num_rows() >= 1) {
+					return true;
+				} else{ return false; }
+		}
 			
 		
 	    

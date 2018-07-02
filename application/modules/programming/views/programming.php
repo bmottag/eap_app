@@ -18,6 +18,8 @@
 
 				<div class="x_content">
 				
+					<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success"><i class="fa fa-plus"></i> New programming</a>
+				
 <?php
 $retornoExito = $this->session->flashdata('retornoExito');
 if ($retornoExito) {
@@ -46,12 +48,12 @@ if ($retornoError) {
 
 							<thead>
 								<tr class="headings">
-									<th class="column-title" style="width: 12%"><small>ID</small></th>
 									<th class="column-title" style="width: 12%"><small>Date</small></th>
+									<th class="column-title" style="width: 12%"><small>Project / Company</small></th>
 									<th class="column-title" style="width: 8%"><small>Quantity</small></th>
 									<th class="column-title" style="width: 8%"><small>Observation</small></th>
-									<th class="column-title" style="width: 8%"><small>Done by</small></th>
 									<th class="column-title" style="width: 8%"><small>Links</small></th>
+									<th class="column-title" style="width: 8%"><small>Done by</small></th>
 								</tr>
 							</thead>
 
@@ -61,16 +63,15 @@ if ($retornoError) {
 			if($information){
 				foreach ($information as $data):
 					echo "<tr>";
-					echo "<td><small>" . $data['id_programming'] . "</small></td>";
 					echo "<td><small>" . $data['date_programming'] . "</small></td>";
+					echo "<td><small>" . $data['project_name'] . " / " . $data['company_name'] . "</small></td>";
 					echo "<td class='text-center'><small>" . $data['quantity'] . "</small></td>";
 					echo "<td><small>" . $data['observation'] . "</small></td>";
-					echo "<td><small>" . $data['first_name'] . " " . $data['last_name'] . "</small></td>";
 					
 					echo "<td class='text-center'><small>";
 					
 //consultar si la fecha de la programacion es mayor a la fecha actual
-$fechaProgramacion = $data['date_programming'] . " " . $data['hora_final_24'];
+$fechaProgramacion = $data['date_programming'];
 
 $datetime1 = date_create($fechaProgramacion);
 $datetime2 = date_create(date('Y-m-d'));
@@ -100,6 +101,8 @@ if($data['state'] == 2)
 <?php
 
 					echo "</small></td>";
+					
+					echo "<td><small>" . $data['first_name'] . " " . $data['last_name'] . "</small></td>";
 
 					echo "</tr>";
 				endforeach;

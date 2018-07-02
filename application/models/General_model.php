@@ -371,7 +371,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_programming($arrData) 
 		{
-			$this->db->select("P.*, U.*");
+			$this->db->select("P.*, U.*, X.project_name, C.company_name");
 			if (array_key_exists("idUser", $arrData)) {
 				$this->db->where('P.fk_id_user', $arrData["idUser"]);
 			}
@@ -386,7 +386,9 @@ class General_model extends CI_Model {
 			}
 			
 			$this->db->join('user U', 'U.id_user = P.fk_id_user', 'INNER');
-
+			$this->db->join('project X', 'X.id_project = P.fk_id_project', 'INNER');
+			$this->db->join('param_company C', 'C.id_company = X.fk_id_company', 'INNER');
+							
 			$this->db->order_by("P.date_programming DESC"); 
 			$query = $this->db->get("programming P");
 
