@@ -96,7 +96,7 @@ if($data['state'] == 2)
 
 ?>
 
-<a href='<?php echo base_url("solicitud/solicitudes_usuario/$data[fk_id_user]/$data[id_solicitud]"); ?>' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> Ver </a>
+<a href='<?php echo base_url("programming/index/$data[id_programming]"); ?>' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> Ver </a>
 
 <?php
 
