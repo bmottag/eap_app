@@ -45,7 +45,7 @@
 	<div class="control-group">
 		<div class="controls">
 			<div class="col-md-11 xdisplay_inputx form-group has-feedback">
-				<input type="text" class="form-control has-feedback-left" id="date_programming" name="date_programming" aria-describedby="inputSuccess2Status">
+				<input type="text" class="form-control has-feedback-left" id="date_programming" name="date_programming" aria-describedby="inputSuccess2Status" value="<?php echo $information?$information[0]["date_programming"]:""; ?>">
 				<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
 				<span id="inputSuccess2Status" class="sr-only">(success)</span>
 			</div>
@@ -62,7 +62,7 @@
 								<select name="project" id="project" class="form-control" >
 									<option value=''>Select...</option>
 									<?php for ($i = 0; $i < count($project); $i++) { ?>
-										<option value="<?php echo $project[$i]["id_project"]; ?>"><?php echo $project[$i]["project_name"] . " / " . $project[$i]["company_name"]; ?></option>	
+										<option value="<?php echo $project[$i]["id_project"]; ?>" <?php if ($information && $project[$i]["id_project"] == $information[0]["fk_id_project"]) { echo 'selected="selected"'; } ?> ><?php echo $project[$i]["project_name"] . " / " . $project[$i]["company_name"]; ?></option>	
 									<?php } ?>
 								</select>
 							</div>
@@ -83,7 +83,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="observation">Observation <span class="required">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<textarea id="observation" name="observation" placeholder="Observation"  class="form-control" rows="3"></textarea>
+								<textarea id="observation" name="observation" placeholder="Observation"  class="form-control" rows="3"><?php echo $information?$information[0]["observation"]:""; ?></textarea>
 							</div>
 						</div>
 						
