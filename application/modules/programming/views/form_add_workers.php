@@ -20,7 +20,7 @@
 				
 					<form name="form" id="form" data-parsley-validate class="form-horizontal form-label-left" method="post">
 						<input type="hidden" id="hddId" name="hddId" value="<?php echo $idProgramming; ?>"/>
-
+<div class="table-responsive">
 						<table class="table table-striped jambo_table bulk_action table-bordered" cellspacing="0" width="100%">
 													
 							<thead>
@@ -46,8 +46,7 @@
                                     'name' => 'workers[]',
                                     'id' => 'workers',
                                     'value' => $lista['id_programming_users'],
-                                    'checked' => $found,
-                                    'style' => 'margin:10px'
+                                    'checked' => $found
                                 );
                                 echo form_checkbox($data);
                                 echo "</td>";
@@ -56,6 +55,7 @@
                             endforeach
                             ?>
                         </table>
+</div>
 						
 						<div class="form-group">							
 							<div class="row" align="center">
