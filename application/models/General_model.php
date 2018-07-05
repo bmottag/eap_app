@@ -397,6 +397,51 @@ class General_model extends CI_Model {
 			} else
 				return false;
 		}
+		
+		/**
+		 * Lista trabajadores para una programacion
+		 * @since 4/7/2018
+		 */
+		public function get_programming_workers($arrData) 
+		{
+			$this->db->select();
+			if (array_key_exists("idUser", $arrData)) {
+				$this->db->where('P.fk_id_programming_user', $arrData["idUser"]);
+			}
+			if (array_key_exists("idProgramming", $arrData)) {
+				$this->db->where('P.fk_id_programming', $arrData["idProgramming"]);
+			}
+			
+			$this->db->join('programming_users U', 'U.id_programming_users = P.fk_id_programming_user', 'INNER');
+							
+			$this->db->order_by("U.full_name ASC"); 
+			$query = $this->db->get("programming_worker P");
+
+			if ($query->num_rows() >= 1) {
+				return $query->result_array();
+			} else
+				return false;
+		}
+		
+		/**
+		 * Active User list
+		 * @since 4/7/2018
+		 */
+		public function get_programming_user_list($arrData) 
+		{
+				$this->db->select();
+				if (array_key_exists("idUser", $arrData)) {
+					$this->db->where('U.id_programming_users', $arrData["idUser"]);
+				}
+				$this->db->order_by("U.full_name", "ASC");
+				$query = $this->db->get("programming_users U");
+
+				if ($query->num_rows() >= 1) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
 	
 		
 

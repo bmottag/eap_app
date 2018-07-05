@@ -86,6 +86,8 @@ if($data['state'] == 2)
 		}else{
 				?>
 		<a href='<?php echo base_url("programming/update_programming/" . $data['id_programming']); ?>' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>
+		
+		<a href='<?php echo base_url("programming/add_programming_workers/" . $data['id_programming']); ?>' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Workers </a>
 				
 		<button type="button" id="<?php echo $data['id_programming']; ?>" class='btn btn-danger btn-xs'>
 				<i class="fa fa-trash-o"></i> Delete 
@@ -116,81 +118,31 @@ if($data['state'] == 2)
 					
 <!-- INICIO HISTORICO -->
 		<?php
-			if($informationHistorico){
+			if($informationWorker){
 		?>
 					<div class="table-responsive">					
-						<table id="dataTablesHistorico" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
+						<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
 
 							<thead>
 								<tr class="headings">
-									<th class="column-title" colspan="9">-- Historial --</th>
+									<th class="column-title" colspan="9">-- WORKERS --</th>
 								</tr>
 								
 								<tr class="headings">
-									<th class="column-title" style="width: 11%"><small>Fecha registro</small></th>
-									<th class="column-title" style="width: 8%"><small>No. CPU</small></th>
-									<th class="column-title" style="width: 9%"><small>Hora inicio</small></th>
-									<th class="column-title" style="width: 8%"><small>Hora fin</small></th>
-									<th class="column-title" style="width: 10%"><small>No. items</small></th>
-									<th class="column-title" style="width: 17%"><small>Grupo items</small></th>
-									<th class="column-title" style="width: 14%"><small>Tipificación</small></th>
-									<th class="column-title" style="width: 14%"><small>Usuario</small></th>
-									<th class="column-title" style="width: 8%"><small>Estado</small></th>
+									<th class="column-title"><small>Name</small></th>
+									<th class="column-title"><small>Movil</small></th>
+									<th class="column-title"><small>Skills</small></th>
 								</tr>
 							</thead>
 
 							<tbody>
 										
 		<?php
-				foreach ($informationHistorico as $data):
+				foreach ($informationWorker as $data):
 					echo "<tr>";
-					echo "<td class='text-center'><small>$data[fecha_solicitud]</small></td>";
-					echo "<td class='text-center'><small>" . $data['numero_computadores'] . "</small></td>";
-					echo "<td class='text-center'><small>" . $data['hora_inicial'] . "</small></td>";
-					echo "<td class='text-center'><small>" . $data['hora_final'] . "</small></td>";
-					echo "<td class='text-center'><small>";
-					if (99 == $data["numero_items"])
-					{ 
-						echo 'Sin definir'; 
-					}else{
-						echo $data['numero_items'];
-					}
-					echo "</small></td>";
-					echo "<td><small>";
-					echo "<strong>" . $data['examen'] . "</strong> - ";
-					if($data['fk_id_prueba'] == 69){
-						echo $data['cual_prueba'] . " - ";
-						echo $data['cual'];
-					}else{
-						echo $data['prueba'];
-					}
-					echo "</small></td>";
-					echo "<td><small>" . $data['tipificacion'] . "</small></td>";
-					echo "<td><small>" . $data['first_name'] . " " . $data['last_name'] . "</small></td>";
-
-					echo "<td class='text-center'><small>";
-						switch ($data['estado_solicitud']) {
-							case 1:
-								$valor = 'Nueva';
-								$clase = "text-success";
-								break;
-							case 2:
-								$valor = 'Eliminada';
-								$clase = "text-danger";
-								break;
-							case 3:
-								$valor = 'Modificada';
-								$clase = "text-info";
-								break;
-						}
-						echo '<p class="' . $clase . '"><strong>' . $valor . '</strong></p>';
-						
-						if($data['incumplio'] == 1){
-							echo '<p class="text-warning"><strong>Incumplió</strong></p>';
-						}
-						
-					echo "</small></td>";
-
+					echo "<td class='text-center'><small>$data[full_name]</small></td>";
+					echo "<td class='text-center'><small>$data[movil_number]</small></td>";
+					echo "<td class='text-center'><small>---- SKILLS ----- </small></td>";
 					echo "</tr>";
 				endforeach;
 		?>
@@ -220,7 +172,7 @@ $(document).ready(function() {
         "info":     true
     } );
 	
-    $('#dataTablesHistorico').DataTable( {
+    $('#dataTablesWorker').DataTable( {
         "paging":   false,
         "ordering": false,
         "info":     false,

@@ -6,6 +6,7 @@ class Programming extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model("programming_model");
+		$this->load->helper('form');
     }
 	
 	/**
@@ -17,7 +18,7 @@ class Programming extends CI_Controller {
 	{			
 		$this->load->model("general_model");
 		$data['information'] = FALSE;
-		$data['informationHistorico'] = FALSE;
+		$data['informationWorker'] = FALSE;
 						
 		$arrParam = array();
 		$data['information'] = $this->general_model->get_programming($arrParam);//info solicitudes
@@ -26,6 +27,9 @@ class Programming extends CI_Controller {
 		if ($idProgramming != 'x') {
 			$arrParam = array("idProgramming" => $idProgramming);
 			$data['information'] = $this->general_model->get_programming($arrParam);//info programacion
+			
+			//lista de trabajadores para esta programacion
+			$data['informationWorker'] = $this->general_model->get_programming_workers($arrParam);//info inspecciones
 		}
 
 		$data["view"] = 'programming';
@@ -109,12 +113,8 @@ class Programming extends CI_Controller {
 	public function users()
 	{		
 		$this->load->model("general_model");
-		$arrParam = array(
-			"table" => "programming_users",
-			"order" => "id_programming_users",
-			"id" => "x"
-		);
-		$data['info'] = $this->general_model->get_basic_search($arrParam);
+		$arrParam = array();
+		$data['info'] = $this->general_model->get_programming_user_list($arrParam);
 
 		$data["view"] = 'users';
 		$this->load->view("layout", $data);
@@ -133,13 +133,8 @@ class Programming extends CI_Controller {
 			
 			if ($idUser != 'x') {
 				$this->load->model("general_model");
-				$arrParam = array(
-					"table" => "programming_users",
-					"order" => "id_programming_users",
-					"column" => "id_programming_users",
-					"id" => $idUser
-				);
-				$data['information'] = $this->general_model->get_basic_search($arrParam);
+				$arrParam = array("idUser" => $idUser);
+				$data['information'] = $this->general_model->get_programming_user_list($arrParam);
 			}
 			
 			$this->load->view("users_modal", $data);
@@ -243,6 +238,54 @@ class Programming extends CI_Controller {
 			}
 
 			echo json_encode($data);	
+    }
+	
+	/**
+	 * Form Add Workers
+     * @since 4/7/2018
+     * @author BMOTTAG
+	 */
+	public function add_programming_workers($idProgramming)
+	{
+			if (empty($idProgramming)) {
+				show_error('ERROR!!! - You are in the wrong place.');
+			}
+			
+			//workers list
+			$this->load->model("general_model");
+			$arrParam = array();
+			$data['workersList'] = $this->general_model->get_programming_user_list($arrParam);//workers list
+			
+			$view = 'form_add_workers';
+			$data["idProgramming"] = $idProgramming;
+			$data["view"] = $view;
+			$this->load->view("layout", $data);
+	}
+	
+	/**
+	 * Save worker
+     * @since 4/7/2018
+     * @author BMOTTAG
+	 */
+	public function save_programming_workers()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$data["idProgramming"] = $this->input->post('hddId');
+
+			if ($this->programming_model->addProgrammingWorker()) {
+				$data["result"] = true;
+				$data["mensaje"] = "Solicitud guardada correctamente.";
+				
+				$this->session->set_flashdata('retornoExito', 'You have add the Workers, remember to get the signature of each one.');
+			} else {
+				$data["result"] = "error";
+				$data["mensaje"] = "Error al guardar. Intente nuevamente o actualice la p\u00e1gina.";
+				
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
     }
 	
 

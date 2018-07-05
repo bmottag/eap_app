@@ -90,6 +90,32 @@
 		}
 		
 		/**
+		 * Add PROGRAMMING WORKER
+		 * @since 4/7/2018
+		 */
+		public function addProgrammingWorker() 
+		{
+			$idProgramming = $this->input->post('hddId');
+			//add the new workers
+			$query = 1;
+			if ($workers = $this->input->post('workers')) {
+				$tot = count($workers);
+				for ($i = 0; $i < $tot; $i++) {
+					$data = array(
+						'fk_id_programming' => $idProgramming,
+						'fk_id_programming_user' => $workers[$i]
+					);
+					$query = $this->db->insert('programming_worker', $data);
+				}
+			}
+			if ($query) {
+				return true;
+			} else{
+				return false;
+			}
+		}
+		
+		/**
 		 * Verify if the project already exist for that date
 		 * @author BMOTTAG
 		 * @since  1/7/2018
