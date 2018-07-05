@@ -140,7 +140,7 @@ if($data['state'] == 2)
 		<?php
 				foreach ($informationWorker as $data):
 					echo "<tr>";
-					echo "<td class='text-center'><small>$data[full_name]</small></td>";
+					echo "<td ><small>$data[full_name]</small></td>";
 					echo "<td class='text-center'><small>$data[movil_number]</small></td>";
 					echo "<td class='text-center'><small>---- SKILLS ----- </small></td>";
 					echo "</tr>";
