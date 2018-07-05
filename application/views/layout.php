@@ -74,8 +74,12 @@
 					//enlaces del menu
 					$enlaces = $this->general_model->get_enlaces($item['id_menu']);
 					
-					foreach ($enlaces as $list):
-						$menu .= '<li><a href="' . base_url($list['link_url']) . '"><i class="fa ' . $list['link_icono'] . ' pull-right"></i> ' . $list['link_name'] . '</a></li>';
+					foreach ($enlaces as $list):						
+						if($list['link_name'] == "DIVIDER"){
+							$menu .= '<li class="divider"></li>';
+						}else{
+							$menu .= '<li><a href="' . base_url($list['link_url']) . '"><i class="fa ' . $list['link_icono'] . ' pull-right"></i> ' . $list['link_name'] . '</a></li>';
+						}
 					endforeach;
 					
 					$menu .= '</ul>';
