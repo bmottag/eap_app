@@ -96,6 +96,10 @@
 		public function addProgrammingWorker() 
 		{
 			$idProgramming = $this->input->post('hddId');
+			
+			//delete workers
+			$this->db->delete('programming_worker', array('fk_id_programming' => $idProgramming));
+			
 			//add the new workers
 			$query = 1;
 			if ($workers = $this->input->post('workers')) {
