@@ -442,6 +442,31 @@ class General_model extends CI_Model {
 					return false;
 				}
 		}
+		
+		/**
+		 * Lista de skills para un trabajador
+		 * @since 5/7/2018
+		 */
+		public function get_programming_skills($arrData) 
+		{
+			$this->db->select();
+			if (array_key_exists("idWorker", $arrData)) {
+				$this->db->where('P.fk_id_programming_user', $arrData["idWorker"]);
+			}
+			if (array_key_exists("idSkill", $arrData)) {
+				$this->db->where('P.fk_id_programming_skill', $arrData["idSkill"]);
+			}
+			
+			$this->db->join('programming_skills S', 'S.id_programming_skill = P.fk_id_programming_skill', 'INNER');
+							
+			$this->db->order_by("S.skill ASC"); 
+			$query = $this->db->get("programming_users_skills P");
+
+			if ($query->num_rows() >= 1) {
+				return $query->result_array();
+			} else
+				return false;
+		}
 	
 		
 

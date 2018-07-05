@@ -299,12 +299,16 @@ class Programming extends CI_Controller {
 				show_error('ERROR!!! - You are in the wrong place.');
 			}
 			
-			//workers list
+			//skills list
 			$this->load->model("general_model");
-			$arrParam = array();
-			$data['workersList'] = $this->general_model->get_programming_user_list($arrParam);//workers list
+			$arrParam = array(
+				"table" => "programming_skills",
+				"order" => "id_programming_skill",
+				"id" => "x"
+			);
+			$data['skillsList'] = $this->general_model->get_basic_search($arrParam);
 			
-			$view = 'form_add_workers';
+			$view = 'form_add_skills';
 			$data["idWorker"] = $idWorker;
 			$data["view"] = $view;
 			$this->load->view("layout", $data);
@@ -319,9 +323,8 @@ class Programming extends CI_Controller {
 	{			
 			header('Content-Type: application/json');
 			$data = array();
-			$data["idWorker"] = $this->input->post('hddId');
 
-			if ($this->programming_model->addProgrammingWorker()) {
+			if ($this->programming_model->addProgrammingSkill()) {
 				$data["result"] = true;
 				$data["mensaje"] = "Solicitud guardada correctamente.";
 				

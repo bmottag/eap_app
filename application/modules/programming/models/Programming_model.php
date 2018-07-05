@@ -120,6 +120,36 @@
 		}
 		
 		/**
+		 * Add PROGRAMMING SKILL
+		 * @since 5/7/2018
+		 */
+		public function addProgrammingSkill() 
+		{
+			$idWorker = $this->input->post('hddId');
+			
+			//delete workers
+			$this->db->delete('programming_users_skills', array('fk_id_programming_user' => $idWorker));
+			
+			//add the new workers
+			$query = 1;
+			if ($skills = $this->input->post('skills')) {
+				$tot = count($skills);
+				for ($i = 0; $i < $tot; $i++) {
+					$data = array(
+						'fk_id_programming_user' => $idWorker,
+						'fk_id_programming_skill' => $skills[$i]
+					);
+					$query = $this->db->insert('programming_users_skills', $data);
+				}
+			}
+			if ($query) {
+				return true;
+			} else{
+				return false;
+			}
+		}
+		
+		/**
 		 * Verify if the project already exist for that date
 		 * @author BMOTTAG
 		 * @since  1/7/2018
