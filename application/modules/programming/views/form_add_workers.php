@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/programming/workers.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/programming/programming_workers.js"); ?>"></script>
 
 <div class="right_col" role="main">
 	<div class="row">

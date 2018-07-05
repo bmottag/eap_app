@@ -5,7 +5,7 @@ $(function(){
 			var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
-				url: base_url + 'programming/cargarModalUsers',
+				url: base_url + 'programming/cargarModalWorkers',
                 data: {'idUser': oID},
                 cache: false,
                 success: function (data) {
@@ -85,7 +85,7 @@ if ($retornoError) {
 				echo "<td>" . $data['movil_number'] . "</td>";
 				
 				echo "<td class='text-center'>";
-				echo "<a href='" . base_url("admin/change_password/" . $data['id_programming_users']) . "' class='btn btn-default btn-xs'><i class='glyphicon glyphicon-lock'></i> Add skill </a>";
+				echo "<a href='" . base_url("admin/change_password/" . $data['id_programming_users']) . "' class='btn btn-default btn-xs'><i class='glyphicon glyphicon-plus'></i> Add skill </a>";
 				echo "</td>";
 				
 				echo "<td class='text-center'>";

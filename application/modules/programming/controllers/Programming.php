@@ -106,17 +106,17 @@ class Programming extends CI_Controller {
     }
 	
 	/**
-	 * lista de usuarios
+	 * lista de trabajadores disponibles
      * @since 1/7/2018
      * @author BMOTTAG
 	 */
-	public function users()
+	public function workers()
 	{		
 		$this->load->model("general_model");
 		$arrParam = array();
 		$data['info'] = $this->general_model->get_programming_user_list($arrParam);
 
-		$data["view"] = 'users';
+		$data["view"] = 'workers';
 		$this->load->view("layout", $data);
 	}
 	
@@ -124,7 +124,7 @@ class Programming extends CI_Controller {
      * Cargo modal - formulario usuarios
      * @since 1/7/2018
      */
-    public function cargarModalUsers() 
+    public function cargarModalWorkers() 
 	{
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
@@ -137,15 +137,15 @@ class Programming extends CI_Controller {
 				$data['information'] = $this->general_model->get_programming_user_list($arrParam);
 			}
 			
-			$this->load->view("users_modal", $data);
+			$this->load->view("workers_modal", $data);
     }
 	
 	/**
-	 * Update users
+	 * Update workers
      * @since 1/6/2018
      * @author BMOTTAG
 	 */
-	public function save_users()
+	public function save_workers()
 	{			
 			header('Content-Type: application/json');
 			$data = array();
@@ -272,6 +272,54 @@ class Programming extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$data["idProgramming"] = $this->input->post('hddId');
+
+			if ($this->programming_model->addProgrammingWorker()) {
+				$data["result"] = true;
+				$data["mensaje"] = "Solicitud guardada correctamente.";
+				
+				$this->session->set_flashdata('retornoExito', 'You have add the Workers, remember to get the signature of each one.');
+			} else {
+				$data["result"] = "error";
+				$data["mensaje"] = "Error al guardar. Intente nuevamente o actualice la p\u00e1gina.";
+				
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
+	
+	/**
+	 * Form Add Workers Skills
+     * @since 5/7/2018
+     * @author BMOTTAG
+	 */
+	public function add_workers_skills($idWorker)
+	{
+			if (empty($idWorker)) {
+				show_error('ERROR!!! - You are in the wrong place.');
+			}
+			
+			//workers list
+			$this->load->model("general_model");
+			$arrParam = array();
+			$data['workersList'] = $this->general_model->get_programming_user_list($arrParam);//workers list
+			
+			$view = 'form_add_workers';
+			$data["idWorker"] = $idWorker;
+			$data["view"] = $view;
+			$this->load->view("layout", $data);
+	}
+	
+	/**
+	 * Save worker skills
+     * @since 5/7/2018
+     * @author BMOTTAG
+	 */
+	public function save_workers_skills()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$data["idWorker"] = $this->input->post('hddId');
 
 			if ($this->programming_model->addProgrammingWorker()) {
 				$data["result"] = true;

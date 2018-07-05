@@ -1,7 +1,35 @@
 $( document ).ready( function () {
-			
-	$("#btnSubmit").click(function(){
+
+	$("#name").convertirMayuscula().bloquearNumeros().maxlength(150);
+	$("#movilNumber").bloquearTexto().maxlength(15);
 	
+	$( "#form" ).validate( {
+		rules: {
+			name:				{ required: true, minlength: 3, maxlength:150 },
+			movilNumber:		{ required: true, number: true, maxlength:12 }
+		},
+		errorElement: "em",
+		errorPlacement: function ( error, element ) {
+			// Add the `help-block` class to the error element
+			error.addClass( "help-block" );
+			error.insertAfter( element );
+
+		},
+		highlight: function ( element, errorClass, validClass ) {
+			$( element ).parents( ".col-sm-6" ).addClass( "has-error" ).removeClass( "has-success" );
+		},
+		unhighlight: function (element, errorClass, validClass) {
+			$( element ).parents( ".col-sm-6" ).addClass( "has-success" ).removeClass( "has-error" );
+		},
+		submitHandler: function (form) {
+			return true;
+		}
+	});
+	
+	$("#btnSubmit").click(function(){		
+	
+		if ($("#form").valid() == true){
+		
 				//Activa icono guardando
 				$('#btnSubmit').attr('disabled','-1');
 				$("#div_error").css("display", "none");
@@ -9,7 +37,7 @@ $( document ).ready( function () {
 			
 				$.ajax({
 					type: "POST",	
-					url: base_url + "programming/save_programming_workers",	
+					url: base_url + "programming/save_workers",	
 					data: $("#form").serialize(),
 					dataType: "json",
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -19,18 +47,17 @@ $( document ).ready( function () {
                                             
 						if( data.result == "error" )
 						{
-							//alert(data.mensaje);
 							$("#div_load").css("display", "none");
 							$('#btnSubmit').removeAttr('disabled');							
 							return false;
 						} 
-										
+
 						if( data.result )//true
 						{	                                                        
 							$("#div_load").css("display", "none");
 							$('#btnSubmit').removeAttr('disabled');
 
-							var url = base_url + "programming/index/" + data.idProgramming;
+							var url = base_url + "programming/workers";
 							$(location).attr("href", url);
 						}
 						else
@@ -47,9 +74,10 @@ $( document ).ready( function () {
 						$("#div_error").css("display", "inline");
 						$('#btnSubmit').removeAttr('disabled');
 					}
+					
 		
 				});	
 		
+		}//if			
 	});
-
 });
