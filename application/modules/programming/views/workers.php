@@ -79,35 +79,26 @@ if ($retornoError) {
 										
 		<?php 
 		if($info){
-			
-			
-		$ci = &get_instance();
-		$ci->load->model("general_model");
+						
+			$ci = &get_instance();
+			$ci->load->model("general_model");
 
 			foreach ($info as $data):
-			
-				$arrParam = array(
-					"idWorker" => $data['id_programming_users']
-				);
-				
-				
 				
 				echo "<tr>";
 				echo "<td>" . $data['full_name'] . "</td>";
 				echo "<td>" . $data['movil_number'] . "</td>";
 				
 				echo "<td class='text-center'>";
-				
 
-$found = $ci->general_model->get_programming_skills($arrParam); //buscamos lista de habilidades por usuario
-if($found){
-foreach ($found as $listaSkills):
-
-echo "<small>" . $listaSkills['skill'] . "<br></small>";
-
-
-endforeach;
-}				
+				//listado de habilidades por usuario				
+				$arrParam = array("idWorker" => $data['id_programming_users']);
+				$found = $ci->general_model->get_programming_skills($arrParam); //buscamos lista de habilidades por usuario
+				if($found){
+					foreach ($found as $listaSkills):
+						echo "<small>" . $listaSkills['skill'] . "<br></small>";
+					endforeach;
+				}				
 				
 				echo "<a href='" . base_url("programming/add_workers_skills/" . $data['id_programming_users']) . "' class='btn btn-default btn-xs'><i class='glyphicon glyphicon-plus'></i> Add skill </a>";
 				echo "</td>";
