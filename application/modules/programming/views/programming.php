@@ -129,23 +129,37 @@ if($data['state'] == 2)
 								</tr>
 								
 								<tr class="headings">
-									<th class="column-title"><small>Name</small></th>
-									<th class="column-title"><small>Movil</small></th>
-									<th class="column-title"><small>Skills</small></th>
+									<th class="column-title" style="width: 20%"><small>Name</small></th>
+									<th class="column-title text-center"><small>Movil</small></th>
+									<th class="column-title text-center"><small>Skills</small></th>
 								</tr>
 							</thead>
 
 							<tbody>
 										
-		<?php
-				foreach ($informationWorker as $data):
-					echo "<tr>";
-					echo "<td ><small>$data[full_name]</small></td>";
-					echo "<td class='text-center'><small>$data[movil_number]</small></td>";
-					echo "<td class='text-center'><small>---- SKILLS ----- </small></td>";
-					echo "</tr>";
-				endforeach;
-		?>
+							<?php
+								$ci = &get_instance();
+								$ci->load->model("general_model");
+								
+								foreach ($informationWorker as $data):
+									echo "<tr>";
+									echo "<td ><small>$data[full_name]</small></td>";
+									echo "<td class='text-center'><small>$data[movil_number]</small></td>";
+									echo "<td class='text-center'><small>";
+
+									//listado de habilidades por usuario
+									$arrParam = array("idWorker" => $data['id_programming_users']);
+									$found = $ci->general_model->get_programming_skills($arrParam); //buscamos lista de habilidades por usuario
+									if($found){
+										foreach ($found as $listaSkills):
+											echo "<small>" . $listaSkills['skill'] . "<br></small>";
+										endforeach;
+									}
+									
+									echo "</small></td>";
+									echo "</tr>";
+								endforeach;
+							?>
 
 							</tbody>
 						</table>
@@ -154,9 +168,7 @@ if($data['state'] == 2)
 			}
 		?>
 <!-- FIN HISTORICO -->
-					
-					
-
+										
 				</div>
 			</div>
 		</div>
@@ -178,7 +190,6 @@ $(document).ready(function() {
         "info":     false,
 		"searching": false
     } );
-	
 	
 } );
 </script>
