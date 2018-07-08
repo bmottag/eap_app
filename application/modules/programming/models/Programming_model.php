@@ -164,6 +164,26 @@
 					return true;
 				} else{ return false; }
 		}
+		
+		/**
+		 * Cmabia el estado de la programacion
+		 * @since 8/7/2018
+		 */
+		public function deleteProgramming() 
+		{
+			$idProgramming = $this->input->post('identificador');
+		
+			$data = array('state' => 3); //estado eliminada
+			
+			$this->db->where('id_programming', $idProgramming);
+			$query = $this->db->update('programming', $data);
+						
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 			
 		
 	    

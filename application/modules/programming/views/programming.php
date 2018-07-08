@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/solicitud/solicitud.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/programming/programming.js"); ?>"></script>
 
 <div class="right_col" role="main">
 	<div class="row">
@@ -48,12 +48,12 @@ if ($retornoError) {
 
 							<thead>
 								<tr class="headings">
-									<th class="column-title" style="width: 12%"><small>Date</small></th>
-									<th class="column-title" style="width: 12%"><small>Project / Company</small></th>
-									<th class="column-title" style="width: 8%"><small>Quantity</small></th>
-									<th class="column-title" style="width: 8%"><small>Observation</small></th>
-									<th class="column-title" style="width: 8%"><small>Links</small></th>
-									<th class="column-title" style="width: 8%"><small>Done by</small></th>
+									<th class="column-title" style="width: 10%"><small>Date</small></th>
+									<th class="column-title" style="width: 15%"><small>Project / Company</small></th>
+									<th class="column-title" style="width: 10%"><small>Quantity</small></th>
+									<th class="column-title" style="width: 20%"><small>Observation</small></th>
+									<th class="column-title" style="width: 30%"><small>Links</small></th>
+									<th class="column-title" style="width: 15%"><small>Done by</small></th>
 								</tr>
 							</thead>
 
@@ -63,7 +63,7 @@ if ($retornoError) {
 			if($information){
 				foreach ($information as $data):
 					echo "<tr>";
-					echo "<td><small>" . $data['date_programming'] . "</small></td>";
+					echo "<td class='text-center'><small>" . $data['date_programming'] . "</small></td>";
 					echo "<td><small>" . $data['project_name'] . " / " . $data['company_name'] . "</small></td>";
 					echo "<td class='text-center'><small>" . $data['quantity'] . "</small></td>";
 					echo "<td><small>" . $data['observation'] . "</small></td>";
@@ -77,6 +77,16 @@ $datetime1 = date_create($fechaProgramacion);
 $datetime2 = date_create(date('Y-m-d'));
 
 
+?>
+
+
+
+					<div class="row">
+						<div class="btn-toolbar">
+							<div class="btn-group">
+
+<?php
+
 if($data['state'] == 2)
 {
 		echo '<p class="text-succedd"><strong>Done</strong></p>';
@@ -84,22 +94,25 @@ if($data['state'] == 2)
 		if($datetime1 < $datetime2) {
 				echo '<p class="text-danger"><strong>Overdue</strong></p>';
 		}else{
-				?>
-		<a href='<?php echo base_url("programming/update_programming/" . $data['id_programming']); ?>' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Edit </a>
-		
-		<a href='<?php echo base_url("programming/add_programming_workers/" . $data['id_programming']); ?>' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> Workers </a>
-				
-		<button type="button" id="<?php echo $data['id_programming']; ?>" class='btn btn-danger btn-xs'>
-				<i class="fa fa-trash-o"></i> Delete 
-		</button>
-				<?php
+?>
+			<a href='<?php echo base_url("programming/update_programming/" . $data['id_programming']); ?>' class='btn btn-info btn-xs' title="Edit"><i class='fa fa-pencil'></i></a>
+			
+			<a href='<?php echo base_url("programming/add_programming_workers/" . $data['id_programming']); ?>' class='btn btn-warning btn-xs' title="Workers"><i class='fa fa-users'></i></a>
+					
+			<button type="button" id="<?php echo $data['id_programming']; ?>" class='btn btn-danger btn-xs' title="Delete">
+					<i class="fa fa-trash-o"></i>
+			</button>
+<?php
 		}
 }
 
 ?>
 
-<a href='<?php echo base_url("programming/index/$data[id_programming]"); ?>' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> Ver </a>
+<a href='<?php echo base_url("programming/index/$data[id_programming]"); ?>' class='btn btn-success btn-xs' title="View"><i class='fa fa-eye'></i></a>
 
+							</div>
+						</div>
+					</div>
 <?php
 
 					echo "</small></td>";

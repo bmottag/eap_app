@@ -339,6 +339,30 @@ class Programming extends CI_Controller {
 			echo json_encode($data);
     }
 	
+	/**
+	 * Delete programming
+     * @since 8/7/2018
+	 */
+	public function delete_programming()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idProgramming = $this->input->post('identificador');
+			
+			if ($this->programming_model->deleteProgramming()) 
+			{				
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', 'You have delete the record.');
+			} else {
+				$data["result"] = "error";
+				$data["mensaje"] = "Error!!! Contactarse con el Administrador.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}				
+
+			echo json_encode($data);
+    }
+	
 
 
 	
