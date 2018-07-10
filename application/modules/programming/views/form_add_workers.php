@@ -13,78 +13,114 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-
-					<div class="alert alert-success alert-dismissible fade in" role="alert">
-						<strong>Info:</strong> Form to add workers.
+					
+					<div class="alert alert-success">
+						<ul class="fa-ul">
+							<li>
+								<i class="fa fa-info-circle fa-lg fa-li"></i> <strong>Workers list.</strong> Select and save the workers to the programming.
+							</li>
+						</ul>
 					</div>
 				
-					<form name="form" id="form" data-parsley-validate class="form-horizontal form-label-left" method="post">
-						<input type="hidden" id="hddId" name="hddId" value="<?php echo $idProgramming; ?>"/>
-<div class="table-responsive">
-						<table class="table table-striped jambo_table bulk_action table-bordered" cellspacing="0" width="100%">
-													
-							<thead>
-								<tr class="headings">
-									<th class="column-title text-center" style="width: 10%">Check </th>
-									<th class="column-title text-center" style="width: 90%">Worker</th>
-								</tr>
-							</thead>
-                            <?php
-                            $ci = &get_instance();
-                            $ci->load->model("general_model");
-                            foreach ($workersList as $lista):
+					<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+
+						<ul class="list-unstyled user_data">
+							<li>
+								<i class="fa fa-building user-profile-icon"></i> <strong>Project / Company:</strong><br> <?php echo $infoProgramming[0]['project_name'] . " / " . $infoProgramming[0]["company_name"]; ?>
+							</li>
+
+							<li>
+								<i class="fa fa-calendar user-profile-icon"></i> <strong>Date:</strong><br> <?php echo $infoProgramming[0]["date_programming"]; ?>
+							</li>
 							
-								$arrParam = array(
-									"idProgramming" => $idProgramming,
-									"idUser" => $lista['id_programming_users']
-								);
-                                $found = $ci->general_model->get_programming_workers($arrParam);
-								
-                                echo "<tr>";
-                                echo "<td class='text-center'>";
-                                $data = array(
-                                    'name' => 'workers[]',
-                                    'id' => 'workers',
-                                    'value' => $lista['id_programming_users'],
-                                    'checked' => $found
-                                );
-                                echo form_checkbox($data);
-                                echo "</td>";
-								echo "<td>" . $lista["full_name"] . "</td>";
-                                echo "</tr>";
-                            endforeach
-                            ?>
-                        </table>
-</div>
+							<li>
+								<i class="fa fa-tachometer user-profile-icon"></i> <strong>Quantity:</strong> <?php echo $infoProgramming[0]["quantity"]; ?>
+							</li>
+							
+							<li>
+								<i class="fa fa-comment user-profile-icon"></i> <strong>Observation:</strong><br> <?php echo $infoProgramming[0]["observation"]; ?>
+							</li>
+						</ul>
 						
-						<div class="form-group">							
-							<div class="row" align="center">
-								<div style="width:50%;" align="center">									 
-									<button type="button" id="btnSubmit" name="btnSubmit" class='btn btn-success'>
-											Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-									</button>
-								</div>
+						<div class="col-md-12">
+							<div class="btn-group">
+								<a class="btn btn-sm btn-primary" href="<?php echo base_url().'programming'; ?>"><span class="fa fa-reply" aria-hidden="true"></span> Go back </a>
 							</div>
 						</div>
 						
-						<div class="form-group">
-							<div class="row" align="center">
-								<div style="width:80%;" align="center">
-									<div id="div_load" style="display:none">		
-										<div class="progress progress-striped active">
-											<div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-												<span class="sr-only">45% completado</span>
-											</div>
-										</div>
-									</div>
-									<div id="div_error" style="display:none">			
-										<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" id="span_msj">&nbsp;</span></div>
+					 </div>
+					
+					<div class="col-md-9 col-sm-9 col-xs-12">
+				
+						<form name="form" id="form" data-parsley-validate class="form-horizontal form-label-left" method="post">
+							<input type="hidden" id="hddId" name="hddId" value="<?php echo $idProgramming; ?>"/>
+							
+							<div class="table-responsive">
+								<table class="table table-striped jambo_table bulk_action table-bordered" cellspacing="0" width="100%">
+															
+									<thead>
+										<tr class="headings">
+											<th class="column-title text-center" style="width: 10%">Check </th>
+											<th class="column-title text-center" style="width: 90%">Worker</th>
+										</tr>
+									</thead>
+									<?php
+									$ci = &get_instance();
+									$ci->load->model("general_model");
+									foreach ($workersList as $lista):
+									
+										$arrParam = array(
+											"idProgramming" => $idProgramming,
+											"idUser" => $lista['id_programming_users']
+										);
+										$found = $ci->general_model->get_programming_workers($arrParam);
+										
+										echo "<tr>";
+										echo "<td class='text-center'>";
+										$data = array(
+											'name' => 'workers[]',
+											'id' => 'workers',
+											'value' => $lista['id_programming_users'],
+											'checked' => $found
+										);
+										echo form_checkbox($data);
+										echo "</td>";
+										echo "<td>" . $lista["full_name"] . "</td>";
+										echo "</tr>";
+									endforeach
+									?>
+								</table>
+							</div>
+							
+							<div class="form-group">							
+								<div class="row" align="center">
+									<div style="width:50%;" align="center">									 
+										<button type="button" id="btnSubmit" name="btnSubmit" class='btn btn-success'>
+												Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+										</button>
 									</div>
 								</div>
 							</div>
-						</div>						
+							
+							<div class="form-group">
+								<div class="row" align="center">
+									<div style="width:80%;" align="center">
+										<div id="div_load" style="display:none">		
+											<div class="progress progress-striped active">
+												<div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+													<span class="sr-only">45% completado</span>
+												</div>
+											</div>
+										</div>
+										<div id="div_error" style="display:none">			
+											<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" id="span_msj">&nbsp;</span></div>
+										</div>
+									</div>
+								</div>
+							</div>						
 
-					</form>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>

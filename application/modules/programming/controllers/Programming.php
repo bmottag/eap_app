@@ -251,8 +251,12 @@ class Programming extends CI_Controller {
 				show_error('ERROR!!! - You are in the wrong place.');
 			}
 			
-			//workers list
 			$this->load->model("general_model");
+			
+			$arrParam = array("idProgramming" => $idProgramming);
+			$data['infoProgramming'] = $this->general_model->get_programming($arrParam);//info programacion
+			
+			//workers list
 			$arrParam = array();
 			$data['workersList'] = $this->general_model->get_programming_user_list($arrParam);//workers list
 			
