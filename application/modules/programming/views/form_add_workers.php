@@ -30,7 +30,7 @@
 							</li>
 
 							<li>
-								<i class="fa fa-calendar user-profile-icon"></i> <strong>Date:</strong><br> <?php echo $infoProgramming[0]["date_programming"]; ?>
+								<i class="fa fa-calendar user-profile-icon"></i> <strong>Date:</strong> <?php echo date('F j, Y', strtotime($infoProgramming[0]["date_programming"])); ?>
 							</li>
 							
 							<li>
@@ -61,7 +61,8 @@
 									<thead>
 										<tr class="headings">
 											<th class="column-title text-center" style="width: 10%">Check </th>
-											<th class="column-title text-center" style="width: 90%">Worker</th>
+											<th class="column-title" style="width: 45%">Worker</th>
+											<th class="column-title" style="width: 45%">Skills</th>
 										</tr>
 									</thead>
 									<?php
@@ -86,6 +87,20 @@
 										echo form_checkbox($data);
 										echo "</td>";
 										echo "<td>" . $lista["full_name"] . "</td>";
+										
+										echo "<td>";
+
+										//listado de habilidades por usuario				
+										$arrParam = array("idWorker" => $lista['id_programming_users']);
+										$skills = $ci->general_model->get_programming_skills($arrParam); //buscamos lista de habilidades por usuario
+										if($skills){
+											foreach ($skills as $listaSkills):
+												echo $listaSkills['skill'] . "<br>";
+											endforeach;
+										}				
+										
+										echo "</td>";
+										
 										echo "</tr>";
 									endforeach
 									?>
