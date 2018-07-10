@@ -17,8 +17,22 @@
 				</div>
 
 				<div class="x_content">
-				
+		<?php
+			if($idProgramming != 'x'){
+		?>
+				<div class="btn-group">
 					<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success"><i class="fa fa-plus"></i> New programming</a>
+
+					<a href="<?php echo base_url().'programming'; ?>" class="btn btn-default"><span class="fa fa-reply" aria-hidden="true"></span> Go back </a>
+				</div>
+				<br><br>
+		<?php
+			}else{
+		?>
+				<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success"><i class="fa fa-plus"></i> New programming</a>
+		<?php
+			}
+		?>
 				
 <?php
 $retornoExito = $this->session->flashdata('retornoExito');
