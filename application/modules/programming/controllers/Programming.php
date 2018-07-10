@@ -20,7 +20,7 @@ class Programming extends CI_Controller {
 		$data['information'] = FALSE;
 		$data['informationWorker'] = FALSE;
 						
-		$arrParam = array();
+		$arrParam = array("estado" => "ACTIVAS");
 		$data['information'] = $this->general_model->get_programming($arrParam);//info solicitudes
 		
 		//si envio el id, entonces busco la informacion 

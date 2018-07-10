@@ -382,7 +382,12 @@ class General_model extends CI_Model {
 				$this->db->where('P.date_programming', $arrData["fecha"]);
 			}
 			if (array_key_exists("estado", $arrData)) {
-				$this->db->where('P.state', $arrData["estado"]);
+				if($arrData["estado"] == "ACTIVAS"){
+					$this->db->where('P.state !=', 3);
+				}else{
+					$this->db->where('P.state', $arrData["estado"]);
+				}
+				
 			}
 			
 			$this->db->join('user U', 'U.id_user = P.fk_id_user', 'INNER');
