@@ -73,17 +73,17 @@ class Programming extends CI_Controller {
 			$date = $this->input->post('date_programming');
 
 			$msj = "You have add a new programming!!";
+			$result_project = false;
 			if ($idProgramming != '') {
 				$msj = "You have update a programming!!";
+			}else{
+				//verificar si ya existe el proyecto para esa fecha
+				$arrParam = array(
+					"idProject" => $idProject,
+					"date" => $date
+				);
+				$result_project = $this->programming_model->verifyProject($arrParam);
 			}
-			
-			//verificar si ya existe el proyecto para esa fecha
-			$result_project = false;
-			$arrParam = array(
-				"idProject" => $idProject,
-				"date" => $date
-			);
-			$result_project = $this->programming_model->verifyProject($arrParam);
 			
 			if ($result_project) {
 				$data["result"] = "error";
