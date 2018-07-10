@@ -278,9 +278,13 @@ class Programming extends CI_Controller {
 			$data = array();
 			$data["idProgramming"] = $this->input->post('hddId');
 
-			if ($this->programming_model->addProgrammingWorker()) {
+			if ($this->programming_model->addProgrammingWorker()) 
+			{
 				$data["result"] = true;
 				$data["mensaje"] = "Solicitud guardada correctamente.";
+				
+				//actualizo el estado de la programacion -> dependiento si se completaron o no la cantidad de trabajadores
+				$updateState = $this->update_state($data["idProgramming"]);
 				
 				$this->session->set_flashdata('retornoExito', 'You have add the Workers, remember to get the signature of each one.');
 			} else {
@@ -366,6 +370,45 @@ class Programming extends CI_Controller {
 			}				
 
 			echo json_encode($data);
+    }
+	
+	/**
+	 * Actualizo estado de la programacion 2 si esta completa 1 si esta incompleta
+     * @since 10/7/2018
+	 */
+    function update_state($idProgramming) 
+	{
+			//programming info
+			$this->load->model("general_model");
+			
+			//busco la cantidad en la programacion
+			$arrParam = array("idProgramming" => $idProgramming);
+			$data['information'] = $this->general_model->get_programming($arrParam);//info programacion
+			
+			$quantity = $data['information'][0]['quantity'];
+						
+			//cuento la cantidad de trabajadores guardados en la base de datos
+			$countWorkers = $this->programming_model->countWorkers($idProgramming);
+			
+			$state = 2; //incompleta
+			if($quantity > $countWorkers){
+				$state = 1; //completa
+			}
+
+			//guardo estado de la programacion			
+			$arrParam = array(
+				"table" => "programming",
+				"primaryKey" => "id_programming",
+				"id" => $idProgramming,
+				"column" => "state",
+				"value" => $state
+			);
+			
+			if ($this->general_model->updateRecord($arrParam)) {
+				return TRUE;
+			}else{
+				return FALSE;
+			}
     }
 	
 

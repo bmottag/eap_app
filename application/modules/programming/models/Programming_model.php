@@ -185,6 +185,21 @@
 				return false;
 			}
 		}
+		
+		/**
+		 * Contar trabajadores
+		 * @since 10/7/2018
+		 */
+		public function countWorkers($idProgramming)
+		{
+				$sql = "SELECT count(id_programming_worker) CONTEO";
+				$sql.= " FROM programming_worker";
+				$sql.= " WHERE fk_id_programming = $idProgramming";
+
+				$query = $this->db->query($sql);
+				$row = $query->row();
+				return $row->CONTEO;
+		}
 			
 		
 	    
