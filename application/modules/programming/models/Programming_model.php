@@ -76,6 +76,7 @@
 				if ($idProgramming == '') {
 					$data['fk_id_user'] = $idUser;
 					$data['date_issue'] = date("Y-m-d G:i:s");	
+					$data['state'] = 1;
 					
 					$query = $this->db->insert('programming', $data);				
 				} else {
