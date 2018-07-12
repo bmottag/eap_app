@@ -78,13 +78,14 @@
 					$data['date_issue'] = date("Y-m-d G:i:s");	
 					$data['state'] = 1;
 					
-					$query = $this->db->insert('programming', $data);				
+					$query = $this->db->insert('programming', $data);
+					$idProgramming = $this->db->insert_id();
 				} else {
 					$this->db->where('id_programming', $idProgramming);
 					$query = $this->db->update('programming', $data);
 				}
 				if ($query) {
-					return true;
+					return $idProgramming;
 				} else {
 					return false;
 				}

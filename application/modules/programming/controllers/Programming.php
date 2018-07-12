@@ -93,7 +93,11 @@ class Programming extends CI_Controller {
 				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> This project is already scheduled for that date.');
 			} else {
 			
-				if ($idProgramming = $this->programming_model->saveProgramming()) {
+				if ($idProgramming = $this->programming_model->saveProgramming()) 
+				{
+					//actualizo el estado de la programacion -> dependiento si se completaron o no la cantidad de trabajadores
+					$updateState = $this->update_state($idProgramming);
+					
 					$data["result"] = true;
 					$this->session->set_flashdata('retornoExito', $msj);
 				} else {
