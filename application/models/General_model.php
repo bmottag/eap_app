@@ -371,7 +371,15 @@ class General_model extends CI_Model {
 		 */
 		public function get_programming($arrData) 
 		{
+			$year = date('Y');
+			$firstDay = date('Y-m-d', mktime(0,0,0, 1, 1, $year));
+			
+			
 			$this->db->select("P.*, U.id_user, U.first_name, U.last_name, X.project_name, C.company_name");
+			$this->db->join('user U', 'U.id_user = P.fk_id_user', 'INNER');
+			$this->db->join('project X', 'X.id_project = P.fk_id_project', 'INNER');
+			$this->db->join('param_company C', 'C.id_company = X.fk_id_company', 'INNER');
+			
 			if (array_key_exists("idUser", $arrData)) {
 				$this->db->where('P.fk_id_user', $arrData["idUser"]);
 			}
@@ -390,9 +398,7 @@ class General_model extends CI_Model {
 				
 			}
 			
-			$this->db->join('user U', 'U.id_user = P.fk_id_user', 'INNER');
-			$this->db->join('project X', 'X.id_project = P.fk_id_project', 'INNER');
-			$this->db->join('param_company C', 'C.id_company = X.fk_id_company', 'INNER');
+			$this->db->where('P.date_issue >=', $firstDay); //se filtran por registros mayores al primer dia del año
 							
 			$this->db->order_by("P.date_programming DESC"); 
 			$query = $this->db->get("programming P");
