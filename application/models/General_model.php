@@ -371,7 +371,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_programming($arrData) 
 		{
-			$this->db->select("P.*, U.*, X.project_name, C.company_name");
+			$this->db->select("P.*, U.id_user, U.first_name, U.last_name, X.project_name, C.company_name");
 			if (array_key_exists("idUser", $arrData)) {
 				$this->db->where('P.fk_id_user', $arrData["idUser"]);
 			}

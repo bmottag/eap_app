@@ -90,25 +90,21 @@ $fechaProgramacion = $data['date_programming'];
 $datetime1 = date_create($fechaProgramacion);
 $datetime2 = date_create(date('Y-m-d'));
 
-
 ?>
-
-
-
-					<div class="row">
-						<div class="btn-toolbar">
-							<div class="btn-group">
-
+							
 <?php
-
-if($data['state'] == 2)
-{
-		echo '<p class="text-succedd"><strong>Done</strong></p>';
-}else{
 		if($datetime1 < $datetime2) {
-				echo '<p class="text-danger"><strong>Overdue</strong></p>';
+				echo '<p class="text-danger"><strong>OVERDUE</strong></p>';
 		}else{
+			
+			if($data['state'] == 2)
+			{
+				echo '<p class="text-success"><strong>DONE</strong></p>';
+			}elseif($data['state'] == 1){
+				echo '<p class="text-danger"><strong>INCOMPLETE</strong></p>';
+			}
 ?>
+
 			<a href='<?php echo base_url("programming/update_programming/" . $data['id_programming']); ?>' class='btn btn-info btn-xs' title="Edit"><i class='fa fa-pencil'></i></a>
 			
 			<a href='<?php echo base_url("programming/add_programming_workers/" . $data['id_programming']); ?>' class='btn btn-warning btn-xs' title="Workers"><i class='fa fa-users'></i></a>
@@ -116,17 +112,14 @@ if($data['state'] == 2)
 			<button type="button" id="<?php echo $data['id_programming']; ?>" class='btn btn-danger btn-xs' title="Delete">
 					<i class="fa fa-trash-o"></i>
 			</button>
+			
 <?php
 		}
-}
-
 ?>
 
-<a href='<?php echo base_url("programming/index/$data[id_programming]"); ?>' class='btn btn-success btn-xs' title="View"><i class='fa fa-eye'></i></a>
+			<a href='<?php echo base_url("programming/index/$data[id_programming]"); ?>' class='btn btn-success btn-xs' title="View"><i class='fa fa-eye'></i></a>
 
-							</div>
-						</div>
-					</div>
+
 <?php
 
 					echo "</small></td>";
