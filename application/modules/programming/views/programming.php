@@ -29,7 +29,11 @@
 		<?php
 			}else{
 		?>
-				<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> New programming</a>
+				<div class="btn-group">
+					<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> New programming</a>
+					<a href="<?php echo base_url().'programming/calendar'; ?>" class="btn btn-warning btn-sm"><span class="fa fa-calendar" aria-hidden="true"></span> Calendar </a>
+				</div>
+				<br><br>
 		<?php
 			}
 		?>
