@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2018 a las 22:20:47
+-- Tiempo de generación: 13-07-2018 a las 06:58:52
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 5.6.24
 
@@ -111,7 +111,8 @@ CREATE TABLE `param_menu` (
 INSERT INTO `param_menu` (`id_menu`, `menu_name`, `menu_icono`, `orden`) VALUES
 (1, 'Report', 'fa-pie-chart', 2),
 (2, 'Settings', 'fa-cog', 3),
-(3, 'Payroll', 'fa-book', 1);
+(3, 'Payroll', 'fa-book', 1),
+(4, 'Programming', 'fa-calendar', 4);
 
 -- --------------------------------------------------------
 
@@ -139,7 +140,12 @@ INSERT INTO `param_menu_links` (`id_link`, `fk_id_menu`, `link_name`, `link_url`
 (5, 2, 'Projects', 'admin/project', 'fa-road', 3),
 (6, 2, 'QR Code', 'codeqr', 'fa-qrcode', 4),
 (7, 1, 'Reports', 'public/reportico/run.php?execute_mode=MENU&project=Payroll', 'fa-area-chart', 2),
-(8, 3, 'Add payroll', 'payroll/payroll_advanced', 'fa-book', 2);
+(8, 3, 'Add payroll', 'payroll/payroll_advanced', 'fa-book', 2),
+(9, 4, 'Available users', 'programming/workers', 'fa-male', 4),
+(10, 4, 'Skills list', 'programming/skills', 'fa-star', 5),
+(11, 4, 'Programming list', 'programming', 'fa-list', 2),
+(12, 4, 'DIVIDER', '', '', 3),
+(13, 4, 'Calendar', 'programming/calendar', 'fa-calendar', 1);
 
 -- --------------------------------------------------------
 
@@ -162,7 +168,8 @@ INSERT INTO `param_menu_permisos` (`id_permiso`, `fk_id_menu`, `fk_id_rol`) VALU
 (2, 2, 1),
 (3, 1, 2),
 (4, 3, 1),
-(5, 3, 2);
+(5, 3, 2),
+(6, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -249,6 +256,7 @@ CREATE TABLE `payroll` (
   `finish` datetime NOT NULL,
   `adjusted_start` datetime NOT NULL,
   `adjusted_finish` datetime NOT NULL,
+  `lunch` tinyint(1) NOT NULL,
   `working_time` varchar(30) NOT NULL,
   `working_hours` float NOT NULL,
   `observation` text NOT NULL,
@@ -260,10 +268,10 @@ CREATE TABLE `payroll` (
 -- Volcado de datos para la tabla `payroll`
 --
 
-INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `finish`, `adjusted_start`, `adjusted_finish`, `working_time`, `working_hours`, `observation`, `activities`, `fk_id_period`) VALUES
-(1, 5, 2, '2018-04-30 06:56:00', '2018-04-30 11:56:00', '2018-04-30 07:00:00', '2018-04-30 11:45:00', '+0 days 04:45:00', 4.75, '********************<br><strong>Payrrol inserted by BENJAMIN MOTTA.</strong><br>Date: 2018-04-30 11:57:04<br>********************', 'REVISAR CONTRO DE HORAS TOTALES', 9),
-(2, 1, 2, '2018-04-30 14:20:00', '2018-04-30 19:36:00', '2018-04-30 14:30:00', '2018-04-30 19:30:00', '+0 days 05:00:00', 5, '********************<br><strong>Changue hour by BENJAMIN MOTTA.</strong><br>Before -> Start: 2018-04-30 14:20:48 <br>Before -> Finish: 0000-00-00 00:00:00<br>AJUSTE<br>Date: 2018-04-30 14:36:33<br>********************', '', 9),
-(3, 5, 2, '2018-04-30 13:26:00', '2018-04-30 16:26:00', '2018-04-30 13:30:00', '2018-04-30 16:15:00', '+0 days 02:45:00', 2.75, '********************<br><strong>Payrrol inserted by BENJAMIN MOTTA.</strong><br>Date: 2018-04-30 14:26:35<br>********************<br>********************<br><strong>Changue hour by BENJAMIN MOTTA.</strong><br>Before -> Start: 2018-04-30 13:26:00 <br>Before -> Finish: 2018-04-30 14:26:00<br>CAMPO DE LA OBERVACION<br>Date: 2018-04-30 14:32:17<br>********************', '', 9);
+INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `finish`, `adjusted_start`, `adjusted_finish`, `lunch`, `working_time`, `working_hours`, `observation`, `activities`, `fk_id_period`) VALUES
+(1, 5, 2, '2018-04-30 06:56:00', '2018-04-30 11:56:00', '2018-04-30 07:00:00', '2018-04-30 11:45:00', 0, '+0 days 04:45:00', 4.75, '********************<br><strong>Payrrol inserted by BENJAMIN MOTTA.</strong><br>Date: 2018-04-30 11:57:04<br>********************', 'REVISAR CONTRO DE HORAS TOTALES', 9),
+(2, 1, 2, '2018-04-30 14:20:00', '2018-04-30 19:36:00', '2018-04-30 14:30:00', '2018-04-30 19:30:00', 0, '+0 days 05:00:00', 5, '********************<br><strong>Changue hour by BENJAMIN MOTTA.</strong><br>Before -> Start: 2018-04-30 14:20:48 <br>Before -> Finish: 0000-00-00 00:00:00<br>AJUSTE<br>Date: 2018-04-30 14:36:33<br>********************', '', 9),
+(3, 5, 2, '2018-04-30 13:26:00', '2018-04-30 16:26:00', '2018-04-30 13:30:00', '2018-04-30 16:15:00', 0, '+0 days 02:45:00', 2.75, '********************<br><strong>Payrrol inserted by BENJAMIN MOTTA.</strong><br>Date: 2018-04-30 14:26:35<br>********************<br>********************<br><strong>Changue hour by BENJAMIN MOTTA.</strong><br>Before -> Start: 2018-04-30 13:26:00 <br>Before -> Finish: 2018-04-30 14:26:00<br>CAMPO DE LA OBERVACION<br>Date: 2018-04-30 14:32:17<br>********************', '', 9);
 
 -- --------------------------------------------------------
 
@@ -274,23 +282,24 @@ INSERT INTO `payroll` (`id_payroll`, `fk_id_user`, `fk_id_project`, `start`, `fi
 CREATE TABLE `payroll_period` (
   `id_period` int(10) NOT NULL,
   `date_start` date NOT NULL,
-  `date_finish` date NOT NULL
+  `date_finish` date NOT NULL,
+  `period` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `payroll_period`
 --
 
-INSERT INTO `payroll_period` (`id_period`, `date_start`, `date_finish`) VALUES
-(1, '2018-01-07', '2018-01-20'),
-(2, '2018-01-21', '2018-02-03'),
-(3, '2018-02-04', '2018-02-17'),
-(4, '2018-02-18', '2018-03-03'),
-(5, '2018-03-04', '2018-03-17'),
-(6, '2018-03-18', '2018-03-31'),
-(7, '2018-04-01', '2018-04-14'),
-(8, '2018-04-15', '2018-04-28'),
-(9, '2018-04-29', '2018-05-12');
+INSERT INTO `payroll_period` (`id_period`, `date_start`, `date_finish`, `period`) VALUES
+(1, '2018-01-07', '2018-01-20', '2018-01-07 --> 2018-01-20'),
+(2, '2018-01-21', '2018-02-03', '2018-01-21 --> 2018-02-03'),
+(3, '2018-02-04', '2018-02-17', '2018-02-04 --> 2018-02-17'),
+(4, '2018-02-18', '2018-03-03', '2018-02-18 --> 2018-03-03'),
+(5, '2018-03-04', '2018-03-17', '2018-03-04 --> 2018-03-17'),
+(6, '2018-03-18', '2018-03-31', '2018-03-18 --> 2018-03-31'),
+(7, '2018-04-01', '2018-04-14', '2018-04-01 --> 2018-04-14'),
+(8, '2018-04-15', '2018-04-28', '2018-04-15 --> 2018-04-28'),
+(9, '2018-04-29', '2018-05-12', '2018-04-29 --> 2018-05-12');
 
 -- --------------------------------------------------------
 
@@ -334,6 +343,70 @@ CREATE TABLE `payroll_total_period` (
   `casual_amount` float(6,2) NOT NULL,
   `gst_amount` float(6,2) NOT NULL,
   `total_user` float(6,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `programming`
+--
+
+CREATE TABLE `programming` (
+  `id_programming` int(10) NOT NULL,
+  `fk_id_user` int(10) NOT NULL,
+  `fk_id_project` int(10) NOT NULL,
+  `date_programming` date NOT NULL,
+  `date_issue` datetime NOT NULL,
+  `quantity` tinyint(1) NOT NULL COMMENT 'Cantidad de personas para el trabajo',
+  `observation` text NOT NULL,
+  `state` tinyint(1) NOT NULL COMMENT '1: Falta programar; 2: Programada; 3: Eliminada'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `programming_skills`
+--
+
+CREATE TABLE `programming_skills` (
+  `id_programming_skill` int(10) NOT NULL,
+  `skill` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `programming_users`
+--
+
+CREATE TABLE `programming_users` (
+  `id_programming_users` int(10) NOT NULL,
+  `full_name` varchar(200) NOT NULL,
+  `movil_number` varchar(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `programming_users_skills`
+--
+
+CREATE TABLE `programming_users_skills` (
+  `id_programming_users_skills` int(10) NOT NULL,
+  `fk_id_programming_skill` int(10) NOT NULL,
+  `fk_id_programming_user` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `programming_worker`
+--
+
+CREATE TABLE `programming_worker` (
+  `id_programming_worker` int(10) NOT NULL,
+  `fk_id_programming_user` int(10) NOT NULL,
+  `fk_id_programming` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -411,7 +484,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `log_user`, `email`, `fk_id_type`, `fk_id_rol`, `birthdate`, `movil`, `password`, `state`, `photo`, `address`, `hora_real_cad`, `hora_contrato_cad`, `no_horas_max`, `company_name`, `gst_number`) VALUES
-(1, 'BENJAMIN', 'MOTTA', 'bmottag', 'benmotta@gmail.com', 3, 1, '2018-03-19', '14034089921', '25f9e794323b453885f5181f1b624d0b', 1, '', '', 26, 28, 94.77, '', ''),
+(1, 'BENJAMIN', 'MOTTA', 'bmottag', 'benmotta@gmail.com', 3, 1, '2018-03-19', '14034089921', 'e10adc3949ba59abbe56e057f20f883e', 1, 'images/employee/thumbs/1.png', '', 26, 28, 94.77, '', ''),
 (2, 'EDUAR', 'ACOSTA', 'eacosta', 'eacosta@eapcontruction.com', 1, 1, '2018-04-05', '4038895044', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 24, 0, 500.00, '', ''),
 (3, 'JAVIER', 'MOLINA', 'jmolina', 'jmolina@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 26, 0, 88.00, '', ''),
 (4, 'ANDRES', 'PALOMARES', 'apalomares', 'apalomares@gmail.com', 2, 2, '2018-04-10', '3347766', 'e10adc3949ba59abbe56e057f20f883e', 1, '', '', 25, 0, 88.00, '', ''),
@@ -518,6 +591,42 @@ ALTER TABLE `payroll_total_period`
   ADD KEY `fk_id_period` (`fk_id_period`);
 
 --
+-- Indices de la tabla `programming`
+--
+ALTER TABLE `programming`
+  ADD PRIMARY KEY (`id_programming`),
+  ADD KEY `fk_id_user` (`fk_id_user`),
+  ADD KEY `fk_id_project` (`fk_id_project`);
+
+--
+-- Indices de la tabla `programming_skills`
+--
+ALTER TABLE `programming_skills`
+  ADD PRIMARY KEY (`id_programming_skill`);
+
+--
+-- Indices de la tabla `programming_users`
+--
+ALTER TABLE `programming_users`
+  ADD PRIMARY KEY (`id_programming_users`);
+
+--
+-- Indices de la tabla `programming_users_skills`
+--
+ALTER TABLE `programming_users_skills`
+  ADD PRIMARY KEY (`id_programming_users_skills`),
+  ADD KEY `fk_id_programming_skill` (`fk_id_programming_skill`),
+  ADD KEY `fk_id_programming_user` (`fk_id_programming_user`);
+
+--
+-- Indices de la tabla `programming_worker`
+--
+ALTER TABLE `programming_worker`
+  ADD PRIMARY KEY (`id_programming_worker`),
+  ADD KEY `fk_id_programming_user` (`fk_id_programming_user`),
+  ADD KEY `fk_id_programming` (`fk_id_programming`);
+
+--
 -- Indices de la tabla `project`
 --
 ALTER TABLE `project`
@@ -565,17 +674,17 @@ ALTER TABLE `param_company_contacts`
 -- AUTO_INCREMENT de la tabla `param_menu`
 --
 ALTER TABLE `param_menu`
-  MODIFY `id_menu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_menu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `param_menu_links`
 --
 ALTER TABLE `param_menu_links`
-  MODIFY `id_link` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_link` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `param_menu_permisos`
 --
 ALTER TABLE `param_menu_permisos`
-  MODIFY `id_permiso` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_permiso` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `param_qr_code`
 --
@@ -611,6 +720,31 @@ ALTER TABLE `payroll_project_period`
 --
 ALTER TABLE `payroll_total_period`
   MODIFY `id_total_period` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `programming`
+--
+ALTER TABLE `programming`
+  MODIFY `id_programming` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `programming_skills`
+--
+ALTER TABLE `programming_skills`
+  MODIFY `id_programming_skill` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `programming_users`
+--
+ALTER TABLE `programming_users`
+  MODIFY `id_programming_users` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `programming_users_skills`
+--
+ALTER TABLE `programming_users_skills`
+  MODIFY `id_programming_users_skills` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `programming_worker`
+--
+ALTER TABLE `programming_worker`
+  MODIFY `id_programming_worker` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `project`
 --
@@ -674,6 +808,26 @@ ALTER TABLE `payroll_project_period`
 --
 ALTER TABLE `payroll_total_period`
   ADD CONSTRAINT `payroll_total_period_ibfk_1` FOREIGN KEY (`fk_id_period`) REFERENCES `payroll_period` (`id_period`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `programming`
+--
+ALTER TABLE `programming`
+  ADD CONSTRAINT `programming_ibfk_1` FOREIGN KEY (`fk_id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `programming_users_skills`
+--
+ALTER TABLE `programming_users_skills`
+  ADD CONSTRAINT `programming_users_skills_ibfk_1` FOREIGN KEY (`fk_id_programming_skill`) REFERENCES `programming_skills` (`id_programming_skill`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `programming_users_skills_ibfk_2` FOREIGN KEY (`fk_id_programming_user`) REFERENCES `programming_users` (`id_programming_users`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `programming_worker`
+--
+ALTER TABLE `programming_worker`
+  ADD CONSTRAINT `programming_worker_ibfk_1` FOREIGN KEY (`fk_id_programming_user`) REFERENCES `programming_users` (`id_programming_users`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `programming_worker_ibfk_2` FOREIGN KEY (`fk_id_programming`) REFERENCES `programming` (`id_programming`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `project`
