@@ -415,6 +415,17 @@ class Programming extends CI_Controller {
 			}
     }
 	
+	public function calendar()
+	{
+		$this->load->model("general_model");
+				
+		$arrParam = array("estado" => "ACTIVAS");
+		$data['information'] = $this->general_model->get_programming($arrParam);//info solicitudes
+		
+		$data["view"] = 'calendar';
+		$this->load->view("layout", $data);
+	}
+	
 
 
 	
