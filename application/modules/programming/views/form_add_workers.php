@@ -43,8 +43,9 @@
 						</ul>
 						
 						<div class="col-md-12">
-							<div class="btn-group">
-								<a class="btn btn-sm btn-primary" href="<?php echo base_url().'programming'; ?>"><span class="fa fa-reply" aria-hidden="true"></span> Go back </a>
+							<div class="btn-group">								
+								<a href="<?php echo base_url().'programming/calendar'; ?>" class="btn btn-warning btn-sm"><span class="fa fa-calendar" aria-hidden="true"></span> Calendar </a>
+								<a href="<?php echo base_url().'programming'; ?>" class="btn btn-default btn-sm"><span class="fa fa-list" aria-hidden="true"></span> Programming list </a>
 							</div>
 						</div>
 						

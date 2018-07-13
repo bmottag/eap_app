@@ -21,15 +21,15 @@
 			if($idProgramming != 'x'){
 		?>
 				<div class="btn-group">
-					<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success"><i class="fa fa-plus"></i> New programming</a>
-
-					<a href="<?php echo base_url().'programming'; ?>" class="btn btn-default"><span class="fa fa-reply" aria-hidden="true"></span> Go back </a>
+					<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> New programming</a>
+					<a href="<?php echo base_url().'programming/calendar'; ?>" class="btn btn-warning btn-sm"><span class="fa fa-calendar" aria-hidden="true"></span> Calendar </a>
+					<a href="<?php echo base_url().'programming'; ?>" class="btn btn-default btn-sm"><span class="fa fa-list" aria-hidden="true"></span> Programming list </a>
 				</div>
 				<br><br>
 		<?php
 			}else{
 		?>
-				<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success"><i class="fa fa-plus"></i> New programming</a>
+				<a href="<?php echo base_url("programming/update_programming"); ?>" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> New programming</a>
 		<?php
 			}
 		?>
